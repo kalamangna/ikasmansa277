@@ -28,6 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')?"https://":"http://";
 
 $config['base_url'] = $protocol.$_SERVER['HTTP_HOST'].'/pendataan_alumni/';
+
 // $config['base_url'] = 'http://localhost/pendataan_alumni/';
 
 
