@@ -5,10 +5,11 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="shortcut icon" href="images/logo_ika.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="<?php echo base_url("images/logo_ika.ico"); ?>" type="image/x-icon">
 
   <title>IKA SMANSA / 277 Sinjai</title>
   <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css'); ?>">
@@ -28,10 +29,11 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
       <a class="navbar-brand" href="http://ikasmansa277.id">
-      <img src="images/logo_ika.ico" alt="Logo IKA" width="30" height="30" class="d-inline-block align-text-top">
-IKA Smansa 277</a>
-      
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+        <img src="<?php echo base_url("images/logo_ika1.png") ?>" alt="Logo IKA" width="30" height="30" class="d-inline-block align-text-top">
+        <span class="ms-1">IKA SMANSA / 277 Sinjai</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -121,17 +123,14 @@ IKA Smansa 277</a>
                 $referralLink = base_url('alumni/create?ut=' . $this->session->userdata('referral'));
                 $whatsappMessage = urlencode($referralLink);
                 $whatsappLink = "https://wa.me/?text=" . $whatsappMessage;
-
-
                 ?>
+
                 <p><strong>Link Pendataan Alumni :</strong></p>
                 <div class="input-group mb-3">
                   <code class="form-control" id="referralLink"><?php echo $referralLink; ?></code>
                   <button onclick="copyLink('<?php echo htmlspecialchars($referralLink, ENT_QUOTES); ?>')">
                     <i class="fa fa-copy"></i>
                   </button>
-
-
                 </div>
 
                 <p><strong>Undang via WhatsApp:</strong></p>
@@ -142,7 +141,6 @@ IKA Smansa 277</a>
                 </div>
                 <div class="text-center mb-3">
                   <a href="<?= base_url('qr_code?url=' . $referralLink) ?>"><img width="75%" src="<?= base_url('qr_code?url=' . $referralLink) ?>"></a>
-                  
                 </div>
               </div>
               <div class="modal-footer">
