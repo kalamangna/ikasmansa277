@@ -17,17 +17,17 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="<?php echo base_url("images/logo_ika.ico"); ?>" />
+  <meta property="og:url" content="<?php echo base_url(); ?>" />
   <meta property="og:title" content="Halaman Dalam Pengembangan" />
   <meta property="og:description" content="" />
-  <meta property="og:image" content="<?php echo base_url("images/logo_ika.png"); ?>" />
+  <meta property="og:image" content="<?php echo base_url("meta.jpeg"); ?>" />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="<?php echo base_url(); ?>" />
   <meta property="twitter:title" content="Halaman Dalam Pengembangan" />
   <meta property="twitter:description" content="" />
-  <meta property="twitter:image" content="<?php echo base_url("images/logo_ika.png"); ?>" />
+  <meta property="twitter:image" content="<?php echo base_url("meta.jpeg"); ?>" />
 
   <!-- Meta Tags Generated with https://metatags.io -->
 
