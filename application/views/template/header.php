@@ -9,11 +9,43 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <title>Halaman Dalam Pengembangan</title>
+  <meta name="title" content="Halaman Dalam Pengembangan" />
+  <meta name="description" content="" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="<?php echo base_url("images/logo_ika.ico"); ?>" />
+  <meta property="og:title" content="Halaman Dalam Pengembangan" />
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="<?php echo base_url("images/logo_ika.png"); ?>" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="<?php echo base_url(); ?>" />
+  <meta property="twitter:title" content="Halaman Dalam Pengembangan" />
+  <meta property="twitter:description" content="" />
+  <meta property="twitter:image" content="<?php echo base_url("images/logo_ika.png"); ?>" />
+
+  <!-- Meta Tags Generated with https://metatags.io -->
+
+
+
+
+
+
   <link rel="shortcut icon" href="<?php echo base_url("images/logo_ika.ico"); ?>" type="image/x-icon">
 
   <title>IKA SMANSA / 277 Sinjai</title>
   <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css'); ?>">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /> -->
+  <link rel="stylesheet" href="<?php echo base_url('assets/fontawesome-free/css/all.min.css')?>">  
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="<?= base_url('assets/css/sb-admin-2.min.css') ?>">
+
 
   <script>
     function copyLink(link) {
@@ -23,6 +55,8 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+
 </head>
 
 <body>
@@ -84,7 +118,7 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
                 Halo, <?php echo $this->session->userdata('nama_lengkap'); ?>
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="<?php echo site_url('alumni/detail/' . $this->session->userdata('id_alumni')); ?>">Profil User</a>
+                <a class="dropdown-item" href="<?php echo site_url('alumni/detail/' . $this->session->userdata('id_alumni')); ?>"><i class="fa fa-link"></i> Profil User</a>
                 <a class="dropdown-item" href="<?php echo site_url('auth/logout'); ?>">Logout</a>
                 <!-- <a class="dropdown-item" href="<?php echo site_url('auth/logout'); ?>">Logout</a> -->
               </div>
@@ -136,7 +170,7 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
                 <p><strong>Undang via WhatsApp:</strong></p>
                 <div class="input-group mb-3">
                   <a href="<?php echo $whatsappLink; ?>" target="_blank" rel="noopener" class="btn btn-success">
-                    <i class="fa fa-whatsapp"></i> Kirim Undangan WhatsApp
+                    <i class="fab fa-whatsapp"></i> Kirim Undangan WhatsApp
                   </a>
                 </div>
                 <div class="text-center mb-3">
@@ -144,7 +178,7 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
                 </div>
               </div>
               <div class="modal-footer">
-                <a href="<?php echo $referralLink; ?>" class="btn btn-primary">Buka Link</a>
+                <a href="<?php echo $referralLink; ?>" class="btn btn-primary"><i class="fa fa-link"></i> Buka Link</a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
               </div>
             </div>
