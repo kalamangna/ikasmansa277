@@ -68,6 +68,15 @@
   </script>
 <?php endif; ?>
 
+<?php 
+    $hidden_counter = isset($hidden_counter) ? $hidden_counter : false;
+    if ($hidden_counter==false) {
+        $this->Counter_model->track_visit();
+    }
+
+?>
+
+
 </body>
 
 </html>

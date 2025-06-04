@@ -7,4 +7,4 @@ $autoload['drivers'] = array();
 $autoload['helper'] = array('url','form','html', 'text','security');
 $autoload['config'] = array();
 $autoload['language'] = array();
-$autoload['model'] = array('Alumni_model','User_model','Page_model','News_model','Alumni_foto_model');
+$autoload['model'] = array('Alumni_model','User_model','Page_model','News_model','Alumni_foto_model', 'Counter_model');

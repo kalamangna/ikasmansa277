@@ -27,7 +27,7 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
               Edit
             </a>
           <?php else: ?>
-            <h3>Detail Alumni</h3>
+            <!-- <h3>Detail Alumni</h3> -->
           <?php endif; ?>
         </div>
 
@@ -178,8 +178,63 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
             }
             ?>
           </div>
+        <!-- Card Data User -->
 
         <?php endif; ?>
+
+
+        <div class="mb-3">
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#undangModal">
+                <i class="fa fa-link"></i> Undang Teman Alumni
+              </button>
+          </div>
+        </div>
+
+
+  <!-- Modal undang teman -->
+      <div class="mb-3">
+        <div class="modal fade" id="undangModal" tabindex="-1" aria-labelledby="referralModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="referralModalLabel">Link & Undangan WhatsApp</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+              </div>
+              <div class="modal-body">
+                <?php
+                $referralLink = base_url('alumni/create?ut=' . $alumni->referral);
+                $whatsappMessage = urlencode($referralLink);
+                $whatsappLink = "https://wa.me/?text=" . $whatsappMessage;
+                ?>
+
+                <p><strong>Link Pendataan Alumni :</strong></p>
+                <div class="input-group mb-3">
+                  <code class="form-control" id="referralLink"><?php echo $referralLink; ?></code>
+                  <button onclick="copyLink('<?php echo htmlspecialchars($referralLink, ENT_QUOTES); ?>')">
+                    <i class="fa fa-copy"></i>
+                  </button>
+                </div>
+
+                <p><strong>Undang via WhatsApp:</strong></p>
+                <div class="input-group mb-3">
+                  <a href="<?php echo $whatsappLink; ?>" target="_blank" rel="noopener" class="btn btn-success">
+                    <i class="fab fa-whatsapp"></i> Kirim Undangan WhatsApp
+                  </a>
+                </div>
+                <div class="text-center mb-3">
+                  <a href="<?= base_url('qr_code?url=' . $referralLink) ?>"><img width="75%" src="<?= base_url('qr_code?url=' . $referralLink) ?>"></a>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <a href="<?php echo $referralLink; ?>" class="btn btn-primary"><i class="fa fa-link"></i> Buka Link</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
 
         <!-- Modal link -->
