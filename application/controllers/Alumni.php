@@ -82,13 +82,6 @@ class Alumni extends CI_Controller {
 
     public function save() {
         $post = $this->input->post();
-        
-        // Check email exists
-
-
-
-
-
 
         $email = $this->input->post('email', true);
         $existing = $this->db->get_where('users', ['email' => $email])->row();

@@ -45,7 +45,7 @@
           <h4>Data Pribadi</h4>
 
           <div class="mb-3">
-            <label for="nama_lengkap" class="form-label">Nama Lengkap (sertakan gelar akademik jika ada)</label>
+            <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
             <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" required>
           </div>
 
