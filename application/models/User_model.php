@@ -20,12 +20,58 @@ class User_model extends CI_Model {
     }
 
     public function update_user($id, $data) {
-
-
         $this->db->where('alumni_id', $id);
         return $this->db->update('users', $data);
     }
     
+    public function get_user($email) {
 
+        // $alumni = $this->db->get_where('alumni', ['id_alumni' => $id])->row();
+
+
+        // if ($alumni && empty($alumni->referral)) {
+        //     // Generate kode referral baru
+        //     $referral_code = $this->generateReferralCode($alumni->id_alumni);
+        //     // Update kolom referral di database
+        //     $this->db->where('id_alumni', $alumni->id_alumni);
+        //     $this->db->update('alumni', ['referral' => $referral_code]);
+        //     // Update objek alumni agar kode referral terbaru tersedia
+        //     $alumni->referral = $referral_code;
+        // }
+
+        $this->db->select('users.*, roles.nama_role as role');
+        $this->db->join('roles', 'roles.id_role = users.role_id', 'left');
+        $this->db->from('users');
+        $this->db->where('users.email', $email);
+        return $this->db->get()->row();
+    }   
+    public function get_user_all($email) {
+
+        // $alumni = $this->db->get_where('alumni', ['id_alumni' => $id])->row();
+
+
+        // if ($alumni && empty($alumni->referral)) {
+        //     // Generate kode referral baru
+        //     $referral_code = $this->generateReferralCode($alumni->id_alumni);
+        //     // Update kolom referral di database
+        //     $this->db->where('id_alumni', $alumni->id_alumni);
+        //     $this->db->update('alumni', ['referral' => $referral_code]);
+        //     // Update objek alumni agar kode referral terbaru tersedia
+        //     $alumni->referral = $referral_code;
+        // }
+
+        $this->db->select('users.*, roles.nama_role as role, alumni.*, pendidikan.angkatan, pendidikan.jurusan, pekerjaan.nama_perusahaan, pekerjaan.id_pekerjaan, ref_pekerjaan.id_ref_pekerjaan, pekerjaan.jabatan, ref_pekerjaan.nama_pekerjaan, pekerjaan.alamat_kantor, keterangan_tambahan.bergabung_komunitas, keterangan_tambahan.partisipasi_kegiatan, keterangan_tambahan.saran_masukan, provinsi.nama_provinsi as provinsi, kabupaten.nama_kabupaten as kabupaten');
+        $this->db->from('users');
+        $this->db->join('roles', 'roles.id_role = users.role_id', 'left');
+        $this->db->join('alumni', 'users.alumni_id = alumni.id_alumni', 'left');
+        $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni', 'left');
+        $this->db->join('pekerjaan', 'pekerjaan.alumni_id = alumni.id_alumni', 'left');
+        $this->db->join('ref_pekerjaan', 'ref_pekerjaan.id_ref_pekerjaan = pekerjaan.id_ref_pekerjaan', 'left');
+        $this->db->join('keterangan_tambahan', 'keterangan_tambahan.alumni_id = alumni.id_alumni', 'left');
+        $this->db->join('provinsi', 'alumni.provinsi_id = provinsi.id_provinsi');
+        $this->db->join('kabupaten', 'alumni.kabupaten_id = kabupaten.id_kabupaten');        
+        $this->db->where('users.email', $email);
+        return $this->db->get()->row();
+    }
     
 }

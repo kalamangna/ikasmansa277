@@ -21,6 +21,23 @@ class Dashboard_model extends CI_Model {
         $query = $this->db->get('pendidikan');
         return $query->row()->total_angkatan;
     }
+
+        // Ambil alumni tercepat
+    public function get_alumni_faster()
+    {
+        $this->db->select('alumni.*, pendidikan.angkatan, pendidikan.jurusan, provinsi.nama_provinsi as provinsi, kabupaten.nama_kabupaten as kabupaten');
+        $this->db->from('alumni');
+        $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
+        $this->db->join('provinsi', 'alumni.provinsi_id = provinsi.id_provinsi');
+        $this->db->join('kabupaten', 'alumni.kabupaten_id = kabupaten.id_kabupaten');        
+        // $this->db->where('pendidikan.angkatan', $angkatan);
+        $this->db->limit(10);
+        $this->db->order_by('alumni.created_at', 'ASC');
+        $this->db->order_by('alumni.id_alumni', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }        
+
     // Menghitung jumlah alumni per angkatan
     public function getAlumniCountByAngkatan() {
         $this->db->select('angkatan as angkatan, COUNT(*) as jumlah_alumni');

@@ -33,79 +33,22 @@ class Alumni_model extends CI_Model {
         $hash = substr(strtoupper(md5($raw)), 0, 8); // 8 karakter kode referral
         return $hash;
     }
-    // Insert data alumni sekaligus user
-    // public function insert_alumni_user($data) {
-    //     $this->db->trans_start();
 
-    //     // Simpan data alumni
-    //     $alumni_data = [
-    //         'nama_lengkap' => $data['nama_lengkap'],
-    //         'tempat_lahir' => $data['tempat_lahir'],
-    //         'tanggal_lahir' => $data['tanggal_lahir'],
-    //         'jenis_kelamin' => $data['jenis_kelamin'],
-    //         'nama_panggilan' => $data['nama_panggilan'],            
-    //         'alamat_domisili' => $data['alamat_domisili'],
-    //         'provinsi_id' => $data['provinsi_id'],
-    //         'kabupaten_id' => $data['kabupaten_id'],
-    //         'no_telepon' => $data['no_telepon'],
-    //         // 'email' => $data['email'],
-    //         'referred_by' => isset($data['referred_by']) ? $data['referred_by'] : null
+// public function get_alumni($id_alumni) {
+//     $this->db->where('id_alumni', $id_alumni);
+//     $query = $this->db->get('alumni');
+//     return $query->row();
+// }
 
-    //     ];
-    //     $this->db->insert('alumni', $alumni_data);
-    //     $alumni_id = $this->db->insert_id();
-
-    //     // Simpan data pendidikan
-    //     $pendidikan_data = [
-    //         'alumni_id' => $alumni_id,
-    //         'angkatan' => $data['angkatan'],
-    //         'jurusan' => $data['jurusan']
-    //     ];
-    //     $this->db->insert('pendidikan', $pendidikan_data);
-
-    //     // Simpan data pekerjaan
-    //     $pekerjaan_data = [
-    //         'alumni_id' => $alumni_id,
-    //         'id_ref_pekerjaan' => $data['id_ref_pekerjaan'],
-    //         'nama_perusahaan' => $data['nama_perusahaan'],
-    //         'jabatan' => $data['jabatan'],
-    //         'alamat_kantor' => $data['alamat_kantor']
-    //     ];
-    //     $this->db->insert('pekerjaan', $pekerjaan_data);
-
-    //     // Simpan keterangan tambahan
-    //     $keterangan_data = [
-    //         'alumni_id' => $alumni_id,
-    //         'bergabung_komunitas' => isset($data['bergabung_komunitas']) ? 1 : 0,
-    //         'partisipasi_kegiatan' => isset($data['partisipasi_kegiatan']) ? 1 : 0,
-    //         'saran_masukan' => $data['saran_masukan']
-    //     ];
-    //     $this->db->insert('keterangan_tambahan', $keterangan_data);
-
-
-    //     // Simpan data user untuk login
-    //     $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
-    //     $user_data = [
-    //         'email' => $data['email'],
-    //         'password_hash' => $password_hash,
-    //         'role_id' => 5, // misal 5 = alumni
-    //         'alumni_id' => $alumni_id
-    //     ];
-    //     $this->db->insert('users', $user_data);
-
-    //     $this->db->trans_complete();
-
-    //     if ($this->db->trans_status() === FALSE) {
-    //         return false;
-    //     } else {
-    //         return $alumni_id;
-    //     }
-    // }
+public function update_alumni($id_alumni, $data) {
+    $this->db->where('id_alumni', $id_alumni);
+    return $this->db->update('alumni', $data);
+}
 
 public function insert_alumni_user($data) {
     $this->db->trans_start();
 
-    // Simpan data alumni
+    // Simpan data alumni - ADD foto_path HERE
     $alumni_data = [
         'nama_lengkap' => $data['nama_lengkap'],
         'tempat_lahir' => $data['tempat_lahir'],
@@ -116,55 +59,12 @@ public function insert_alumni_user($data) {
         'provinsi_id' => $data['provinsi_id'],
         'kabupaten_id' => $data['kabupaten_id'],
         'no_telepon' => $data['no_telepon'],
-        // 'email' => $data['email'],
+        'foto_profil' => isset($data['foto_profil']) ? $data['foto_profil'] : null, // Add this line
         'referred_by' => isset($data['referred_by']) ? $data['referred_by'] : null
     ];
     $this->db->insert('alumni', $alumni_data);
     $alumni_id = $this->db->insert_id();
 
-    // echo "$alumni_id"; die();
-    // Upload dan validasi foto
-
-    
-    // if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
-    //     $config['upload_path'] =  FCPATH . 'uploads/foto_alumni/';
-    //     $config['allowed_types'] = 'jpg|jpeg|png';
-    //     $config['max_size'] = 1024; // 1MB
-    //     $config['encrypt_name'] = TRUE;
-
-    //     // if (!is_dir($config['upload_path'])) {
-    //     //     mkdir($config['upload_path'], 0755, true);
-    //     // }
-
-    //     $this->load->library('upload', $config);
-
-    //     if (!$this->upload->do_upload('foto')) {
-    //         // Jika gagal upload, batalkan transaksi dan return error
-    //         $this->db->trans_rollback();
-    //         return ['error' => $this->upload->display_errors()];
-    //     }
-
-    //     $upload_data = $this->upload->data();
-    //     $image_path = $upload_data['full_path'];
-
-    //     // Cek dimensi foto potrait
-    //     list($width, $height) = getimagesize($image_path);
-    //     if ($height <= $width) {
-    //         // Bukan potrait, hapus file dan batalkan transaksi
-    //         unlink($image_path);
-    //         $this->db->trans_rollback();
-    //         return ['error' => 'Foto harus berbentuk potrait (tinggi lebih besar dari lebar).'];
-    //     }
-
-    //     // Simpan nama file foto ke tabel alumni_foto
-    //     $foto_data = [
-    //         'id_alumni' => $alumni_id,
-    //         'nama_file' => $upload_data['file_name']
-    //     ];
-    //     $this->db->insert('alumni_foto', $foto_data);
-    // }
-
-    // Simpan data pendidikan
     $pendidikan_data = [
         'alumni_id' => $alumni_id,
         'angkatan' => $data['angkatan'],
@@ -209,6 +109,73 @@ public function insert_alumni_user($data) {
         return $alumni_id;
     }
 }
+
+
+
+// public function insert_alumni_user($data) {
+//     $this->db->trans_start();
+
+//     // Simpan data alumni
+//     $alumni_data = [
+//         'nama_lengkap' => $data['nama_lengkap'],
+//         'tempat_lahir' => $data['tempat_lahir'],
+//         'tanggal_lahir' => $data['tanggal_lahir'],
+//         'jenis_kelamin' => $data['jenis_kelamin'],
+//         'nama_panggilan' => $data['nama_panggilan'],            
+//         'alamat_domisili' => $data['alamat_domisili'],
+//         'provinsi_id' => $data['provinsi_id'],
+//         'kabupaten_id' => $data['kabupaten_id'],
+//         'no_telepon' => $data['no_telepon'],
+//         // 'email' => $data['email'],
+//         'referred_by' => isset($data['referred_by']) ? $data['referred_by'] : null
+//     ];
+//     $this->db->insert('alumni', $alumni_data);
+//     $alumni_id = $this->db->insert_id();
+
+//     $pendidikan_data = [
+//         'alumni_id' => $alumni_id,
+//         'angkatan' => $data['angkatan'],
+//         'jurusan' => $data['jurusan']
+//     ];
+//     $this->db->insert('pendidikan', $pendidikan_data);
+
+//     // Simpan data pekerjaan
+//     $pekerjaan_data = [
+//         'alumni_id' => $alumni_id,
+//         'id_ref_pekerjaan' => $data['id_ref_pekerjaan'],
+//         'nama_perusahaan' => $data['nama_perusahaan'],
+//         'jabatan' => $data['jabatan'],
+//         'alamat_kantor' => $data['alamat_kantor']
+//     ];
+//     $this->db->insert('pekerjaan', $pekerjaan_data);
+
+//     // Simpan keterangan tambahan
+//     $keterangan_data = [
+//         'alumni_id' => $alumni_id,
+//         'bergabung_komunitas' => isset($data['bergabung_komunitas']) ? 1 : 0,
+//         'partisipasi_kegiatan' => isset($data['partisipasi_kegiatan']) ? 1 : 0,
+//         'saran_masukan' => $data['saran_masukan']
+//     ];
+//     $this->db->insert('keterangan_tambahan', $keterangan_data);
+
+//     // Simpan data user untuk login
+//     $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
+//     $user_data = [
+//         'email' => $data['email'],
+//         'password_hash' => $password_hash,
+//         'role_id' => 5, // misal 5 = alumni
+//         'alumni_id' => $alumni_id
+//     ];
+//     $this->db->insert('users', $user_data);
+
+//     $this->db->trans_complete();
+
+//     if ($this->db->trans_status() === FALSE) {
+//         return false;
+//     } else {
+//         return $alumni_id;
+//     }
+// }
    
 
 
@@ -255,6 +222,7 @@ public function insert_alumni_user($data) {
         $query = $this->db->get();
         return $query->result_array();
     }
+
         // Ambil alumni berdasarkan angkatan
     public function get_alumni_by_angkatan($angkatan)
     {

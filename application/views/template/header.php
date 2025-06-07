@@ -12,30 +12,24 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
 
   <!-- Primary Meta Tags -->
   <title>IKA SMANSA / 277 Sinjai</title>
-  <meta name="title" content="IKA SMANSA / 277 Sinjai" />
+  <meta name="title" content="IKA SMANSA / 277 Sinjai  - Pendataan Alumni" />
   <meta name="description" content="" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="<?php echo base_url(); ?>" />
-  <meta property="og:title" content="IKA SMANSA / 277 Sinjai" />
+  <meta property="og:title" content="IKA SMANSA / 277 Sinjai - Pendataan Alumni" />
   <meta property="og:description" content="" />
   <meta property="og:image" content="<?php echo base_url("meta.jpeg"); ?>" />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="<?php echo base_url(); ?>" />
-  <meta property="twitter:title" content="IKA SMANSA / 277 Sinjai" />
+  <meta property="twitter:title" content="IKA SMANSA / 277 Sinjai - Pendataan Alumni" />
   <meta property="twitter:description" content="" />
   <meta property="twitter:image" content="<?php echo base_url("meta.jpeg"); ?>" />
 
   <!-- Meta Tags Generated with https://metatags.io -->
-
-
-
-
-
-
   <link rel="shortcut icon" href="<?php echo base_url("images/logo_ika.ico"); ?>" type="image/x-icon">
 
   <title>IKA SMANSA / 277 Sinjai</title>
@@ -81,37 +75,25 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
           <li class="nav-item">
             <a class="nav-link" href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
           </li>
-          <?php if ($is_logged_in): ?>
+          <?php if ($is_logged_in AND !empty($this->session->userdata('referral'))): ?>
             <li class="nav-item">
               <a class="nav-link" href="<?php echo site_url('alumni'); ?>">Data Alumni</a>
             </li>
           <?php endif; ?>
 
-          <!--     <?php if ($is_logged_in and $is_admin) : ?>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="ikaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          IKA Alumni
-        </a>
-        <div class="dropdown-menu" aria-labelledby="ikaDropdown">
-          <a class="dropdown-item" href="<?php echo site_url('ika/profil'); ?>">Profil IKA</a>
-          <a class="dropdown-item" href="<?php echo site_url('ika/kegiatan'); ?>">Kegiatan</a>
-          <a class="dropdown-item" href="<?php echo site_url('ika/berita'); ?>">Berita IKA</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="<?php echo site_url('ika/kontak'); ?>">Kontak</a>
-        </div>
-      </li>
-    <?php endif; ?>
- -->
+
         </ul>
 
         <!-- Menu login/logout di sebelah kanan -->
         <ul class="navbar-nav ml-auto">
           <?php if ($is_logged_in): ?>
-            <div class="d-flex justify-content-end">
-              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#referralModal">
-                <i class="fa fa-link"></i> Undang Teman Alumni
-              </button>
-            </div>
+            <?php if (!empty($this->session->userdata('referral'))): ?>
+              <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#referralModal">
+                  <i class="fa fa-link"></i> Undang Teman Alumni
+                </button>
+              </div>
+            <?php endif; ?>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">

@@ -80,3 +80,9 @@
 </body>
 
 </html>
+
+
+<?php 
+// $upload_path = FCPATH . 'pendataan_alumni/uploads/alumni/';
+// echo $upload_path;die();
+?>

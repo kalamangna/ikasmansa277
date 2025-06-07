@@ -3,36 +3,45 @@
 <div class="row g-4 mb-4">
   <div class="col-6 col-lg-3">
     <div class="card shadow">
-      <div class="card-header">Jumlah Alumni</div>
+      <div class="card-header"><i class="fas fa-users text-success me-2 "></i> Jumlah Alumni</div>
       <div class="card-body">
-        <p class="d-flex display-6 fw-bold justify-content-end"><?php echo $total_alumni; ?></p>
+        <p class="d-flex display-6 fw-bold justify-content-end">
+          <?php echo $total_alumni; ?>
+            
+          </p>
+<!--         <p class="d-flex justify-content-end mb-0">
+        </p>
+ -->      </div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="card shadow">
+      <div class="card-header"><i class="fa fa-graduation-cap text-warning"></i> Jumlah Angkatan</div>
+      <div class="card-body">
+        <p class="d-flex display-6 fw-bold justify-content-end">
+          <?php echo $total_angkatan; ?></p>
       </div>
     </div>
   </div>
 
   <div class="col-6 col-lg-3">
     <div class="card shadow">
-      <div class="card-header">Jumlah Angkatan</div>
+      <div class="card-header"><i class="fas fa-male text-primary me-1"></i> Jumlah Laki-laki</div>
       <div class="card-body">
-        <p class="d-flex display-6 fw-bold justify-content-end"><?php echo $total_angkatan; ?></p>
+        <p class="d-flex display-6 fw-bold justify-content-end">
+          <?php echo $gender_total->total_laki_laki; ?>
+        </p>
       </div>
     </div>
   </div>
 
   <div class="col-6 col-lg-3">
     <div class="card shadow">
-      <div class="card-header">Jumlah Laki-laki</div>
+      <div class="card-header"><i class="fas fa-female text-danger ms-1 me-1"></i> Jumlah Perempuan</div>
       <div class="card-body">
-        <p class="d-flex display-6 fw-bold justify-content-end"><?php echo $gender_total->total_laki_laki; ?></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-6 col-lg-3">
-    <div class="card shadow">
-      <div class="card-header">Jumlah Perempuan</div>
-      <div class="card-body">
-        <p class="d-flex display-6 fw-bold justify-content-end"><?php echo $gender_total->total_perempuan; ?></p>
+        <p class="d-flex display-6 fw-bold justify-content-end">
+          <?php echo $gender_total->total_perempuan; ?> 
+        </p>
       </div>
     </div>
   </div>
@@ -56,6 +65,31 @@
   </div>
 
   <div class="col-md-6">
+    <div class="card shadow mb-3">
+      <div class="card-header">Pendata Tercepat</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped text-nowrap align-middle">
+            <thead>
+              <tr>
+                <th class="text-center">No.</th>
+                <th class="text-center">Nama / Angkatan</th>
+                <th class="text-center">Waktu</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $urut=1; foreach ($alumni_tercepat as $row): ?>
+                <tr>
+                  <td class="text-center"><?=$urut++?></td>
+                  <td class="text-left"><?php echo htmlspecialchars($row->nama_lengkap); ?> / <?php echo htmlspecialchars($row->angkatan); ?></td>
+                  <td class="text-center"><?php echo htmlspecialchars($row->created_at); ?></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
     <div class="card shadow mb-3">
       <div class="card-header">Domisili Alumni</div>
       <div class="card-body">
@@ -242,3 +276,31 @@
     plugins: [ChartDataLabels] // Aktifkan plugin
   });
 </script>
+
+
+<?php if(isset($menit_reload) && is_numeric($menit_reload) && $menit_reload > 0): ?>
+    <div class="reload-info" style="position: fixed; bottom: 10px; right: 10px; background: #f8f9fa; padding: 10px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 1000;">
+        <p>Halaman akan reload otomatis setiap <?php echo $menit_reload; ?> menit (<span id="countdown"><?php echo $menit_reload * 60; ?></span> detik)</p>
+    </div>
+
+    <script>
+        // Hitung mundur
+        let timeLeft = <?php echo $menit_reload * 60; ?>;
+        const countdownElement = document.getElementById('countdown');
+        
+        const countdownInterval = setInterval(() => {
+            timeLeft--;
+            countdownElement.textContent = timeLeft;
+            
+            if(timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                window.location.reload();
+            }
+        }, 1000);
+
+        // Reload halaman setelah X menit
+        setTimeout(function(){
+            window.location.reload();
+        }, <?php echo $menit_reload * 60 * 1000; ?>);
+    </script>
+<?php endif; ?>

@@ -20,18 +20,23 @@ class Auth extends CI_Controller {
             if($user) {
                 // Simpan data user ke session
 
-                $alumni = $this->Alumni_model->get_alumni($user->alumni_id);
+                $user = $this->User_model->get_user($email);
+
+                $userx = $this->User_model->get_user_all($email);
 
                 $this->session->set_userdata('logged_in', 1);
-                $this->session->set_userdata('id_alumni', $alumni->id_alumni);
-                $this->session->set_userdata('nama_lengkap', $alumni->nama_lengkap);
-                $this->session->set_userdata('angkatan', $alumni->angkatan);
-                $this->session->set_userdata('referral', $alumni->referral);
+                $this->session->set_userdata('role_id', $user->role_id);
+                $this->session->set_userdata('role', $user->role);
                 $this->session->set_userdata('user_id', $user->id_user);
                 $this->session->set_userdata('email', $user->email);
-                $this->session->set_userdata('role_id', $alumni->role_id);
-                $this->session->set_userdata('role', $alumni->role);
 
+                if (!empty($userx->id_alumni)) {
+                    $this->session->set_userdata('id_alumni', $userx->id_alumni);
+                    $this->session->set_userdata('nama_lengkap', $userx->nama_lengkap);
+                    $this->session->set_userdata('angkatan', $userx->angkatan);
+                    $this->session->set_userdata('referral', $userx->referral);
+                }
+                // print_r($this->session->userdata()); die();
                 redirect('dashboard'); // Ganti dengan halaman setelah login
             } else {
                 $data['error'] = "Email atau password salah.";

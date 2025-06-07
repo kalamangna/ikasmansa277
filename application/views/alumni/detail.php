@@ -21,6 +21,58 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
         <h3 class="mb-0">Data Alumni</h3>
       </div>
       <div class="card-body">
+        <p>Terima kasih Anda telah mengisi pendataan alumni.</p>
+        <p>Anda adalah Alumni ke <strong><?php echo $urutan_angkatan; ?></strong> dari angkatan <strong><?php echo $alumni->angkatan; ?></strong> yang telah melakukan pendataan.</p>
+        <p>Anda adalah Alumni ke <strong><?php echo $urutan_alumni; ?></strong> dari total <strong><?php echo $total_alumni; ?></strong> yang telah melakukan pendataan.</p>
+
+
+        
+        <!-- Foto Profil Section -->
+        <div class="text-center mb-4">
+          <div class="profile-photo-container" style="width: 150px; height: 150px; margin: 0 auto; border-radius: 50%; overflow: hidden; border: 3px solid #f0f0f0;">
+            <?php if(!empty($alumni->foto_profil)): ?>
+              <img src="<?= base_url('uploads/foto_alumni/'.$alumni->foto_profil) ?>" alt="Foto Profil" style="width: 100%; height: 100%; object-fit: cover;">
+            <?php else: ?>
+              <div style="width: 100%; height: 100%; background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-user" style="font-size: 60px; color: #777;"></i>
+              </div>
+            <?php endif; ?>
+          </div>
+          
+          <?php if ($show_edit): ?>
+            <div class="mt-3">
+              <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#uploadPhotoModal">
+                <i class="fas fa-camera"></i> Ganti Foto
+              </button>
+            </div>
+          <?php endif; ?>
+        </div>
+        
+        <!-- Modal Upload Foto -->
+        <div class="modal fade" id="uploadPhotoModal" tabindex="-1" aria-labelledby="uploadPhotoModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <form action="<?= site_url('alumni/upload_photo/'.$alumni->id_alumni) ?>" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="uploadPhotoModalLabel">Unggah Foto Profil</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label for="foto_profil" class="form-label">Pilih Foto</label>
+                    <input class="form-control" type="file" id="foto_profil" name="foto_profil" accept="image/*" required>
+                    <small class="text-muted">Format: JPG/PNG, Maksimal 2MB</small>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                  <button type="submit" class="btn btn-primary">Unggah</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
         <div class="d-flex justify-content-end align-items-center mb-3">
           <?php if ($show_edit): ?>
             <a href="<?= site_url('alumni/edit/' . $alumni->id_alumni) ?>" class="btn btn-secondary">
@@ -30,19 +82,6 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
             <!-- <h3>Detail Alumni</h3> -->
           <?php endif; ?>
         </div>
-
-        <!-- 
-        <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#referralModal">
-            <i class="fa fa-link"></i> Undang Teman Alumni 
-          </button>
-        </div>
-            -->
-        <!-- <h3>Detail Data Alumni</h3> -->
-
-        <p>Terima kasih Anda telah mengisi pendataan alumni.</p>
-        <p>Anda adalah Alumni ke <strong><?php echo $urutan_angkatan; ?></strong> dari angkatan <strong><?php echo $alumni->angkatan; ?></strong> yang telah melakukan pendataan.</p>
-        <p>Anda adalah Alumni ke <strong><?php echo $urutan_alumni; ?></strong> dari total <strong><?php echo $total_alumni; ?></strong> yang telah melakukan pendataan.</p>
 
         <!-- Card Data Pribadi -->
         <div class="card mb-3">
@@ -70,13 +109,6 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
               <div class="col-md-4 fw-bold">Jenis Kelamin</div>
               <div class="col-md-8"><?php echo htmlspecialchars($alumni->jenis_kelamin); ?></div>
             </div>
-
-            <!-- <p><strong>Nama Lengkap:</strong> <?php echo htmlspecialchars($alumni->nama_lengkap); ?></p>
-            <p><strong>Tempat, Tanggal Lahir:</strong> <?php echo htmlspecialchars($alumni->tempat_lahir . ', ' . $this->Alumni_model->formatTanggalIndo($alumni->tanggal_lahir)); ?></p>
-            <p><strong>Angkatan:</strong> <?php echo htmlspecialchars($alumni->angkatan); ?></p> -->
-            <!-- Tambahkan data pribadi lain sesuai kebutuhan -->
-            <!-- <p><strong>Nama Panggilan:</strong> <?php echo htmlspecialchars($alumni->nama_panggilan); ?></p>
-            <p><strong>Jenis Kelamin:</strong> <?php echo htmlspecialchars($alumni->jenis_kelamin); ?></p> -->
           </div>
         </div>
 
@@ -98,11 +130,6 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
               <div class="col-md-4 fw-bold">Jabatan</div>
               <div class="col-md-8"><?php echo htmlspecialchars($alumni->jabatan); ?></div>
             </div>
-
-            <!-- <p><strong>Nama Pekerjaan:</strong> <?php echo htmlspecialchars($alumni->nama_pekerjaan); ?></p>
-            <p><strong>Nama Perusahaan:</strong> <?php echo htmlspecialchars($alumni->nama_perusahaan); ?></p>
-            <p><strong>Jabatan:</strong> <?php echo htmlspecialchars($alumni->jabatan); ?></p> -->
-            <!-- Tambahkan data pekerjaan lain sesuai kebutuhan -->
           </div>
         </div>
 
@@ -124,13 +151,8 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
               <div class="col-md-4 fw-bold">Kabupaten</div>
               <div class="col-md-8"><?php echo htmlspecialchars($alumni->kabupaten); ?></div>
             </div>
-
-            <!-- <p><strong>Alamat Domisili:</strong> <?php echo htmlspecialchars($alumni->alamat_domisili); ?></p>
-            <p><strong>Provinsi:</strong> <?php echo htmlspecialchars($alumni->provinsi); ?></p>
-            <p><strong>Kabupaten:</strong> <?php echo htmlspecialchars($alumni->kabupaten); ?></p> -->
           </div>
         </div>
-
 
         <!-- Card Data User -->
         <div class="card mb-3">
@@ -155,12 +177,8 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
               <div class="col-md-4 fw-bold">Role</div>
               <div class="col-md-8"><?php echo htmlspecialchars($alumni->role); ?></div>
             </div>
-
-            <!-- <p><strong>Email:</strong> <?php echo htmlspecialchars($alumni->email); ?></p>
-            <p><strong>Role:</strong> <?php echo htmlspecialchars($alumni->role); ?></p> -->
           </div>
         </div>
-
 
         <!-- Jumlah referral -->
         <?php if (count($get_alumni_by_referred_by) > 0): ?>
@@ -178,10 +196,7 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
             }
             ?>
           </div>
-        <!-- Card Data User -->
-
         <?php endif; ?>
-
 
         <div class="mb-3">
             <div class="d-flex justify-content-end">
@@ -191,51 +206,48 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
           </div>
         </div>
 
-
-  <!-- Modal undang teman -->
-      <div class="mb-3">
-        <div class="modal fade" id="undangModal" tabindex="-1" aria-labelledby="referralModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="referralModalLabel">Link & Undangan WhatsApp</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-              </div>
-              <div class="modal-body">
-                <?php
-                $referralLink = base_url('alumni/create?ut=' . $alumni->referral);
-                $whatsappMessage = urlencode($referralLink);
-                $whatsappLink = "https://wa.me/?text=" . $whatsappMessage;
-                ?>
-
-                <p><strong>Link Pendataan Alumni :</strong></p>
-                <div class="input-group mb-3">
-                  <code class="form-control" id="referralLink"><?php echo $referralLink; ?></code>
-                  <button onclick="copyLink('<?php echo htmlspecialchars($referralLink, ENT_QUOTES); ?>')">
-                    <i class="fa fa-copy"></i>
-                  </button>
+        <!-- Modal undang teman -->
+        <div class="mb-3">
+          <div class="modal fade" id="undangModal" tabindex="-1" aria-labelledby="referralModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="referralModalLabel">Link & Undangan WhatsApp</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                 </div>
+                <div class="modal-body">
+                  <?php
+                  $referralLink = base_url('alumni/create?ut=' . $alumni->referral);
+                  $whatsappMessage = urlencode($referralLink);
+                  $whatsappLink = "https://wa.me/?text=" . $whatsappMessage;
+                  ?>
 
-                <p><strong>Undang via WhatsApp:</strong></p>
-                <div class="input-group mb-3">
-                  <a href="<?php echo $whatsappLink; ?>" target="_blank" rel="noopener" class="btn btn-success">
-                    <i class="fab fa-whatsapp"></i> Kirim Undangan WhatsApp
-                  </a>
+                  <p><strong>Link Pendataan Alumni :</strong></p>
+                  <div class="input-group mb-3">
+                    <code class="form-control" id="referralLink"><?php echo $referralLink; ?></code>
+                    <button onclick="copyLink('<?php echo htmlspecialchars($referralLink, ENT_QUOTES); ?>')">
+                      <i class="fa fa-copy"></i>
+                    </button>
+                  </div>
+
+                  <p><strong>Undang via WhatsApp:</strong></p>
+                  <div class="input-group mb-3">
+                    <a href="<?php echo $whatsappLink; ?>" target="_blank" rel="noopener" class="btn btn-success">
+                      <i class="fab fa-whatsapp"></i> Kirim Undangan WhatsApp
+                    </a>
+                  </div>
+                  <div class="text-center mb-3">
+                    <a href="<?= base_url('qr_code?url=' . $referralLink) ?>"><img width="75%" src="<?= base_url('qr_code?url=' . $referralLink) ?>"></a>
+                  </div>
                 </div>
-                <div class="text-center mb-3">
-                  <a href="<?= base_url('qr_code?url=' . $referralLink) ?>"><img width="75%" src="<?= base_url('qr_code?url=' . $referralLink) ?>"></a>
+                <div class="modal-footer">
+                  <a href="<?php echo $referralLink; ?>" class="btn btn-primary"><i class="fa fa-link"></i> Buka Link</a>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <a href="<?php echo $referralLink; ?>" class="btn btn-primary"><i class="fa fa-link"></i> Buka Link</a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-
 
         <!-- Modal link -->
         <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
@@ -276,9 +288,17 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   </div>
 </div>
+
+<script>
+function copyLink(link) {
+  navigator.clipboard.writeText(link).then(function() {
+    alert('Link berhasil disalin!');
+  }, function() {
+    alert('Gagal menyalin link');
+  });
+}
+</script>
