@@ -38,6 +38,22 @@ class Dashboard_model extends CI_Model {
         return $query->result();
     }        
 
+        // Ambil referral terbanyak
+    public function get_referred_rank()
+    {
+
+        $query = $this -> db -> query("
+            SELECT `alumni`.*, `pendidikan`.`angkatan`, 
+                (SELECT COUNT(A2.id_alumni) FROM alumni A2 WHERE A2.referred_by = alumni.id_alumni) AS ref_jumlah 
+            FROM `alumni` 
+            LEFT JOIN `pendidikan` ON `pendidikan`.`alumni_id` = `alumni`.`id_alumni` 
+            HAVING `ref_jumlah` > 0
+            ORDER BY `ref_jumlah` DESC 
+            LIMIT 10;
+                ");
+        return $query -> result();
+    }        
+
     // Menghitung jumlah alumni per angkatan
     public function getAlumniCountByAngkatan() {
         $this->db->select('angkatan as angkatan, COUNT(*) as jumlah_alumni');

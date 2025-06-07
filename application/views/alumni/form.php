@@ -112,7 +112,7 @@
               <div class="col-md-6">
                 <label for="angkatan" class="form-label">Angkatan (Tahun Lulus)</label>
                 <select name="angkatan" id="angkatan" class="form-select" required>
-                  <option value="">-- Pilih Tahun --</option>
+                  <option value="">-- Pilih Angkatan --</option>
                   <?php
                   $tahun_mulai = 1966;
                   $tahun_sekarang = date('Y');

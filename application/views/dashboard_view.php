@@ -56,12 +56,37 @@
       </div>
     </div>
 
-    <div class="card shadow">
+    <div class="card shadow mb-3">
       <div class="card-header">Jumlah Alumni per Jurusan</div>
       <div class="card-body">
         <canvas id="chartJurusan"></canvas>
       </div>
     </div>
+
+   <div class="card shadow mb-3">
+      <div class="card-header">Domisili Alumni</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped text-nowrap align-middle">
+            <thead>
+              <tr>
+                <th class="text-center">Kabupaten / Provinsi</th>
+                <th class="text-center">Jumlah</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($alumni_per_kabupaten as $row): ?>
+                <tr>
+                  <td class="text-left"><?php echo htmlspecialchars($row->nama_kabupaten); ?> - <?php echo htmlspecialchars($row->nama_provinsi); ?></td>
+                  <td class="text-center"><?php echo htmlspecialchars($row->total_alumni); ?></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="col-md-6">
@@ -90,21 +115,48 @@
         </div>
       </div>
     </div>
+
     <div class="card shadow mb-3">
-      <div class="card-header">Domisili Alumni</div>
+      <div class="card-header">Referral Terbanyak</div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-bordered table-striped text-nowrap align-middle">
             <thead>
               <tr>
-                <th class="text-center">Kabupaten / Provinsi</th>
+                <th class="text-center">No.</th>
+                <th class="text-center">Nama / Angkatan</th>
+                <th class="text-center">Jumlah Ref</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $urut=1; foreach ($get_referred_rank as $row): ?>
+                <tr>
+                  <td class="text-center"><?=$urut++?></td>
+                  <td class="text-left"><?php echo htmlspecialchars($row->nama_lengkap); ?> / <?php echo htmlspecialchars($row->angkatan); ?></td>
+                  <td class="text-center"><?php echo htmlspecialchars($row->ref_jumlah); ?></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="card shadow mb-3">
+      <div class="card-header">Pekerjaan Alumni</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped text-nowrap align-middle">
+            <thead>
+              <tr>
+                <th class="text-center">Pekerjaan</th>
                 <th class="text-center">Jumlah</th>
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($alumni_per_kabupaten as $row): ?>
+              <?php foreach ($alumni_per_pekerjaan as $row): ?>
                 <tr>
-                  <td class="text-left"><?php echo htmlspecialchars($row->nama_kabupaten); ?> - <?php echo htmlspecialchars($row->nama_provinsi); ?></td>
+                  <td><?php echo htmlspecialchars($row->nama_pekerjaan); ?></td>
                   <td class="text-center"><?php echo htmlspecialchars($row->total_alumni); ?></td>
                 </tr>
               <?php endforeach; ?>
@@ -113,7 +165,6 @@
         </div>
       </div>
     </div>
-
     <div class="card shadow mb-3">
       <div class="card-header">Jenis Kelamin Alumni</div>
       <div class="card-body">
@@ -142,29 +193,7 @@
       </div>
     </div>
 
-    <div class="card shadow">
-      <div class="card-header">Pekerjaan Alumni</div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped text-nowrap align-middle">
-            <thead>
-              <tr>
-                <th class="text-center">Pekerjaan</th>
-                <th class="text-center">Jumlah</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($alumni_per_pekerjaan as $row): ?>
-                <tr>
-                  <td><?php echo htmlspecialchars($row->nama_pekerjaan); ?></td>
-                  <td class="text-center"><?php echo htmlspecialchars($row->total_alumni); ?></td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+
   </div>
 </div>
 
