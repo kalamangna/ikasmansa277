@@ -121,7 +121,7 @@ class Alumni extends CI_Controller {
                 'upload_path'   => $upload_path,
                 'allowed_types' => 'gif|jpg|jpeg|png',
                 'max_size'      => 2048, // 2MB
-                'file_name'     => 'alumni_'.$post['id_alumni'].'_'.time(),
+                'file_name'     => 'alumni_'.$post['nama_lengkap'].'_'.time(),
                 'overwrite'     => false
             ];
             
