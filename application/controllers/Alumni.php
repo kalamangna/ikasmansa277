@@ -593,7 +593,7 @@ public function update_user($id_alumni) {
         $result = $this->Alumni_model->hapus_alumni($id);
         
         if ($result) {
-            $this->session->set_flashdata('success', 'Data alumni '.$alumni->nama.'dan semua data terkait berhasil dihapus.');
+            $this->session->set_flashdata('success', 'Data alumni '.$alumni->nama_lengkap.' dan semua data terkait berhasil dihapus.');
         } else {
             $this->session->set_flashdata('error', 'Gagal menghapus data alumni.');
         }
