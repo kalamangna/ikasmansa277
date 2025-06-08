@@ -34,12 +34,6 @@ class Alumni_model extends CI_Model {
         return $hash;
     }
 
-// public function get_alumni($id_alumni) {
-//     $this->db->where('id_alumni', $id_alumni);
-//     $query = $this->db->get('alumni');
-//     return $query->row();
-// }
-
 public function update_alumni($id_alumni, $data) {
     $this->db->where('id_alumni', $id_alumni);
     return $this->db->update('alumni', $data);
@@ -113,72 +107,6 @@ public function insert_alumni($data) {
         return $this->db->insert('users', $data);
     }   
 
-// public function insert_alumni_user($data) {
-//     $this->db->trans_start();
-
-//     // Simpan data alumni
-//     $alumni_data = [
-//         'nama_lengkap' => $data['nama_lengkap'],
-//         'tempat_lahir' => $data['tempat_lahir'],
-//         'tanggal_lahir' => $data['tanggal_lahir'],
-//         'jenis_kelamin' => $data['jenis_kelamin'],
-//         'nama_panggilan' => $data['nama_panggilan'],            
-//         'alamat_domisili' => $data['alamat_domisili'],
-//         'provinsi_id' => $data['provinsi_id'],
-//         'kabupaten_id' => $data['kabupaten_id'],
-//         'no_telepon' => $data['no_telepon'],
-//         // 'email' => $data['email'],
-//         'referred_by' => isset($data['referred_by']) ? $data['referred_by'] : null
-//     ];
-//     $this->db->insert('alumni', $alumni_data);
-//     $alumni_id = $this->db->insert_id();
-
-//     $pendidikan_data = [
-//         'alumni_id' => $alumni_id,
-//         'angkatan' => $data['angkatan'],
-//         'jurusan' => $data['jurusan']
-//     ];
-//     $this->db->insert('pendidikan', $pendidikan_data);
-
-//     // Simpan data pekerjaan
-//     $pekerjaan_data = [
-//         'alumni_id' => $alumni_id,
-//         'id_ref_pekerjaan' => $data['id_ref_pekerjaan'],
-//         'nama_perusahaan' => $data['nama_perusahaan'],
-//         'jabatan' => $data['jabatan'],
-//         'alamat_kantor' => $data['alamat_kantor']
-//     ];
-//     $this->db->insert('pekerjaan', $pekerjaan_data);
-
-//     // Simpan keterangan tambahan
-//     $keterangan_data = [
-//         'alumni_id' => $alumni_id,
-//         'bergabung_komunitas' => isset($data['bergabung_komunitas']) ? 1 : 0,
-//         'partisipasi_kegiatan' => isset($data['partisipasi_kegiatan']) ? 1 : 0,
-//         'saran_masukan' => $data['saran_masukan']
-//     ];
-//     $this->db->insert('keterangan_tambahan', $keterangan_data);
-
-//     // Simpan data user untuk login
-//     $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
-//     $user_data = [
-//         'email' => $data['email'],
-//         'password_hash' => $password_hash,
-//         'role_id' => 5, // misal 5 = alumni
-//         'alumni_id' => $alumni_id
-//     ];
-//     $this->db->insert('users', $user_data);
-
-//     $this->db->trans_complete();
-
-//     if ($this->db->trans_status() === FALSE) {
-//         return false;
-//     } else {
-//         return $alumni_id;
-//     }
-// }
-   
-
 
 
     public function get_alumni_by_referral($referral_code) {
@@ -225,9 +153,11 @@ public function insert_alumni($data) {
     }
 
         // Ambil alumni berdasarkan angkatan
-    public function get_alumni_by_angkatan($angkatan)
+    public function get_alumni_by_angkatan($angkatan) 
     {
-        $this->db->select('alumni.*, pendidikan.angkatan, pendidikan.jurusan, provinsi.nama_provinsi as provinsi, kabupaten.nama_kabupaten as kabupaten');
+        $this->db->select('alumni.*, pendidikan.angkatan, pendidikan.jurusan, provinsi.nama_provinsi as provinsi, kabupaten.nama_kabupaten as kabupaten,
+            (SELECT COUNT(A2.id_alumni) FROM alumni A2 WHERE A2.referred_by = alumni.id_alumni) AS ref_jumlah 
+            ');
         $this->db->from('alumni');
         $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
         $this->db->join('provinsi', 'alumni.provinsi_id = provinsi.id_provinsi');
@@ -266,8 +196,8 @@ public function insert_alumni($data) {
             'provinsi_id' => $data['provinsi_id'],
             'kabupaten_id' => $data['kabupaten_id'],
             'no_telepon' => $data['no_telepon'],
-            'email' => $data['email'],
-            'referred_by' => isset($data['referred_by']) ? $data['referred_by'] : null
+            // 'email' => $data['email'],
+            // 'referred_by' => isset($data['referred_by']) ? $data['referred_by'] : null
 
         ];
         $this->db->where('id_alumni', $id);
@@ -301,14 +231,14 @@ public function insert_alumni($data) {
         $this->db->update('keterangan_tambahan', $keterangan_data);
 
         // Update user (email dan password jika diisi)
-        $user_data = [
-            'email' => $data['email']
-        ];
-        if (!empty($data['password'])) {
-            $user_data['password_hash'] = password_hash($data['password'], PASSWORD_DEFAULT);
-        }
-        $this->db->where('alumni_id', $id);
-        $this->db->update('users', $user_data);
+        // $user_data = [
+        //     'email' => $data['email']
+        // ];
+        // if (!empty($data['password'])) {
+        //     $user_data['password_hash'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        // }
+        // $this->db->where('alumni_id', $id);
+        // $this->db->update('users', $user_data);
 
         $this->db->trans_complete();
 
@@ -362,5 +292,32 @@ public function insert_alumni($data) {
         return $query ? $query->urutan : 0;
     }
 
+ public function hapus_alumni($id_alumni) {
 
+    
+    $this->db->trans_start();
+    
+    // Proses penghapusan database
+    $tables = ['pekerjaan', 'pendidikan', 'keterangan_tambahan', 'users', 'alumni'];
+               
+    foreach ($tables as $table) {
+        $field = ($table == 'alumni') ? 'id_alumni' : 'alumni_id';
+        $this->db->where($field, $id_alumni);
+        $this->db->delete($table);
+    }
+    
+    $this->db->trans_complete();
+    
+    if ($this->db->trans_status()) {
+        
+        return true;
+    }
+    
+    return false;
+}
+    // Function untuk mendapatkan data alumni sebelum dihapus (opsional)
+    public function get_alumni_data($id_alumni) {
+        $this->db->where('id_alumni', $id_alumni);
+        return $this->db->get('alumni')->row();
+    }
 }

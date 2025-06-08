@@ -1,7 +1,4 @@
-<?php if ($this->session->flashdata('error')): ?>
-  <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
-<?php endif; ?>
-
+<!--  -->
 <div class="row justify-content-center">
   <div class="col-md-9 col-lg-7">
     <div class="card">

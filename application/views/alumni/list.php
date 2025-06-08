@@ -28,6 +28,11 @@
             <th>Nama Panggilan</th>
             <th>Jurusan</th>
             <th>Domisili Sekarang</th>
+            <th>Ref</th>
+            <?php if($is_admin) {?>
+                <th>proses</th>
+            <?php } ?>
+
             <!-- Tambahkan kolom lain sesuai kebutuhan -->
           </tr>
         </thead>
@@ -41,6 +46,17 @@
                 <td class="text-center"><?php echo htmlspecialchars($alumni->nama_panggilan); ?></td>
                 <td class="text-center"><?php echo htmlspecialchars($alumni->jurusan); ?></td>
                 <td class="text-center"><?php echo htmlspecialchars($alumni->provinsi . " / " . $alumni->kabupaten); ?></td>
+                <td class="text-center"><?php echo htmlspecialchars($alumni->ref_jumlah); ?></td>
+                <?php if($is_admin):?>
+                  <td class="text-center">
+
+                      <a href="<?= site_url('alumni/detail/'.$alumni->id_alumni) ?>" class="btn btn-outline-info btn-sm"><i class="fas fa-info"></i></a>
+
+                      <?php if($alumni->id_alumni !=  $this->session->userdata('id_alumni') && $alumni->ref_jumlah==0):?>
+                      <a href="<?= site_url('alumni/hapus/'.$alumni->id_alumni) ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')"><i class="fas fa-trash"></i></a>
+                      <?php endif; ?>
+                  </td>            
+                <?php endif; ?>
               </tr>
             <?php endforeach; ?>
           <?php else: ?>

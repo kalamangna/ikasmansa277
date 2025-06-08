@@ -10,10 +10,17 @@ class Alumni extends CI_Controller {
         $this->load->helper('url', 'form');
     }
 
+    private function tkn($id=0)
+    {
+        $tkn = md5((int)$id + (int)date("Ymd"));
+    }
+
+
     public function index()
     {
         $user_role = $this->session->userdata('role');
         $user_angkatan = $this->session->userdata('angkatan');
+        $id_alumni = $this->session->userdata('id_alumni');
 
         // Ambil angkatan yang dipilih dari dropdown (hanya untuk admin)
         $selected_angkatan = $this->input->get('angkatan');
@@ -33,6 +40,19 @@ class Alumni extends CI_Controller {
         if ($user_role == 'admin') {
             $angkatan_list = $this->Alumni_model->get_all_angkatan();
         }
+
+
+        $is_admin = false;
+        if ($this->session->userdata('logged_in')) {
+            if (
+                $user_role == "admin" || // admin super
+                ($user_role == 'admin_angkatan' && $user_angkatan == $selected_angkatan) // admin angkatan sama
+            ) 
+            {
+                $is_admin = true;
+            }
+        }
+        $data['is_admin'] = $is_admin;
 
         // Ambil data alumni berdasarkan angkatan yang dipilih
         $data['alumni_list'] = $this->Alumni_model->get_alumni_by_angkatan($selected_angkatan);
@@ -82,6 +102,17 @@ class Alumni extends CI_Controller {
 
 public function save() {
     $post = $this->input->post();
+
+
+    $last_input = $this->session->userdata('last_alumni_input');
+    if ($last_input && 
+        $last_input['nama'] == $post['nama_lengkap'] && 
+        (time() - $last_input['time']) < 1800) { // 30 menit
+        $this->session->set_flashdata('error', 'Anda sudah menginput data dengan nama ini dalam 30 menit terakhir');
+        redirect('alumni/create');
+        return;
+    }
+
 
     // Handle photo upload
     $photo_path = '';
@@ -147,11 +178,6 @@ public function save() {
         return;
     }
     
-
-
-
-
-
     if (!$alumni_id) {
         if (!empty($photo_path)) {
             @unlink(FCPATH.$photo_path);
@@ -212,106 +238,15 @@ public function save() {
     }
     
     // Jika berhasil
+    $this->session->set_userdata('last_alumni_input', [
+        'nama' => $post['nama_lengkap'],
+        'time' => time()
+    ]);
+
     $referral = $post['referred_by'] ?? '';
     $this->session->set_flashdata('success', 'Data alumni berhasil disimpan.');
     redirect('alumni/detail/'.$alumni_id.'?ut='.$referral);
 }
-    // public function save() {
-    //     $post = $this->input->post();
-    //     // print_r($post); die();
-    //     // Validasi sederhana bisa ditambahkan di sini
-
-    //     $email = $this->input->post('email', true);
-    //     $existing = $this->db->get_where('users', ['email' => $email])->row();
-
-    //     if ($existing) {
-    //         // Email sudah terdaftar, kembalikan ke form dengan pesan error
-    //         $this->session->set_flashdata('error', 'Email sudah digunakan, silakan gunakan email lain.');
-    //         redirect('alumni/create?ut='.$this->input->get('ut'));
-    //         return;
-    //     }
-
- 
-
-    //     $alumni_id = $this->Alumni_model->insert_alumni_user($post);
-
-
-
-    //     if(is_int($alumni_id)) {
-    //         // Ambil kode referral dari data yang baru disimpan (misal dari $post atau database)
-    //         $referral = isset($post['referred_by']) ? $post['referred_by'] : '';
-
-    //         // Simpan pesan sukses dan redirect ke halaman detail alumni
-    //         $this->session->set_flashdata('success', 'Data alumni dan user berhasil disimpan.');
-    //         redirect('alumni/detail/'.$alumni_id.'?ut='.$referral);
-    //     } else {
-    //         $this->session->set_flashdata('error', 'Gagal menyimpan data.');
-    //         print_r($alumni_id);
-    //         // redirect('alumni/create');
-    //         // redirect('alumni/create?ut='.$this->input->get('ut'));
-    //     }
-
-
-    // }
-
-    // public function save()
-    // {
-    //     // Konfigurasi upload foto
-    //     // print_r($this->input->post()); die();
-    //     // if (!is_dir('./uploads/foto_alumni/')) {
-    //     //     mkdir('./uploads/foto_alumni/', 0755, true);
-    //     // }
-    //     $config['upload_path'] = './uploads/foto_alumni/';
-    //     $config['allowed_types'] = 'jpg|jpeg|png';
-    //     $config['max_size'] = 1024; // maksimal 1MB
-    //     $config['encrypt_name'] = TRUE;
-
-    //     // print_r($config); die();
-
-    //     if (!is_dir($config['upload_path'])) {
-    //         mkdir($config['upload_path'], 0755, true);
-    //     }
-
-    //     $this->load->library('upload', $config);
-
-    //     if (!$this->upload->do_upload('foto')) {
-    //         $error = $this->upload->display_errors();
-    //         $this->session->set_flashdata('error', $error);
-    //         redirect('alumni/create?ut='.$this->input->get('ut'));
-    //         return;
-    //     }
-
-    //     $upload_data = $this->upload->data();
-
-
-    //     $image_path = $upload_data['upload_path'];
-
-    //     // Cek dimensi foto potrait
-    //     list($width, $height) = getimagesize($image_path);
-    //     if ($height <= $width) {
-    //         // Bukan potrait, hapus file dan beri pesan error
-    //         unlink($image_path);
-    //         $this->session->set_flashdata('error', 'Foto harus berbentuk potrait (tinggi lebih besar dari lebar).');
-    //         redirect('alumni/create?ut='.$this->input->get('ut'));
-    //         return;
-    //     }
-
-    //     // $alumni_id = $this->Alumni_model->insert_alumni_user($post);
-    //     // Simpan data alumni beserta nama file foto
-    //     $data_alumni = [
-    //         'nama_lengkap' => $this->input->post('nama_lengkap', true),
-    //         'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
-    //         // kolom lain sesuai kebutuhan
-    //         'foto' => $upload_data['file_name']
-    //     ];
-
-    //     $this->Alumni_model->insert_alumni_user($data_alumni);
-    //     $alumni_id = $this->Alumni_model->insert_alumni_user($post);
-
-    //     $this->session->set_flashdata('success', 'Data alumni berhasil disimpan.');
-    //     redirect('alumni/create');
-    // }
-
 
     public function detail($id) {
         $data['alumni'] = $alumni = $this->Alumni_model->get_alumni($id);
@@ -430,8 +365,6 @@ public function save() {
         $data['pekerjaan_list'] = $this->Alumni_model->get_pekerjaan();
         $data['ajax_kabupaten'] = true;
 
-
-
         $user = $this->session->userdata(); // misal ['role_id' => ..., 'alumni_id' => ..., 'angkatan' => ...]
         // Ambil data alumni yang sedang dilihat, termasuk angkatannya
         $alumni_angkatan = $alumni->angkatan; // pastikan data angkatan sudah tersedia di objek $alumni
@@ -473,52 +406,212 @@ public function save() {
         } else {
             $this->session->set_flashdata('error', 'Gagal memperbarui data.');
         }
-        redirect('alumni/edit/'.$id);
+        redirect('alumni/detail/'.$id);
     }
+public function update_user($id_alumni) {
+    $this->load->library('form_validation');
+    $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 
-    public function update_user($id_alumni) {
-        // print_r($this->input->post()); die();
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-
-        $email = $this->input->post('email');
-        $existing = $this->db->get_where('users', ['email' => $email])->row();
-
-        if ($existing and $this->input->post('email_current')!=$email) {
-            // Email sudah terdaftar, kembalikan ke form dengan pesan error
-            $this->session->set_flashdata('error', 'Email sudah digunakan, silakan gunakan email lain.');
-            redirect('alumni/detail/'.$id_alumni);
-            return;
-        }
+    $email = $this->input->post('email');
+    $existing = $this->db->get_where('users', ['email' => $email])->row();
 
 
+    if ($this->form_validation->run() == FALSE) {
+        $this->session->set_flashdata('error', validation_errors());
+        redirect('alumni/detail/'.$this->input->post('alumni_id'));
+    } else {
+        $user_data = [
+            'email' => $this->input->post('email'),
+            'alumni_id' => $this->input->post('alumni_id') // Pastikan ada relasi dengan alumni
+        ];
 
-
+        // Tambahkan password jika diisi
         if ($this->input->post('password')) {
-            $this->form_validation->set_rules('password', 'Password', 'min_length[6]');
-            // $this->form_validation->set_rules('password_confirm', 'Konfirmasi Password', 'matches[password]');
+            $user_data['password_hash'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
         }
 
-        if ($this->form_validation->run() == FALSE) {
-            // Jika validasi gagal, kembalikan ke halaman detail dengan error
-            $this->session->set_flashdata('error', validation_errors());
-            redirect('alumni/detail/'.$this->input->post('alumni_id'));
-        } else {
-            $update_data = [
-                'email' => $this->input->post('email'),
-            ];
-            if ($this->input->post('password')) {
-                $update_data['password_hash'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
-            }
-            if ($this->session->userdata('role') == 'admin') {
-                $update_data['role_id'] = $this->input->post('role_id');
-            }
-            $this->load->model('User_model');
-            $this->User_model->update_user($this->input->post('alumni_id'), $update_data);
+        // Tambahkan role jika admin
+        if ($this->session->userdata('role') == 'admin') {
+            $user_data['role_id'] = $this->input->post('role_id');
+        }
 
-            $this->session->set_flashdata('success', 'Data user berhasil diperbarui.');
-            redirect('alumni/detail/'.$this->input->post('alumni_id'));
+        $this->load->model('User_model');
+        
+        // Cek apakah user sudah ada berdasarkan alumni_id
+        $user_exists = $this->db->get_where('users', ['alumni_id' => $this->input->post('alumni_id')])->row();
+        
+        if ($user_exists) {
+            // UPDATE jika user sudah ada
+            $this->User_model->update_user($this->input->post('alumni_id'), $user_data);
+            $message = 'Data user berhasil diperbarui.';
+        } else {
+            // INSERT jika user belum ada
+            // Tambahkan data default jika diperlukan
+            // $user_data['active'] = 1; // Contoh: set user sebagai aktif
+            $user_data['updated_at'] = date('Y-m-d H:i:s');
+            
+            $this->User_model->insert_user($user_data); // Pastikan ada method create_user di model
+            $message = 'Akun user berhasil dibuat.';
+        }
+
+        $this->session->set_flashdata('success', $message);
+        redirect('alumni/detail/'.$this->input->post('alumni_id'));
+    }
+}
+
+    // public function update_user($id_alumni) {
+    //     // print_r($this->input->post()); die();
+    //     $this->load->library('form_validation');
+    //     $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+
+    //     $email = $this->input->post('email');
+    //     $existing = $this->db->get_where('users', ['email' => $email])->row();
+
+    //     if ($existing and $this->input->post('email_current')!=$email) {
+    //         // Email sudah terdaftar, kembalikan ke form dengan pesan error
+    //         $this->session->set_flashdata('error', 'Email sudah digunakan, silakan gunakan email lain.');
+    //         redirect('alumni/detail/'.$id_alumni);
+    //         return;
+    //     }
+
+
+
+
+    //     if ($this->input->post('password')) {
+    //         $this->form_validation->set_rules('password', 'Password', 'min_length[6]');
+    //         // $this->form_validation->set_rules('password_confirm', 'Konfirmasi Password', 'matches[password]');
+    //     }
+
+    //     if ($this->form_validation->run() == FALSE) {
+    //         // Jika validasi gagal, kembalikan ke halaman detail dengan error
+    //         $this->session->set_flashdata('error', validation_errors());
+    //         redirect('alumni/detail/'.$this->input->post('alumni_id'));
+    //     } else {
+    //         $update_data = [
+    //             'email' => $this->input->post('email'),
+    //         ];
+    //         if ($this->input->post('password')) {
+    //             $update_data['password_hash'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+    //         }
+    //         if ($this->session->userdata('role') == 'admin') {
+    //             $update_data['role_id'] = $this->input->post('role_id');
+    //         }
+    //         $this->load->model('User_model');
+    //         $this->User_model->update_user($this->input->post('alumni_id'), $update_data);
+
+    //         $this->session->set_flashdata('success', 'Data user berhasil diperbarui.');
+    //         redirect('alumni/detail/'.$this->input->post('alumni_id'));
+    //     }
+    // }
+
+
+   public function hapus_alumni($id_alumni) {
+        // Mulai transaksi database
+        $this->db->trans_start();
+        
+        try {
+            // 1. Hapus data pekerjaan terkait
+            $this->db->where('alumni_id', $id_alumni);
+            $this->db->delete('pekerjaan');
+            
+            // 2. Hapus data pendidikan terkait
+            $this->db->where('alumni_id', $id_alumni);
+            $this->db->delete('pendidikan');
+            
+            // 3. Hapus data keterangan tambahan terkait
+            $this->db->where('alumni_id', $id_alumni);
+            $this->db->delete('keterangan_tambahan');
+            
+            // 4. Hapus data foto terkait
+            $this->db->where('id_alumni', $id_alumni);
+            $this->db->delete('alumni_foto');
+            
+            // 5. Hapus data user terkait
+            $this->db->where('alumni_id', $id_alumni);
+            $this->db->delete('users');
+            
+            // 6. Hapus data alumni
+            $this->db->where('id_alumni', $id_alumni);
+            $this->db->delete('alumni');
+            
+            // Selesaikan transaksi
+            $this->db->trans_complete();
+            
+            // Cek jika transaksi berhasil
+            if ($this->db->trans_status() === FALSE) {
+                // Jika gagal, rollback transaksi
+                $this->db->trans_rollback();
+                return false;
+            } else {
+                return true;
+            }
+            
+        } catch (Exception $e) {
+            // Jika terjadi error, rollback transaksi
+            $this->db->trans_rollback();
+            log_message('error', 'Error menghapus alumni: ' . $e->getMessage());
+            return false;
         }
     }
+    
+    // Function untuk mendapatkan data alumni sebelum dihapus (opsional)
+    public function get_alumni_data($id_alumni) {
+        $this->db->where('id_alumni', $id_alumni);
+        return $this->db->get('alumni')->row();
+    }
+
+
+
+    public function hapus($id) {
+        // Cek otorisasi sebelum menghapus
+
+        $user_role = $this->session->userdata('role');
+        $user_angkatan = $this->session->userdata('angkatan');
+        $id_alumni = $this->session->userdata('id_alumni');
+        $alumni = $this->Alumni_model->get_alumni($id_alumni);
+        // print_r($alumni);die();
+
+
+
+
+        $is_admin = false;
+        if ($this->session->userdata('logged_in')) {
+            if (
+                $user_role == "admin" || // admin super
+                ($user_role == 'admin_angkatan' && $user_angkatan == $alumni->angkatan) // admin angkatan sama
+            ) 
+            {
+                $is_admin = true;
+            }
+        }
+
+
+        if (!$is_admin) {
+            show_error('Anda tidak memiliki izin untuk melakukan aksi ini.', 403);
+        }
+        // Panggil function hapus
+        $result = $this->Alumni_model->hapus_alumni($id);
+        
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data alumni '.$alumni->nama.'dan semua data terkait berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menghapus data alumni.');
+        }
+        
+        redirect('alumni'); // Redirect ke halaman daftar alumni
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 }

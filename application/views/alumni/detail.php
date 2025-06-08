@@ -1,11 +1,4 @@
-<?php if ($this->session->flashdata('error')): ?>
-  <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
-<?php endif; ?>
-
-<?php if ($this->session->flashdata('success')): ?>
-  <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
-<?php endif; ?>
-
+<!--  -->
 <?php
 $user_role = $this->session->userdata('role');
 $user_angkatan = $this->session->userdata('angkatan'); // angkatan admin yang login
@@ -180,6 +173,19 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
           </div>
         </div>
 
+        <!-- Jumlah referred by -->
+        <?php if (!empty($alumni->referred_by)):?> 
+          <div class="alert alert-info small" role="alert">
+            Referred by : 
+          <?php
+          $referral = $this->Alumni_model->get_alumni($alumni->referred_by); 
+          ?>
+              <a href="<?= base_url('alumni/detail/' . $referral->id_alumni) ?>">
+              <?=$referral->nama_lengkap . " (" . $referral->angkatan . ")";?>
+            </a>
+          </div>
+        <?php endif;  ?>
+
         <!-- Jumlah referral -->
         <?php if (count($get_alumni_by_referred_by) > 0): ?>
           <div class="alert alert-info small" role="alert">
@@ -187,9 +193,7 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
             <?php
             $i = 1;
             foreach ($get_alumni_by_referred_by as $reffered) { ?>
-              <a href="<?= base_url('alumni/detail/' . $reffered->id_alumni) ?>"><?= $reffered->nama_lengkap . " (" . $reffered->angkatan . ")" ?><?php if ($i < count($get_alumni_by_referred_by)) {
-                                                                                                                                                    echo ",";
-                                                                                                                                                  } ?>
+              <a href="<?= base_url('alumni/detail/' . $reffered->id_alumni) ?>"><?= $reffered->nama_lengkap . " (" . $reffered->angkatan . ")" ?><?php if ($i < count($get_alumni_by_referred_by)) {echo ",";} ?>
               </a>
             <?php
               $i++;
@@ -201,7 +205,7 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
         <div class="mb-3">
             <div class="d-flex justify-content-end">
               <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#undangModal">
-                <i class="fa fa-link"></i> Undang Teman Alumni
+                <i class="fa fa-link"></i> Undang Teman Alumni melalui akun ini
               </button>
           </div>
         </div>
@@ -271,9 +275,12 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
                     <div class="mb-3">
                       <label for="role" class="form-label">Role User</label>
                       <select class="form-select" id="role" name="role_id" required>
-                        <option value="1" <?php echo ($alumni->role_id == '1') ? 'selected' : ''; ?>>Admin</option>
+                        <option>-Pilih Role-</option>
+                        <?php if ($user_role == 'admin'): ?>                        
+                            <option value="1" <?php echo ($alumni->role_id == '1') ? 'selected' : ''; ?>>Admin</option>
                         <option value="2" <?php echo ($alumni->role_id == '2') ? 'selected' : ''; ?>>Admin Angkatan</option>
-                        <option value="5" <?php echo ($alumni->role_id == '5') ? 'selected' : ''; ?>>User</option>
+                        <?php endif; ?>
+                        <option value="5" <?php echo ($alumni->role_id == '5') ? 'selected' : ''; ?>>User Alumni</option>
                       </select>
                     </div>
                   <?php endif; ?>
