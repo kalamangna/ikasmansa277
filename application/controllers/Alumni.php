@@ -598,7 +598,7 @@ public function update_user($id_alumni) {
             $this->session->set_flashdata('error', 'Gagal menghapus data alumni.');
         }
         
-        redirect('alumni/'.$alumni->angkatan); // Redirect ke halaman daftar alumni
+        redirect('alumni?angkatan='.$alumni->angkatan); // Redirect ke halaman daftar alumni
     }
 
 
