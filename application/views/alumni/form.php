@@ -23,8 +23,9 @@
           <h4>Data Pribadi</h4>
 
           <div class="mb-3">
-            <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
+            <label for="nama_lengkap" class="form-label">Nama Lengkap <small class="text-muted">(Wajib diisi)</small></label>
             <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" required>
+            <small class="text-muted">Isikan nama lengkap sesuai ijazah</small>
           </div>
 
           <div class="mb-3">
@@ -32,9 +33,10 @@
               <div class="col-md-6">
                 <label for="nama_panggilan" class="form-label">Nama Panggilan</label>
                 <input type="text" class="form-control" id="nama_panggilan" name="nama_panggilan" value="<?php echo set_value('nama_panggilan', $alumni->nama_panggilan ?? ''); ?>">
+                <small class="text-muted">Nama yang biasa dipanggil sehari-hari</small>
               </div>
               <div class="col-md-6">
-                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                <label for="jenis_kelamin" class="form-label">Jenis Kelamin <small class="text-muted">(Wajib diisi)</small></label>
                 <div class="form-check">
                   <input class="form-check-input" type="radio" id="laki" name="jenis_kelamin" value="Laki-laki" <?php echo set_value('jenis_kelamin', $alumni->jenis_kelamin ?? '') == 'Laki-laki' ? 'checked' : ''; ?> required>
                   <label class="form-check-label" for="laki">Laki-laki</label>
@@ -50,22 +52,19 @@
           <div class="mb-3">
             <div class="row g-3">
               <div class="col-md-6">
-                <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                <label for="tempat_lahir" class="form-label">Tempat Lahir <small class="text-muted">(Wajib diisi)</small></label>
                 <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" required>
+                <small class="text-muted">Kota/kabupaten tempat lahir</small>
               </div>
               <div class="col-md-6">
-                <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                <label for="tanggal_lahir" class="form-label">Tanggal Lahir <small class="text-muted">(Wajib diisi)</small></label>
                 <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" required>
               </div>
             </div>
           </div>
-          <!--           <div class="mb-3">
-              <label for="foto" class="form-label">Foto Alumni (harus potrait)</label>
-              <input type="file" name="foto" id="foto" class="form-control" accept="image/*" required>
-          </div>
- -->
+
           <div class="mb-3">
-            <label for="provinsi" class="form-label">Provinsi</label>
+            <label for="provinsi" class="form-label">Provinsi <small class="text-muted">(Wajib diisi)</small></label>
             <select class="form-select" id="provinsi" name="provinsi_id" required>
               <option value="">-- Pilih Provinsi --</option>
               <?php foreach ($provinsi as $prov): ?>
@@ -75,7 +74,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="kabupaten" class="form-label">Kabupaten/Kota</label>
+            <label for="kabupaten" class="form-label">Kabupaten/Kota <small class="text-muted">(Wajib diisi)</small></label>
             <select class="form-select" id="kabupaten" name="kabupaten_id" required>
               <option value="">-- Pilih Kabupaten/Kota --</option>
               <!-- Bisa diisi via AJAX berdasarkan provinsi -->
@@ -83,24 +82,28 @@
           </div>
 
           <div class="mb-3">
-            <label for="alamat_domisili" class="form-label">Alamat Domisili</label>
+            <label for="alamat_domisili" class="form-label">Alamat Domisili <small class="text-muted">(Wajib diisi)</small></label>
             <textarea class="form-control" id="alamat_domisili" name="alamat_domisili" rows="2" required></textarea>
+            <small class="text-muted">Alamat tempat tinggal saat ini</small>
           </div>
 
           <div class="mb-3">
-            <label for="no_telepon" class="form-label">Nomor Telepon/WhatsApp</label>
+            <label for="no_telepon" class="form-label">Nomor Telepon/WhatsApp <small class="text-muted">(Wajib diisi)</small></label>
             <input type="text" class="form-control" id="no_telepon" name="no_telepon" required>
+            <small class="text-muted">Nomor aktif yang bisa dihubungi</small>
           </div>
 
-          <!-- Input Email dan Password untuk user login -->
+          <!-- Input Email dan Password untuk user login (opsional) -->
           <div class="mb-3">
             <label for="email" class="form-label">Email (untuk login)</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+            <input type="email" class="form-control" id="email" name="email">
+            <small class="text-muted">Opsional - untuk login ke sistem alumni</small>
           </div>
 
           <div class="mb-3">
             <label for="password" class="form-label">Password (untuk login)</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password" class="form-control" id="password" name="password">
+            <small class="text-muted">Opsional - password untuk login ke sistem alumni</small>
           </div>
 
           <hr>
@@ -110,24 +113,22 @@
           <div class="mb-3">
             <div class="row g-3">
               <div class="col-md-6">
-                <label for="angkatan" class="form-label">Angkatan (Tahun Lulus)</label>
+                <label for="angkatan" class="form-label">Angkatan (Tahun Lulus) <small class="text-muted">(Wajib diisi)</small></label>
                 <select name="angkatan" id="angkatan" class="form-select" required>
                   <option value="">-- Pilih Angkatan --</option>
                   <?php
                   $tahun_mulai = 1966;
                   $tahun_sekarang = date('Y');
                   for ($tahun = $tahun_mulai; $tahun <= $tahun_sekarang; $tahun++) {
-                    // Jika ingin tahun terbaru di atas, gunakan: for ($tahun = $tahun_sekarang; $tahun >= $tahun_mulai; $tahun--)
                     echo '<option value="' . $tahun . '">' . $tahun . '</option>';
                   }
                   ?>
                 </select>
               </div>
               <div class="col-md-6">
-                <label for="jurusan" class="form-label">Jurusan</label>
+                <label for="jurusan" class="form-label">Jurusan <small class="text-muted">(Wajib diisi)</small></label>
                 <select name="jurusan" id="jurusan" class="form-select" required>
                   <option value="">-- Pilih Jurusan --</option>
-                  <!-- Jurusan SMA -->
                   <option value="Fisika">Fisika (A1)</option>
                   <option value="Biologi">Biologi (A2)</option>
                   <option value="Ilmu Sosial">Ilmu Sosial (A3)</option>
@@ -142,7 +143,6 @@
               </div>
             </div>
           </div>
-
 
           <hr>
           <!-- Data Pekerjaan -->
@@ -168,16 +168,19 @@
               }
               ?>
             </select>
+            <small class="text-muted">Pekerjaan saat ini (jika ada)</small>
           </div>
 
           <div class="mb-3">
             <label for="nama_perusahaan" class="form-label">Nama Perusahaan/Instansi</label>
             <input type="text" class="form-control" id="nama_perusahaan" name="nama_perusahaan">
+            <small class="text-muted">Nama tempat bekerja saat ini</small>
           </div>
 
           <div class="mb-3">
             <label for="jabatan" class="form-label">Jabatan</label>
             <input type="text" class="form-control" id="jabatan" name="jabatan">
+            <small class="text-muted">Posisi/jabatan pekerjaan saat ini</small>
           </div>
 
           <div class="mb-3">
@@ -187,17 +190,14 @@
 
           <hr>
           <!-- Foto -->
-        <div class="mb-3">
-          <label for="foto" class="form-label">Foto Profil</label>
-          <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
-          <small class="text-muted">Format: JPG/PNG, maksimal 2MB (disarankan foto portrait)</small>
-          <div id="preview-container" class="mt-2" style="display:none;">
-            <img id="preview-image" src="#" alt="Preview Foto" style="max-width: 200px; max-height: 200px;">
+          <div class="mb-3">
+            <label for="foto" class="form-label">Foto Profil <small class="text-muted">(Wajib diisi)</small></label>
+            <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
+            <small class="text-muted">Maksimal 10MB (akan otomatis diperkecil oleh sistem, disarankan foto portrait)</small>
+            <div id="preview-container" class="mt-2" style="display:none;">
+              <img id="preview-image" src="#" alt="Preview Foto" style="max-width: 200px; max-height: 200px;">
+            </div>
           </div>
-        </div>
-
-        <!-- Add this script at the bottom of the page, before the closing </body> tag -->
-
 
           <!-- Keterangan Tambahan -->
           <h4>Keterangan Tambahan</h4>
@@ -231,7 +231,6 @@
         </form>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -252,14 +251,14 @@
     }
   });
 
-  // File size validation
+  // File size validation (10MB)
   document.querySelector('form').addEventListener('submit', function(e) {
     const fotoInput = document.getElementById('foto');
     if (fotoInput.files.length > 0) {
       const fileSize = fotoInput.files[0].size / 1024 / 1024; // in MB
-      if (fileSize > 2) {
+      if (fileSize > 10) {
         e.preventDefault();
-        alert('Ukuran foto terlalu besar. Maksimal 2MB.');
+        alert('Ukuran foto terlalu besar. Maksimal 10MB.');
         return false;
       }
     }

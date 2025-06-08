@@ -35,7 +35,7 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
   <title>IKA SMANSA / 277 Sinjai</title>
   <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css'); ?>">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /> -->
-  <link rel="stylesheet" href="<?php echo base_url('assets/fontawesome-free/css/all.min.css')?>">  
+  <link rel="stylesheet" href="<?php echo base_url('assets/fontawesome-free/css/all.min.css') ?>">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="<?= base_url('assets/css/sb-admin-2.min.css') ?>">
@@ -49,8 +49,6 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-
-
 </head>
 
 <body>
@@ -75,13 +73,12 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
           <li class="nav-item">
             <a class="nav-link" href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
           </li>
-          <?php if ($is_logged_in AND !empty($this->session->userdata('referral'))): ?>
+
+          <?php if ($is_logged_in and !empty($this->session->userdata('referral'))): ?>
             <li class="nav-item">
               <a class="nav-link" href="<?php echo site_url('alumni'); ?>">Data Alumni</a>
             </li>
           <?php endif; ?>
-
-
         </ul>
 
         <!-- Menu login/logout di sebelah kanan -->
