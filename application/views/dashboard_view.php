@@ -77,7 +77,7 @@
   </div> -->
 
   <div class="col-md-6">
-    <div class="card shadow">
+    <div class="card shadow mb-3">
       <div class="card-header">Domisili Alumni</div>
       <div class="card-body">
         <div class="table-responsive">
@@ -100,10 +100,10 @@
         </div>
       </div>
     </div>
-  </div>
+<!--   </div>
 
-  <div class="col-md-6">
-    <div class="card shadow">
+  <div class="col-md-6"> -->
+    <div class="card shadow mb-3">
       <div class="card-header">Pekerjaan Alumni</div>
       <div class="card-body">
         <div class="table-responsive">
@@ -126,10 +126,10 @@
         </div>
       </div>
     </div>
-  </div>
+<!--   </div>
 
-  <div class="col-md-6">
-    <div class="card shadow">
+  <div class="col-md-6"> -->
+    <div class="card shadow mb-3">
       <div class="card-header">Jenis Kelamin Alumni</div>
       <div class="card-body">
         <div class="table-responsive">
@@ -159,7 +159,7 @@
   </div>
 
   <div class="col-md-6">
-    <div class="card shadow">
+    <div class="card shadow mb-3">
       <div class="card-header">Data Terbaru</div>
       <div class="card-body">
         <div class="table-responsive">
@@ -185,10 +185,10 @@
         </div>
       </div>
     </div>
-  </div>
+<!--   </div>
 
-  <div class="col-md-6">
-    <div class="card shadow">
+  <div class="col-md-6"> -->
+    <div class="card shadow mb-3">
       <div class="card-header">Data Tercepat</div>
       <div class="card-body">
         <div class="table-responsive">
@@ -214,10 +214,10 @@
         </div>
       </div>
     </div>
-  </div>
+<!--   </div>
 
-  <div class="col-md-6">
-    <div class="card shadow">
+  <div class="col-md-6"> -->
+    <div class="card shadow mb-3">
       <div class="card-header">Referral Terbanyak</div>
       <div class="card-body">
         <div class="table-responsive">
