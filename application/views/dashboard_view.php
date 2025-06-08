@@ -160,7 +160,36 @@
 
   <div class="col-md-6">
     <div class="card shadow">
-      <div class="card-header">Pendata Tercepat</div>
+      <div class="card-header">Data Terbaru</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped text-nowrap align-middle">
+            <thead>
+              <tr>
+                <th class="text-center">No.</th>
+                <th class="text-center">Nama / Angkatan</th>
+                <th class="text-center">Waktu</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $urut = 1;
+              foreach ($alumni_terbaru as $row): ?>
+                <tr>
+                  <td class="text-center"><?= $urut++ ?></td>
+                  <td class="text-left"><?php echo htmlspecialchars($row->nama_lengkap); ?> / <?php echo htmlspecialchars($row->angkatan); ?></td>
+                  <td class="text-center"><?php echo htmlspecialchars($row->created_at); ?></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card shadow">
+      <div class="card-header">Data Tercepat</div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-bordered table-striped text-nowrap align-middle">

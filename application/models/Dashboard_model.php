@@ -38,6 +38,21 @@ class Dashboard_model extends CI_Model {
         return $query->result();
     }        
 
+        // Ambil alumni terbaru
+    public function get_alumni_recent()
+    {
+        $this->db->select('alumni.*, pendidikan.angkatan, pendidikan.jurusan, provinsi.nama_provinsi as provinsi, kabupaten.nama_kabupaten as kabupaten');
+        $this->db->from('alumni');
+        $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
+        $this->db->join('provinsi', 'alumni.provinsi_id = provinsi.id_provinsi');
+        $this->db->join('kabupaten', 'alumni.kabupaten_id = kabupaten.id_kabupaten');        
+        // $this->db->where('pendidikan.angkatan', $angkatan);
+        $this->db->limit(10);
+        $this->db->order_by('alumni.created_at', 'DESC');
+        $query = $this->db->get();
+        return $query->result();
+    }        
+
         // Ambil referral terbanyak
     public function get_referred_rank()
     {
