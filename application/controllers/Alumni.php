@@ -83,17 +83,6 @@ class Alumni extends CI_Controller {
 public function save() {
     $post = $this->input->post();
 
-    // Cek email hanya jika diisi
-    $email = $this->input->post('email', true);
-    if (!empty($email)) {
-        $existing = $this->db->get_where('users', ['email' => $email])->row();
-        if ($existing) {
-            $this->session->set_flashdata('error', 'Email sudah digunakan, silakan gunakan email lain.');
-            redirect('alumni/create?ut='.$this->input->get('ut'));
-            return;
-        }
-    }
-
     // Handle photo upload
     $photo_path = '';
     if (!empty($_FILES['foto']['name'])) {
@@ -101,7 +90,7 @@ public function save() {
 
         $config = [
             'upload_path'   => $upload_path,
-            'allowed_types' => 'jpg|jpeg|png|gif|webp|bmp|tiff|svg',
+            'allowed_types' => 'gif|jpg|jpeg|png|webp',
             'max_size'      => 10240, // 10MB
             'file_name'     => 'alumni_'.$post['nama_lengkap'].'_'.time(),
             'overwrite'     => false
@@ -121,13 +110,11 @@ public function save() {
                 'maintain_ratio' => true,
                 'width'          => 800,
                 'height'         => 800,
-                'quality'        => '85%' // Kompresi kualitas gambar
+                'quality'        => '85%'
             ];
             
             $this->image_lib->initialize($resize_config);
-            if (!$this->image_lib->resize()) {
-                log_message('error', 'Image resize failed: '.$this->image_lib->display_errors());
-            }
+            $this->image_lib->resize();
             $this->image_lib->clear();
         } else {
             $this->session->set_flashdata('error', $this->upload->display_errors());
@@ -139,21 +126,70 @@ public function save() {
     // Add photo path to post data
     $post['foto_profil'] = isset($upload_data) ? $upload_data['file_name'] : '';
 
-    // Save alumni data
-    $alumni_id = $this->Alumni_model->insert_alumni_user($post);
-
-    if (is_int($alumni_id)) {
-        $referral = $post['referred_by'] ?? '';
-        $this->session->set_flashdata('success', 'Data alumni berhasil disimpan.');
-        redirect('alumni/detail/'.$alumni_id.'?ut='.$referral);
-    } else {
+    // Save alumni data (tanpa user jika email kosong)
+    $email = trim($post['email']);
+    $password = trim($post['password']);
+    
+    // Hapus email dan password dari $post agar tidak masuk ke tabel alumni
+    unset($post['email']);
+    unset($post['password']);
+    
+    // Simpan data alumni utama
+    $alumni_id = $this->Alumni_model->insert_alumni($post);
+    
+    if (!$alumni_id) {
         // Clean up uploaded file if save failed
         if (!empty($photo_path) && file_exists(FCPATH.$photo_path)) {
             unlink(FCPATH.$photo_path);
         }
-        $this->session->set_flashdata('error', 'Gagal menyimpan data.');
+        $this->session->set_flashdata('error', 'Gagal menyimpan data alumni.');
         redirect('alumni/create?ut='.$this->input->get('ut'));
+        return;
     }
+    
+    // Hanya buat user jika email dan password diisi
+    if (!empty($email) && !empty($password)) {
+        // Cek apakah email sudah ada
+        $existing = $this->db->get_where('users', ['email' => $email])->row();
+        if ($existing) {
+            // Hapus data alumni yang sudah tersimpan
+            $this->Alumni_model->delete_alumni($alumni_id);
+            if (!empty($photo_path) && file_exists(FCPATH.$photo_path)) {
+                unlink(FCPATH.$photo_path);
+            }
+            
+            $this->session->set_flashdata('error', 'Email sudah digunakan, silakan gunakan email lain.');
+            redirect('alumni/create?ut='.$this->input->get('ut'));
+            return;
+        }
+        
+        // Buat user baru
+        $user_data = [
+            'email' => $email,
+            'password_hash' => password_hash($password, PASSWORD_BCRYPT),
+            'role_id' => 5, // Sesuaikan dengan role alumni
+            'alumni_id' => $alumni_id
+        ];
+        
+        $user_id = $this->User_model->insert_user($user_data);
+        
+        if (!$user_id) {
+            // Hapus data alumni jika gagal buat user
+            $this->Alumni_model->delete_alumni($alumni_id);
+            if (!empty($photo_path) && file_exists(FCPATH.$photo_path)) {
+                unlink(FCPATH.$photo_path);
+            }
+            
+            $this->session->set_flashdata('error', 'Gagal membuat akun pengguna.');
+            redirect('alumni/create?ut='.$this->input->get('ut'));
+            return;
+        }
+    }
+    
+    // Jika berhasil
+    $referral = $post['referred_by'] ?? '';
+    $this->session->set_flashdata('success', 'Data alumni berhasil disimpan.');
+    redirect('alumni/detail/'.$alumni_id.'?ut='.$referral);
 }
     // public function save() {
     //     $post = $this->input->post();
