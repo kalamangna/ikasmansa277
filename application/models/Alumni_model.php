@@ -45,7 +45,7 @@ public function update_alumni($id_alumni, $data) {
     return $this->db->update('alumni', $data);
 }
 
-public function insert_alumni_user($data) {
+public function insert_alumni($data) {
     $this->db->trans_start();
 
     // Simpan data alumni - ADD foto_path HERE
@@ -91,15 +91,6 @@ public function insert_alumni_user($data) {
     ];
     $this->db->insert('keterangan_tambahan', $keterangan_data);
 
-    // Simpan data user untuk login
-    $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
-    $user_data = [
-        'email' => $data['email'],
-        'password_hash' => $password_hash,
-        'role_id' => 5, // misal 5 = alumni
-        'alumni_id' => $alumni_id
-    ];
-    $this->db->insert('users', $user_data);
 
     $this->db->trans_complete();
 
@@ -110,7 +101,17 @@ public function insert_alumni_user($data) {
     }
 }
 
-
+    public function insert_user($data) {
+        // Skip jika email kosong (sebagai backup)
+        if (empty($data['email'])) return true;
+        
+        // Cek duplikat
+        if ($this->db->get_where('users', ['email' => $data['email']])->row()) {
+            return false;
+        }
+        
+        return $this->db->insert('users', $data);
+    }   
 
 // public function insert_alumni_user($data) {
 //     $this->db->trans_start();

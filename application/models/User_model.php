@@ -24,6 +24,24 @@ class User_model extends CI_Model {
         return $this->db->update('users', $data);
     }
     
+
+public function insert_user($data) {
+    // Skip jika email kosong
+    if (empty($data['email'])) {
+        return true;
+    }
+    
+    // Cek duplikat email
+    $exists = $this->db->get_where('users', ['email' => $data['email']])->row();
+    if ($exists) {
+        return false;
+    }
+    
+    return $this->db->insert('users', $data);
+}
+
+
+    
     public function get_user($email) {
 
         // $alumni = $this->db->get_where('alumni', ['id_alumni' => $id])->row();

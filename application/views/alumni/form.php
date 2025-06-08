@@ -93,18 +93,17 @@
             <small class="text-muted">Nomor aktif yang bisa dihubungi</small>
           </div>
 
-          <!-- Input Email dan Password untuk user login (opsional) -->
-          <div class="mb-3">
-            <label for="email" class="form-label">Email (untuk login)</label>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email (Opsional)</label>
             <input type="email" class="form-control" id="email" name="email">
-            <small class="text-muted">Opsional - untuk login ke sistem alumni</small>
-          </div>
+            <small class="text-muted">Isi hanya jika ingin membuat akun login</small>
+        </div>
 
-          <div class="mb-3">
-            <label for="password" class="form-label">Password (untuk login)</label>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password">
-            <small class="text-muted">Opsional - password untuk login ke sistem alumni</small>
-          </div>
+            <small class="text-muted">Diperlukan hanya jika mengisi email</small>
+        </div>
 
           <hr>
 

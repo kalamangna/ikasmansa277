@@ -147,6 +147,20 @@ public function save() {
         return;
     }
     
+
+
+
+
+
+    if (!$alumni_id) {
+        if (!empty($photo_path)) {
+            @unlink(FCPATH.$photo_path);
+        }
+        $this->session->set_flashdata('error', 'Gagal menyimpan data alumni');
+        redirect('alumni/create?ut='.$this->input->get('ut'));
+        return;
+    }
+
     // Hanya buat user jika email dan password diisi
     if (!empty($email) && !empty($password)) {
         // Cek apakah email sudah ada
@@ -163,13 +177,24 @@ public function save() {
             return;
         }
         
-        // Buat user baru
+    if (!empty(trim($post['email']))) {
         $user_data = [
-            'email' => $email,
-            'password_hash' => password_hash($password, PASSWORD_BCRYPT),
-            'role_id' => 5, // Sesuaikan dengan role alumni
+            'email' => trim($post['email']),
+            'password_hash' => password_hash($post['password'], PASSWORD_BCRYPT),
+            'role_id' => 5, // role alumni
             'alumni_id' => $alumni_id
         ];
+        
+        if (!$this->User_model->insert_user($user_data)) {
+            $this->Alumni_model->delete_alumni($alumni_id);
+            if (!empty($photo_path)) {
+                @unlink(FCPATH.$photo_path);
+            }
+            $this->session->set_flashdata('error', 'Email sudah digunakan');
+            redirect('alumni/create?ut='.$this->input->get('ut'));
+            return;
+            }
+        }
         
         $user_id = $this->User_model->insert_user($user_data);
         
