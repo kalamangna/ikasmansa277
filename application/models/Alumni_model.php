@@ -320,4 +320,35 @@ public function insert_alumni($data) {
         $this->db->where('id_alumni', $id_alumni);
         return $this->db->get('alumni')->row();
     }
+
+
+
+    public function get_alumni_dobel($banyak=10) {
+        $query = $this -> db -> query("
+            SELECT alumni.nama_lengkap,alumni.alamat_domisili, count(alumni.id_alumni) as jml 
+            FROM alumni 
+            GROUP BY alumni.nama_lengkap,alumni.alamat_domisili 
+            ORDER BY jml DESC 
+            LIMIT $banyak;
+                ");
+        return $query -> result();
+    }
+
+
+    public function get_dobel_data($nama_lengkap=null, $alamat_domisili=null) 
+    {
+        $this->db->select('alumni.*, pendidikan.angkatan, pendidikan.jurusan, 
+            (SELECT COUNT(A2.id_alumni) FROM alumni A2 WHERE A2.referred_by = alumni.id_alumni) AS ref_jumlah 
+            ');
+        $this->db->from('alumni');
+        $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
+        $this->db->where('alumni.nama_lengkap', $nama_lengkap);
+        $this->db->where('alumni.alamat_domisili', $alamat_domisili);
+        $this->db->order_by('alumni.id_alumni', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }        
+
+
+
 }

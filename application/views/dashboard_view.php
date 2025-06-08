@@ -45,39 +45,30 @@
 </div>
 
 <div class="row g-4 mb-4">
-  <div class="col-md-5 col-lg-4">
-    <div class="card shadow" style="min-height: 450px;">
+  <div class="col-lg-4">
+    <div class="card shadow h-100">
       <div class="card-header">Jumlah Alumni per Jurusan</div>
       <div class="card-body">
-        <canvas id="chartJurusan"></canvas>
+        <div class="chart-container">
+          <canvas id="chartJurusan"></canvas>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="col-md-7 col-lg-8">
-    <div class="card shadow" style="min-height: 450px;">
+  <div class="col-lg-8">
+    <div class="card shadow h-100">
       <div class="card-header">Jumlah Alumni per Angkatan</div>
       <div class="card-body">
-        <canvas id="chartAngkatan"></canvas>
+        <div class="chart-container">
+          <canvas id="chartAngkatan"></canvas>
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- <div class="col-md-4">
-    tes
-  </div>
-
-  <div class="col-md-8">
-    <div class="card shadow">
-      <div class="card-header">Jumlah Alumni per Jurusan</div>
-      <div class="card-body">
-        <canvas id="chartJurusan"></canvas>
-      </div>
-    </div>
-  </div> -->
 
   <div class="col-md-6">
-    <div class="card shadow mb-3">
+    <div class="card shadow mb-4">
       <div class="card-header">Domisili Alumni</div>
       <div class="card-body">
         <div class="table-responsive">
@@ -100,10 +91,8 @@
         </div>
       </div>
     </div>
-<!--   </div>
 
-  <div class="col-md-6"> -->
-    <div class="card shadow mb-3">
+    <div class="card shadow mb-4">
       <div class="card-header">Pekerjaan Alumni</div>
       <div class="card-body">
         <div class="table-responsive">
@@ -126,10 +115,8 @@
         </div>
       </div>
     </div>
-<!--   </div>
 
-  <div class="col-md-6"> -->
-    <div class="card shadow mb-3">
+    <div class="card shadow mb-4">
       <div class="card-header">Jenis Kelamin Alumni</div>
       <div class="card-body">
         <div class="table-responsive">
@@ -159,7 +146,7 @@
   </div>
 
   <div class="col-md-6">
-    <div class="card shadow mb-3">
+    <div class="card shadow mb-4">
       <div class="card-header">Data Terbaru</div>
       <div class="card-body">
         <div class="table-responsive">
@@ -185,10 +172,8 @@
         </div>
       </div>
     </div>
-<!--   </div>
 
-  <div class="col-md-6"> -->
-    <div class="card shadow mb-3">
+    <div class="card shadow mb-4">
       <div class="card-header">Data Tercepat</div>
       <div class="card-body">
         <div class="table-responsive">
@@ -214,10 +199,8 @@
         </div>
       </div>
     </div>
-<!--   </div>
 
-  <div class="col-md-6"> -->
-    <div class="card shadow mb-3">
+    <div class="card shadow mb-4">
       <div class="card-header">Referral Terbanyak</div>
       <div class="card-body">
         <div class="table-responsive">
@@ -245,6 +228,25 @@
     </div>
   </div>
 </div>
+
+<style>
+  /* CSS untuk chart selalu sama tinggi */
+  .chart-container {
+    position: relative;
+    height: 200px;
+  }
+
+  @media (min-width: 768px) {
+    .chart-container {
+      height: 300px;
+    }
+  }
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+</style>
 
 
 <script>
@@ -284,6 +286,7 @@
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
         y: {
           beginAtZero: true,
@@ -327,6 +330,7 @@
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           position: 'bottom', // Posisi legend di atas,

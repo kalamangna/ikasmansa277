@@ -6,6 +6,8 @@ class Admin extends CI_Controller {
 
         if (!$this->session->userdata('logged_in')) {
             redirect('auth/login'); // arahkan ke halaman login jika belum login
+        }        if (!$this->session->userdata('logged_in')) {
+            redirect('auth/login'); // arahkan ke halaman login jika belum login
         }
     }
 
@@ -21,6 +23,7 @@ class Admin extends CI_Controller {
         $this->load->view('admin/dashboard');
         $this->load->view('template/footer');
     }
+
 
     // Pages
     public function pages() {

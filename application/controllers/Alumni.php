@@ -607,6 +607,46 @@ public function update_user($id_alumni) {
 
 
 
+    public function dobel($banyak=2) {
+
+        $sesi = $this->session->userdata();
+        // print_r($sesi);
+
+        if (!$this->session->userdata('logged_in')) {
+            redirect('auth/login'); // arahkan ke halaman login jika belum login
+        }        if (!$this->session->userdata('logged_in')) {
+            redirect('auth/login'); // arahkan ke halaman login jika belum login
+        }
+
+        $data_dobel = $this->Alumni_model->get_alumni_dobel($banyak);
+
+        $all = 1;
+        foreach ($data_dobel as $db) {
+            $get_dobel_data = $this->Alumni_model->get_dobel_data($db->nama_lengkap, $db->alamat_domisili);
+            $ur = 1;
+            foreach ($get_dobel_data as $gdb) {
+                echo "<br/>".$ur++." - ".$gdb->nama_lengkap." - (".$gdb->angkatan.") - ".$gdb->alamat_domisili." - ".$gdb->ref_jumlah."- ".$all++;
+
+                if ($ur>2 AND $gdb->ref_jumlah==0) {
+                    // echo "perlu dihapus";
+                   $hapus = $this -> hapus_alumni($gdb->id_alumni);
+                   if($hapus){
+                    echo "- berhasil dihapus";
+                   }
+                }
+
+
+            }
+
+
+        }
+
+
+
+        // $this->load->view('template/header');
+        // $this->load->view('admin/dobel');
+        // $this->load->view('template/footer');
+    }
 
 
 

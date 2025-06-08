@@ -13,21 +13,21 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
   <!-- Primary Meta Tags -->
   <title>IKA SMANSA / 277 Sinjai</title>
   <meta name="title" content="IKA SMANSA / 277 Sinjai  - Pendataan Alumni" />
-  <meta name="description" content="" />
+  <meta name="description" content="Website Pendataan Alumni IKA SMANSA / 277 Sinjai" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="<?php echo base_url(); ?>" />
   <meta property="og:title" content="IKA SMANSA / 277 Sinjai - Pendataan Alumni" />
-  <meta property="og:description" content="" />
-  <meta property="og:image" content="<?php echo base_url("meta.jpeg"); ?>" />
+  <meta property="og:description" content="Website Pendataan Alumni IKA SMANSA / 277 Sinjai" />
+  <meta property="og:image" content="<?php echo base_url("meta.png"); ?>" />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="<?php echo base_url(); ?>" />
   <meta property="twitter:title" content="IKA SMANSA / 277 Sinjai - Pendataan Alumni" />
-  <meta property="twitter:description" content="" />
-  <meta property="twitter:image" content="<?php echo base_url("meta.jpeg"); ?>" />
+  <meta property="twitter:description" content="Website Pendataan Alumni IKA SMANSA / 277 Sinjai" />
+  <meta property="twitter:image" content="<?php echo base_url("meta.png"); ?>" />
 
   <!-- Meta Tags Generated with https://metatags.io -->
   <link rel="shortcut icon" href="<?php echo base_url("images/logo_ika.ico"); ?>" type="image/x-icon">
@@ -54,7 +54,7 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-      <a class="navbar-brand" href="http://ikasmansa277.id">
+      <a class="navbar-brand" href="<?php echo base_url(); ?>">
         <img src="<?php echo base_url("images/logo_ika1.png") ?>" alt="Logo IKA" width="30" height="30" class="d-inline-block align-text-top">
         <span class="ms-1">IKA SMANSA / 277 Sinjai</span>
       </a>
@@ -116,10 +116,10 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
 
 
     <?php if ($this->session->flashdata('success')): ?>
-        <div class="alert alert-success"><?= $this->session->flashdata('success') ?></div>
+      <div class="alert alert-success"><?= $this->session->flashdata('success') ?></div>
     <?php endif; ?>
     <?php if ($this->session->flashdata('error')): ?>
-        <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
+      <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
     <?php endif; ?>
 
 
