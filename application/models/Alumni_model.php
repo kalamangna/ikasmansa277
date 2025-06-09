@@ -177,7 +177,7 @@ public function insert_alumni($data) {
         $this->db->join('provinsi', 'alumni.provinsi_id = provinsi.id_provinsi');
         $this->db->join('kabupaten', 'alumni.kabupaten_id = kabupaten.id_kabupaten');        
         $this->db->where('alumni.referred_by', $id_alumni);
-        $this->db->order_by('pendidikan.angkatan', 'ASC');
+        $this->db->order_by('alumni.created_at', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }

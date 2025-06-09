@@ -202,7 +202,9 @@ public function save() {
             redirect('alumni/create?ut='.$this->input->get('ut'));
             return;
         }
-        
+    
+
+    if (!isset($post['email'])) {$post['email']=" ";}
     if (!empty(trim($post['email']))) {
         $user_data = [
             'email' => trim($post['email']),

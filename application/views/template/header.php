@@ -118,8 +118,11 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
     <?php if ($this->session->flashdata('success')): ?>
       <div class="alert alert-success"><?= $this->session->flashdata('success') ?></div>
     <?php endif; ?>
-    <?php if ($this->session->flashdata('error')): ?>
-      <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
+    <?php 
+    if ($this->session->flashdata('error')):
+    $this->Telegram_model->send_alert('error', $this->session->flashdata('error'));
+     ?>
+    <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
     <?php endif; ?>
 
 
