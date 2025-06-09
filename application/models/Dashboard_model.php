@@ -112,12 +112,14 @@ class Dashboard_model extends CI_Model {
         $this->db->select('
             pendidikan.angkatan,
             SUM(CASE WHEN alumni.jenis_kelamin = "Laki-laki" THEN 1 ELSE 0 END) AS jumlah_laki_laki,
-            SUM(CASE WHEN alumni.jenis_kelamin = "Perempuan" THEN 1 ELSE 0 END) AS jumlah_perempuan
+            SUM(CASE WHEN alumni.jenis_kelamin = "Perempuan" THEN 1 ELSE 0 END) AS jumlah_perempuan,
+            COUNT(*) AS total_semua
+
         ');
         $this->db->from('alumni');
         $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
         $this->db->group_by('pendidikan.angkatan');
-        $this->db->order_by('pendidikan.angkatan', 'ASC');
+        $this->db->order_by('total_semua', 'DESC');
         $query = $this->db->get();
         return $query->result();
     }
