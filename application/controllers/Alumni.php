@@ -247,10 +247,10 @@ public function save() {
     $this->session->set_flashdata('success', 'Data alumni berhasil disimpan.');
 
     // $message = 'Pendataan '. $post['nama_lengkap'] .' angkatan '.$post['angkatan'].' berhasil !!';
-    $message = '✨ <b><u>PENDAFTARAN BERHASIL</u></b> ✨' . "\n\n" .
+    $message = '<b><u>#INPUT BERHASIL</u></b>' . "\n" .
                '🟢 <b>Status:</b> BERHASIL' . "\n" .
                '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($post['nama_lengkap']) . '</i>' . "\n" .
-               '📌 <b>Angkatan:</b> <code>' . $post['angkatan'] . '</code>' . "\n\n" .
+               '📌 <b>Angkatan:</b> <code>' . $post['angkatan'] . '</code>' . "\n" .
                '⏱ <i>Waktu: ' . date('d/m/Y H:i:s') . '</i>';
     $kirim_tele = $this->send_telegram_message($message);
     // print_r($kirim_tele); die();
@@ -468,6 +468,18 @@ public function update_user($id_alumni) {
         }
 
         $this->session->set_flashdata('success', $message);
+
+        $alumni = $this->Alumni_model->get_alumni($id_alumni);
+        $message = '<b><u>#UPDATE USER BERHASIL</u></b>' . "\n" .
+                   '🟢 <b>Status:</b> BERHASIL' . "\n" .
+                   '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($alumni->nama_lengkap) . '</i>' . "\n" .
+                   '📌 <b>Angkatan:</b> <code>' . $alumni->angkatan . '</code>' . "\n\n" .
+                   '⭐ <b>Admin:</b> <code>' . $this->session->userdata('nama_lengkap') . '</code>' . "\n" .
+                   '⏱ <i>Waktu: ' . date('d/m/Y H:i:s') . '</i>';
+        $kirim_tele = $this->send_telegram_message($message);
+        // print_r($kirim_tele); die();
+
+
         redirect('alumni/detail/'.$this->input->post('alumni_id'));
     }
 }
@@ -607,6 +619,14 @@ public function update_user($id_alumni) {
         
         if ($result) {
             $this->session->set_flashdata('success', 'Data alumni '.$alumni->nama_lengkap.' dan semua data terkait berhasil dihapus.');
+
+            $message = '<b><u>#HAPUS USER BERHASIL</u></b>' . "\n" .
+                       '🟢 <b>Status:</b> BERHASIL' . "\n" .
+                       '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($alumni->nama_lengkap) . '</i>' . "\n" .
+                       '📌 <b>Angkatan:</b> <code>' . $alumni->angkatan . '</code>' . "\n\n" .
+                       '⭐ <b>Admin:</b> <code>' . $this->session->userdata('nama_lengkap') . '</code>' . "\n" .
+                       '⏱ <i>Waktu: ' . date('d/m/Y H:i:s') . '</i>';
+            $kirim_tele = $this->send_telegram_message($message);
         } else {
             $this->session->set_flashdata('error', 'Gagal menghapus data alumni.');
         }

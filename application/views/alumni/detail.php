@@ -1,5 +1,7 @@
 <!--  -->
 <?php
+
+// print_r($this->session->userdata());
 $user_role = $this->session->userdata('role');
 $user_angkatan = $this->session->userdata('angkatan'); // angkatan admin yang login
 $alumni_angkatan = $alumni->angkatan; // angkatan alumni yang sedang ditampilkan
