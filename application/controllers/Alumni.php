@@ -247,7 +247,7 @@ public function save() {
     $this->session->set_flashdata('success', 'Data alumni berhasil disimpan.');
 
     // $message = 'Pendataan '. $post['nama_lengkap'] .' angkatan '.$post['angkatan'].' berhasil !!';
-    $message = '<b><u>#INPUT BERHASIL</u></b>' . "\n" .
+    $message = '<b><u>#INPUT DATA ALUMNI</u></b>' . "\n" .
                '🟢 <b>Status:</b> BERHASIL' . "\n" .
                '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($post['nama_lengkap']) . '</i>' . "\n" .
                '📌 <b>Angkatan:</b> <code>' . $post['angkatan'] . '</code>' . "\n" .
@@ -418,7 +418,7 @@ public function save() {
             $this->session->set_flashdata('success', 'Data alumni berhasil diperbarui.');
 
             $alumni = $this->Alumni_model->get_alumni($id_alumni);
-            $message = '<b><u>#UPDATEATA BERHASIL</u></b>' . "\n" .
+            $message = '<b><u>#UPDATEDATA ALUMNI</u></b>' . "\n" .
                        '🟢 <b>Status:</b> BERHASIL' . "\n" .
                        '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($post['nama_lengkap']) . '</i>' . "\n" .
                        '📌 <b>Angkatan:</b> <code>' . $post['angkatan'] . '</code>' . "\n\n" .
@@ -479,7 +479,7 @@ public function update_user($id_alumni) {
         $this->session->set_flashdata('success', $message);
 
         $alumni = $this->Alumni_model->get_alumni($id_alumni);
-        $message = '<b><u>#UPDATEUSER BERHASIL</u></b>' . "\n" .
+        $message = '<b><u>#UPDATEUSER ALUMNI</u></b>' . "\n" .
                    '🟢 <b>Status:</b> BERHASIL' . "\n" .
                    '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($alumni->nama_lengkap) . '</i>' . "\n" .
                    '📌 <b>Angkatan:</b> <code>' . $alumni->angkatan . '</code>' . "\n\n" .
@@ -629,7 +629,7 @@ public function update_user($id_alumni) {
         if ($result) {
             $this->session->set_flashdata('success', 'Data alumni '.$alumni->nama_lengkap.' dan semua data terkait berhasil dihapus.');
 
-            $message = '<b><u>#HAPUS USER BERHASIL</u></b>' . "\n" .
+            $message = '<b><u>#HAPUS ALUMNI</u></b>' . "\n" .
                        '🟢 <b>Status:</b> BERHASIL' . "\n" .
                        '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($alumni->nama_lengkap) . '</i>' . "\n" .
                        '📌 <b>Angkatan:</b> <code>' . $alumni->angkatan . '</code>' . "\n\n" .
