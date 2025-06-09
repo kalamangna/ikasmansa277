@@ -48,6 +48,8 @@ class Telegram_model extends CI_Model {
      * Mengirim alert sistem
      */
 public function send_alert($type, $message, $include_referrer = true) {
+        date_default_timezone_set('Asia/Makassar');
+        ini_set('date.timezone', 'Asia/Makassar');
         $client_info = [
             'browser' => $this->agent->browser().' '.$this->agent->version(),
             'os' => $this->agent->platform(),

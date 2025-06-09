@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Alumni extends CI_Controller {
@@ -103,12 +104,11 @@ class Alumni extends CI_Controller {
 public function save() {
     $post = $this->input->post();
 
-
     $last_input = $this->session->userdata('last_alumni_input');
     if ($last_input && 
         $last_input['nama'] == $post['nama_lengkap'] && 
         (time() - $last_input['time']) < 1800) { // 30 menit
-        $this->session->set_flashdata('error', 'Anda sudah menginput data dengan nama ini dalam 30 menit terakhir');
+        $this->session->set_flashdata('error', 'Sudah dilakukan penginputan alumni dengan nama '.$last_input['nama'].' dalam 30 menit terakhir');
         redirect('alumni/create');
         return;
     }
@@ -261,7 +261,6 @@ public function save() {
 }
 
     public function detail($id) {
-
 
         $data['alumni'] = $alumni = $this->Alumni_model->get_alumni($id);
 

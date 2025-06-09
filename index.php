@@ -1,4 +1,6 @@
 <?php
+putenv('TZ=Asia/Makassar');
+
 /**
  * CodeIgniter
  *

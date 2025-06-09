@@ -1,7 +1,5 @@
 <?php
 // Letakkan di paling atas file sebelum output apapun
-date_default_timezone_set('Asia/Makassar');
-ini_set('date.timezone', 'Asia/Makassar');
 ?>
 
 <?php
@@ -124,7 +122,6 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
  <div class="row">
             <div class="col text-end">
                 <?php
-                date_default_timezone_set('Asia/Makassar');
                 
                 $hari = date('l');
                 $tanggal = date('d/m/Y');
