@@ -14,12 +14,10 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
         <h3 class="mb-0">Data Alumni</h3>
       </div>
       <div class="card-body">
-        <p>Terima kasih Anda telah mengisi pendataan alumni.</p>
+        <p>Terima kasih <strong class="text-danger"><?php echo htmlspecialchars($alumni->nama_lengkap); ?> </strong> angkatan <strong class="text-danger"><?=$alumni->angkatan?> </strong> telah berpatisipasi di Pendataan&nbsp;Alumni&nbsp;SMAN&nbsp;1/277&nbsp;Sinjai.</p>
         <p>Anda adalah Alumni ke <strong><?php echo $urutan_angkatan; ?></strong> dari angkatan <strong><?php echo $alumni->angkatan; ?></strong> yang telah melakukan pendataan.</p>
         <p>Anda adalah Alumni ke <strong><?php echo $urutan_alumni; ?></strong> dari total <strong><?php echo $total_alumni; ?></strong> yang telah melakukan pendataan.</p>
 
-
-        
         <!-- Foto Profil Section -->
         <div class="text-center mb-4">
           <div class="profile-photo-container" style="width: 150px; height: 150px; margin: 0 auto; border-radius: 50%; overflow: hidden; border: 3px solid #f0f0f0;">

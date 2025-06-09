@@ -193,7 +193,7 @@ public function save() {
         $existing = $this->db->get_where('users', ['email' => $email])->row();
         if ($existing) {
             // Hapus data alumni yang sudah tersimpan
-            $this->Alumni_model->delete_alumni($alumni_id);
+            $this->Alumni_model->hapus_alumni($alumni_id);
             if (!empty($photo_path) && file_exists(FCPATH.$photo_path)) {
                 unlink(FCPATH.$photo_path);
             }
@@ -245,10 +245,18 @@ public function save() {
 
     $referral = $post['referred_by'] ?? '';
     $this->session->set_flashdata('success', 'Data alumni berhasil disimpan.');
+
+    $message = 'Pendataan '. $post['nama_lengkap'] .' angkatan '.$post['angkatan'].' berhasil !!';
+    $kirim_tele = $this->send_telegram_message($message);
+    // print_r($kirim_tele); die();
+
+
     redirect('alumni/detail/'.$alumni_id.'?ut='.$referral);
 }
 
     public function detail($id) {
+
+
         $data['alumni'] = $alumni = $this->Alumni_model->get_alumni($id);
 
         // print_r($data); die();   
@@ -649,9 +657,54 @@ public function update_user($id_alumni) {
     }
 
 
-
-
-
+    public function send_telegram_message($message) {
+        // URL API Telegram
+        $url = "https://api.telegram.org/bot" . TELEGRAM_BOT_TOKEN . "/sendMessage";
+        
+        // Data yang akan dikirim
+        $data = array(
+            'chat_id' => TELEGRAM_CHAT_ID,
+            'text' => $message,
+            'parse_mode' => 'HTML'
+        );
+        
+        // Inisialisasi cURL
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        // Untuk development (nonaktifkan di production)
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
+        // Eksekusi request
+        $result = curl_exec($ch);
+        
+        // Tutup koneksi cURL
+        curl_close($ch);
+        
+        // Decode response JSON
+        $resultArray = json_decode($result, TRUE);
+        
+        if (isset($resultArray['ok']) && $resultArray['ok']) {
+            return true;
+        }
+        
+        return isset($resultArray['description']) ? $resultArray['description'] : 'Unknown error';
+    }
+    // Contoh penggunaan fungsi
+    public function test_send_message() {
+        $message = 'Halo! Ini adalah pesan test dari CodeIgniter 3.';
+        
+        $result = $this->send_telegram_message($message);
+        
+        if ($result === true) {
+            echo 'Pesan berhasil dikirim!';
+        } else {
+            echo 'Gagal mengirim pesan: ' . $result;
+        }
+    }
 
     
 }

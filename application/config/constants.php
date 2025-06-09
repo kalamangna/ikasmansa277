@@ -83,3 +83,7 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+
+define('TELEGRAM_BOT_TOKEN', '7991961663:AAHjzyngTT1uXj3fMUdYnEIPmsCMzuMMKFk');
+define('TELEGRAM_CHAT_ID', '-1002881420702');
