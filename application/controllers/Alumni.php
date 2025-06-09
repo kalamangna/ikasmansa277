@@ -197,38 +197,37 @@ public function save() {
             if (!empty($photo_path) && file_exists(FCPATH.$photo_path)) {
                 unlink(FCPATH.$photo_path);
             }
-            
             $this->session->set_flashdata('error', 'Email sudah digunakan, silakan gunakan email lain.');
             redirect('alumni/create?ut='.$this->input->get('ut'));
             return;
         }
     
 
-    if (!isset($post['email'])) {$post['email']=" ";}
-    if (!empty(trim($post['email']))) {
+    // if (!isset($post['email'])) {$post['email']=" ";}
+    if (!empty($email)) {
         $user_data = [
-            'email' => trim($post['email']),
-            'password_hash' => password_hash($post['password'], PASSWORD_BCRYPT),
+            'email' => $email,
+            'password_hash' => password_hash($password, PASSWORD_BCRYPT),
             'role_id' => 5, // role alumni
             'alumni_id' => $alumni_id
         ];
         
-        if (!$this->User_model->insert_user($user_data)) {
-            $this->Alumni_model->delete_alumni($alumni_id);
-            if (!empty($photo_path)) {
-                @unlink(FCPATH.$photo_path);
-            }
-            $this->session->set_flashdata('error', 'Email sudah digunakan');
-            redirect('alumni/create?ut='.$this->input->get('ut'));
-            return;
-            }
+            // if (!$this->User_model->insert_user($user_data)) {
+            //     $this->Alumni_model->hapus_alumni($alumni_id);
+            //     if (!empty($photo_path)) {
+            //         @unlink(FCPATH.$photo_path);
+            //     }
+            //     $this->session->set_flashdata('error', 'Email sudah digunakan');
+            //     redirect('alumni/create?ut='.$this->input->get('ut'));
+            //     return;
+            //     }
         }
         
         $user_id = $this->User_model->insert_user($user_data);
-        
+
         if (!$user_id) {
             // Hapus data alumni jika gagal buat user
-            $this->Alumni_model->delete_alumni($alumni_id);
+            $this->Alumni_model->hapus_alumni($alumni_id);
             if (!empty($photo_path) && file_exists(FCPATH.$photo_path)) {
                 unlink(FCPATH.$photo_path);
             }
