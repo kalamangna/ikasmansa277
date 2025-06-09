@@ -112,6 +112,36 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
       </div>
     </div>
   </nav>
+      <!-- Info Hari, Tanggal, dan Waktu (PHP) -->
+    <!-- <div class="bg-light border-bottom"> -->
+        <div class="container">
+ <div class="row">
+            <div class="col text-end">
+                <?php
+                date_default_timezone_set('Asia/Jakarta');
+                
+                $hari = date('l');
+                $tanggal = date('d/m/Y');
+                $waktu = date('H:i:s');
+                
+                $nama_hari = [
+                    'Sunday' => 'Minggu',
+                    'Monday' => 'Senin',
+                    'Tuesday' => 'Selasa',
+                    'Wednesday' => 'Rabu',
+                    'Thursday' => 'Kamis',
+                    'Friday' => 'Jumat',
+                    'Saturday' => 'Sabtu'
+                ];
+                ?>
+                <span class="fw-bold me-1"><?= $nama_hari[$hari] ?></span>
+                <span class="me-1"><?= $tanggal ?></span>
+                <span class="me-1">|</span>
+                <span class="text-muted"><?= $waktu ?></span>
+            </div>
+        </div>        </div>
+    <!-- </div> --> 
+
   <div class="container mt-4" style="min-height: 100vh;">
 
 
