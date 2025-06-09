@@ -36,33 +36,45 @@ class Telegram_model extends CI_Model {
         ]);
         
         $result = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        
-        return json_decode($result, true);
+         
+        // return json_decode($result, true);
+        return $http_code == 200 ? true : false;
+
     }
 
     /**
      * Mengirim alert sistem
      */
-    public function send_alert($type, $message) {
+public function send_alert($type, $message, $include_referrer = true) {
         $client_info = [
             'browser' => $this->agent->browser().' '.$this->agent->version(),
             'os' => $this->agent->platform(),
             'ip' => $this->input->ip_address(),
-            'device' => $this->agent->is_mobile() ? 'Mobile' : 'Desktop',
-            'url' => current_url()
+            'device' => $this->agent->is_mobile() ? '📱 Mobile' : '💻 Desktop',
+            'url' => current_url(),
+            'referrer' => $include_referrer ? ($this->agent->referrer() ?? 'Direct/Bookmark') : 'N/A'
         ];
 
-        $icon = ($type == 'success') ? '✅' : '🚨';
-        $text = "$icon <b>".strtoupper($type)." ALERT</b>\n"
+        $icon = [
+            'success' => '✅',
+            'error' => '🚨',
+            'warning' => '⚠️',
+            'info' => 'ℹ️'
+        ][strtolower($type)] ?? '📌';
+
+        $text = "{$icon} <b>".strtoupper($type)." ALERT</b>\n"
                ."🕒 <b>Waktu:</b> ".date('Y-m-d H:i:s')."\n"
-               ."📝 <b>Pesan:</b> $message\n\n"
+               ."📝 <b>Pesan:</b> {$message}\n\n"
                ."🌐 <b>Browser:</b> {$client_info['browser']}\n"
                ."🖥️ <b>OS:</b> {$client_info['os']}\n"
-               ."📱 <b>Device:</b> {$client_info['device']}\n"
-               ."🔗 <b>URL:</b> {$client_info['url']}\n"
+               ."{$client_info['device']}\n"
+               ."🔗 <b>URL Saat Ini:</b> {$client_info['url']}\n"
+               ."↩️ <b>Referrer:</b> {$client_info['referrer']}\n"
                ."🛡️ <b>IP:</b> {$client_info['ip']}";
 
         return $this->send_message($text);
     }
+    
 }
