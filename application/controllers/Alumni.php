@@ -246,7 +246,12 @@ public function save() {
     $referral = $post['referred_by'] ?? '';
     $this->session->set_flashdata('success', 'Data alumni berhasil disimpan.');
 
-    $message = 'Pendataan '. $post['nama_lengkap'] .' angkatan '.$post['angkatan'].' berhasil !!';
+    // $message = 'Pendataan '. $post['nama_lengkap'] .' angkatan '.$post['angkatan'].' berhasil !!';
+    $message = '✨ <b><u>PENDAFTARAN BERHASIL</u></b> ✨' . "\n\n" .
+               '🟢 <b>Status:</b> BERHASIL' . "\n" .
+               '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($post['nama_lengkap']) . '</i>' . "\n" .
+               '📌 <b>Angkatan:</b> <code>' . $post['angkatan'] . '</code>' . "\n\n" .
+               '⏱ <i>Waktu: ' . date('d/m/Y H:i:s') . '</i>';
     $kirim_tele = $this->send_telegram_message($message);
     // print_r($kirim_tele); die();
 
