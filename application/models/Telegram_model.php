@@ -64,7 +64,7 @@ public function send_alert($type, $message, $include_referrer = true) {
             'info' => 'ℹ️'
         ][strtolower($type)] ?? '📌';
 
-        $text = "{$icon} <b>".strtoupper($type)." ALERT</b>\n"
+        $text = "{$icon} <b>#".strtoupper($type)." ALERT</b>\n"
                ."🕒 <b>Waktu:</b> ".date('Y-m-d H:i:s')."\n"
                ."📝 <b>Pesan:</b> {$message}\n\n"
                ."🌐 <b>Browser:</b> {$client_info['browser']}\n"
@@ -76,5 +76,5 @@ public function send_alert($type, $message, $include_referrer = true) {
 
         return $this->send_message($text);
     }
-    
+
 }
