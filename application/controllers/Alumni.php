@@ -121,7 +121,7 @@ public function save() {
 
         $config = [
             'upload_path'   => $upload_path,
-            'allowed_types' => 'gif|jpg|jpeg|png|webp',
+            'allowed_types' => '*',
             'max_size'      => 10240, // 10MB
             'file_name'     => 'alumni_'.$post['nama_lengkap'].'_'.time(),
             'overwrite'     => false
@@ -330,7 +330,8 @@ public function save() {
 
         // Konfigurasi upload
         $config['upload_path'] = './uploads/foto_alumni/';
-        $config['allowed_types'] = 'jpg|jpeg|png';
+        // $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['allowed_types'] = '*';
         $config['max_size'] = 2048; // 2MB
         $config['file_name'] = 'alumni_'.$id_alumni.'_'.time();
         $config['overwrite'] = true;

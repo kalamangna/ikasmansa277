@@ -16,22 +16,24 @@
           <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
         <?php endif; ?>
 
-        <form method="post" action="<?php echo site_url('alumni/save?ut=' . $this->input->get('ut')); ?>" enctype="multipart/form-data">
+        <form method="post" action="<?php echo site_url('alumni/save?ut=' . $this->input->get('ut')); ?>" enctype="multipart/form-data" class="needs-validation" novalidate>
           <h4>Data Pribadi</h4>
 
           <div class="mb-3">
             <label for="nama_lengkap" class="form-label">Nama Lengkap <small class="text-muted">(Wajib diisi)</small></label>
             <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" required>
             <small class="text-muted">Isikan nama lengkap sesuai ijazah</small>
+            <div class="invalid-feedback">*Nama lengkap wajib diisi.</div>
           </div>
 
           <div class="mb-3">
             <div class="row g-3">
               <div class="col-md-6">
-                <label for="nama_panggilan" class="form-label">Nama Panggilan</label>
+                <label for="nama_panggilan" class="form-label">Nama Panggilan <small class="text-muted">(Opsional)</small></label>
                 <input type="text" class="form-control" id="nama_panggilan" name="nama_panggilan" value="<?php echo set_value('nama_panggilan', $alumni->nama_panggilan ?? ''); ?>">
                 <small class="text-muted">Nama yang biasa dipanggil sehari-hari</small>
               </div>
+
               <div class="col-md-6">
                 <label for="jenis_kelamin" class="form-label">Jenis Kelamin <small class="text-muted">(Wajib diisi)</small></label>
                 <div class="form-check">
@@ -41,6 +43,9 @@
                 <div class="form-check">
                   <input class="form-check-input" type="radio" id="perempuan" name="jenis_kelamin" value="Perempuan" <?php echo set_value('jenis_kelamin', $alumni->jenis_kelamin ?? '') == 'Perempuan' ? 'checked' : ''; ?>>
                   <label class="form-check-label" for="perempuan">Perempuan</label>
+                  <div class="invalid-feedback">
+                    *Silakan pilih jenis kelamin.
+                  </div>
                 </div>
               </div>
             </div>
@@ -52,55 +57,63 @@
                 <label for="tempat_lahir" class="form-label">Tempat Lahir <small class="text-muted">(Wajib diisi)</small></label>
                 <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" required>
                 <small class="text-muted">Kota/kabupaten tempat lahir</small>
+                <div class="invalid-feedback">*Tempat lahir wajib diisi.</div>
               </div>
               <div class="col-md-6">
                 <label for="tanggal_lahir" class="form-label">Tanggal Lahir <small class="text-muted">(Wajib diisi)</small></label>
                 <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" required>
+                <div class="invalid-feedback">*Silakan pilih tanggal lahir.</div>
               </div>
             </div>
           </div>
 
           <div class="mb-3">
-            <label for="provinsi" class="form-label">Provinsi <small class="text-muted">(Wajib diisi)</small></label>
+            <label for="provinsi" class="form-label">Provinsi Domisili <small class="text-muted">(Wajib diisi)</small></label>
             <select class="form-select" id="provinsi" name="provinsi_id" required>
               <option value="">-- Pilih Provinsi --</option>
               <?php foreach ($provinsi as $prov): ?>
                 <option value="<?php echo $prov->id_provinsi; ?>"><?php echo $prov->nama_provinsi; ?></option>
               <?php endforeach; ?>
             </select>
+            <div class="invalid-feedback">*Silakan pilih provinsi.</div>
           </div>
 
           <div class="mb-3">
-            <label for="kabupaten" class="form-label">Kabupaten/Kota <small class="text-muted">(Wajib diisi)</small></label>
+            <label for="kabupaten" class="form-label">Kabupaten/Kota Domisili <small class="text-muted">(Wajib diisi)</small></label>
             <select class="form-select" id="kabupaten" name="kabupaten_id" required>
               <option value="">-- Pilih Kabupaten/Kota --</option>
               <!-- Bisa diisi via AJAX berdasarkan provinsi -->
             </select>
+            <div class="invalid-feedback">*Silakan pilih kabupaten/kota.</div>
           </div>
 
           <div class="mb-3">
             <label for="alamat_domisili" class="form-label">Alamat Domisili <small class="text-muted">(Wajib diisi)</small></label>
             <textarea class="form-control" id="alamat_domisili" name="alamat_domisili" rows="2" required></textarea>
             <small class="text-muted">Alamat tempat tinggal saat ini</small>
+            <div class="invalid-feedback">*Alamat domisili wajib diisi.</div>
           </div>
 
           <div class="mb-3">
             <label for="no_telepon" class="form-label">Nomor Telepon/WhatsApp <small class="text-muted">(Wajib diisi)</small></label>
             <input type="text" class="form-control" id="no_telepon" name="no_telepon" required>
             <small class="text-muted">Nomor aktif yang bisa dihubungi</small>
+            <div class="invalid-feedback">*Nomor telepon/WhatsApp wajib diisi.</div>
           </div>
 
-        <div class="mb-3">
-            <label for="email" class="form-label">Email (Opsional)</label>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email <small class="text-muted">(Opsional)</small></label>
             <input type="email" class="form-control" id="email" name="email">
             <small class="text-muted">Isi hanya jika ingin membuat akun login</small>
-        </div>
+            <div class="invalid-feedback">*Silakan masukkan email yang valid.</div>
+          </div>
 
-        <div class="mb-3">
+          <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password">
             <small class="text-muted">Diperlukan hanya jika mengisi email</small>
-        </div>
+            <div class="invalid-feedback">*Silakan masukkan password.</div>
+          </div>
 
           <hr>
 
@@ -120,7 +133,9 @@
                   }
                   ?>
                 </select>
+                <div class="invalid-feedback">*Silakan pilih angkatan.</div>
               </div>
+
               <div class="col-md-6">
                 <label for="jurusan" class="form-label">Jurusan <small class="text-muted">(Wajib diisi)</small></label>
                 <select name="jurusan" id="jurusan" class="form-select" required>
@@ -136,12 +151,13 @@
                   <option disabled>──────────</option>
                   <option value="Umum">Umum / Tidak ada jurusan</option>
                 </select>
+                <div class="invalid-feedback">*Silakan pilih jurusan.</div>
               </div>
             </div>
           </div>
 
           <hr>
-          <!-- Data Pekerjaan -->
+
           <h4>Data Pekerjaan</h4>
           <div class="mb-3">
             <label for="pekerjaan" class="form-label">Pekerjaan</label>
@@ -185,18 +201,20 @@
           </div>
 
           <hr>
-          <!-- Foto -->
+
           <div class="mb-3">
             <label for="foto" class="form-label">Foto Profil <small class="text-muted">(Wajib diisi)</small></label>
             <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
             <small class="text-muted">Maksimal 10MB (akan otomatis diperkecil oleh sistem, disarankan foto portrait)</small>
-            <div id="preview-container" class="mt-2" style="display:none;">
+            <div class="invalid-feedback">*Silakan upload foto profil.</div>
+
+            <div id="preview-container" class="mt-2" style="display: none;">
               <img id="preview-image" src="#" alt="Preview Foto" style="max-width: 200px; max-height: 200px;">
             </div>
           </div>
 
-          <!-- Keterangan Tambahan -->
           <h4>Keterangan Tambahan</h4>
+
           <div class="mb-3">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="bergabung_komunitas" name="bergabung_komunitas" value="1">
@@ -220,7 +238,6 @@
             <textarea class="form-control" id="saran_masukan" name="saran_masukan" rows="3"></textarea>
           </div>
 
-          <!-- input kode refferal -->
           <input type="hidden" name="referred_by" value="<?php echo $referred_by; ?>">
 
           <button type="submit" class="btn btn-primary">Simpan Data</button>
@@ -232,20 +249,31 @@
 
 <script>
   // Photo preview functionality
-  document.getElementById('foto').addEventListener('change', function(e) {
+document.getElementById('foto').addEventListener('change', function(e) {
     const file = e.target.files[0];
+    
+    // Daftar tipe file gambar yang diizinkan
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
+    
     if (file) {
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const previewContainer = document.getElementById('preview-container');
-        const previewImage = document.getElementById('preview-image');
+        // Cek apakah tipe file termasuk gambar
+        if (!allowedTypes.includes(file.type)) {
+            alert('Silakan pilih file gambar (JPEG, PNG, GIF, WEBP, atau SVG)');
+            e.target.value = ''; // Reset input file
+            return;
+        }
         
-        previewImage.src = event.target.result;
-        previewContainer.style.display = 'block';
-      }
-      reader.readAsDataURL(file);
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const previewContainer = document.getElementById('preview-container');
+            const previewImage = document.getElementById('preview-image');
+
+            previewImage.src = event.target.result;
+            previewContainer.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
     }
-  });
+});
 
   // File size validation (10MB)
   document.querySelector('form').addEventListener('submit', function(e) {

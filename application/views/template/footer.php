@@ -76,6 +76,39 @@ if ($hidden_counter == false) {
 
 ?>
 
+
+<!-- Validasi form dengan Bootstrap -->
+<script>
+  (function() {
+    'use strict';
+    const forms = document.querySelectorAll('.needs-validation');
+
+    Array.from(forms).forEach(function(form) {
+      form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          // Fokus ke field pertama yang invalid
+          const firstInvalid = form.querySelector(':invalid');
+          if (firstInvalid) {
+            firstInvalid.focus();
+            // scroll ke posisi (jika dibutuhkan)
+            firstInvalid.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center'
+            });
+          }
+        }
+
+        form.classList.add('was-validated');
+      }, false);
+    });
+  })();
+</script>
+
+
+
 </body>
 
 </html>

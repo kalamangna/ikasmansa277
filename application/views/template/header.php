@@ -1,5 +1,4 @@
 <?php
-// Letakkan di paling atas file sebelum output apapun
 ?>
 
 <?php
@@ -116,34 +115,33 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
       </div>
     </div>
   </nav>
-      <!-- Info Hari, Tanggal, dan Waktu (PHP) -->
-    <!-- <div class="bg-light border-bottom"> -->
-        <div class="container">
- <div class="row">
-            <div class="col text-end">
-                <?php
-                
-                $hari = date('l');
-                $tanggal = date('d/m/Y');
-                $waktu = date('H:i:s');
-                
-                $nama_hari = [
-                    'Sunday' => 'Minggu',
-                    'Monday' => 'Senin',
-                    'Tuesday' => 'Selasa',
-                    'Wednesday' => 'Rabu',
-                    'Thursday' => 'Kamis',
-                    'Friday' => 'Jumat',
-                    'Saturday' => 'Sabtu'
-                ];
-                ?>
-                <span class="fw-bold me-1"><?= $nama_hari[$hari] ?></span>
-                <span class="me-1"><?= $tanggal ?></span>
-                <span class="me-1">|</span>
-                <span class="text-muted"><?= $waktu ?></span>
-            </div>
-        </div>        </div>
-    <!-- </div> --> 
+  <!-- Info Hari, Tanggal, dan Waktu (PHP) -->
+  <!-- <div class="bg-light border-bottom"> -->
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col text-end">
+        <?php
+        $hari = date('l');
+        $tanggal = date('d/m/Y');
+        $waktu = date('H:i:s');
+
+        $nama_hari = [
+          'Sunday' => 'Minggu',
+          'Monday' => 'Senin',
+          'Tuesday' => 'Selasa',
+          'Wednesday' => 'Rabu',
+          'Thursday' => 'Kamis',
+          'Friday' => 'Jumat',
+          'Saturday' => 'Sabtu'
+        ];
+        ?>
+        <span class="fw-bold me-1"><?= $nama_hari[$hari] ?>, <?= $tanggal ?></span>
+        <span class="me-1">|</span>
+        <span class="text-muted"><?= $waktu ?></span>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
 
   <div class="container mt-4" style="min-height: 100vh;">
 
@@ -151,11 +149,11 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
     <?php if ($this->session->flashdata('success')): ?>
       <div class="alert alert-success"><?= $this->session->flashdata('success') ?></div>
     <?php endif; ?>
-    <?php 
+    <?php
     if ($this->session->flashdata('error')):
-    $this->Telegram_model->send_alert('error', $this->session->flashdata('error'));
-     ?>
-    <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
+      $this->Telegram_model->send_alert('error', $this->session->flashdata('error'));
+    ?>
+      <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
     <?php endif; ?>
 
 
@@ -179,6 +177,7 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
                 <h5 class="modal-title" id="referralModalLabel">Link & Undangan WhatsApp</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
               </div>
+
               <div class="modal-body">
                 <?php
                 $referralLink = base_url('alumni/create?ut=' . $this->session->userdata('referral'));
@@ -186,24 +185,36 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
                 $whatsappLink = "https://wa.me/?text=" . $whatsappMessage;
                 ?>
 
-                <p><strong>Link Pendataan Alumni :</strong></p>
-                <div class="input-group mb-3">
-                  <code class="form-control" id="referralLink"><?php echo $referralLink; ?></code>
-                  <button onclick="copyLink('<?php echo htmlspecialchars($referralLink, ENT_QUOTES); ?>')">
-                    <i class="fa fa-copy"></i>
-                  </button>
+                <!-- Link Referral -->
+                <div class="mb-4">
+                  <label class="form-label fw-bolder">Link Pendataan Alumni:</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="referralLink" value="<?php echo $referralLink; ?>" readonly>
+                    <button class="btn btn-outline-secondary" onclick="copyLink('<?php echo htmlspecialchars($referralLink, ENT_QUOTES); ?>')" title="Salin Link">
+                      <i class="fa fa-copy"></i>
+                    </button>
+                  </div>
                 </div>
 
-                <p><strong>Undang via WhatsApp:</strong></p>
-                <div class="input-group mb-3">
+                <!-- Tombol WhatsApp -->
+                <div class="mb-4">
+                  <label class="form-label fw-bolder">Undang via WhatsApp:</label><br>
                   <a href="<?php echo $whatsappLink; ?>" target="_blank" rel="noopener" class="btn btn-success">
                     <i class="fab fa-whatsapp"></i> Kirim Undangan WhatsApp
                   </a>
                 </div>
-                <div class="text-center mb-3">
-                  <a href="<?= base_url('qr_code?url=' . $referralLink) ?>"><img width="75%" src="<?= base_url('qr_code?url=' . $referralLink) ?>"></a>
+
+                <!-- QR Code -->
+                <div class="text-center">
+                  <label class="form-label fw-bolder mb-2">Scan QR Code:</label>
+                  <div class="d-flex justify-content-center">
+                    <a href="<?= base_url('qr_code?url=' . $referralLink) ?>">
+                      <img src="<?= base_url('qr_code?url=' . $referralLink) ?>" alt="QR Code" class="img-fluid" style="max-width: 75%;">
+                    </a>
+                  </div>
                 </div>
               </div>
+
               <div class="modal-footer">
                 <a href="<?php echo $referralLink; ?>" class="btn btn-primary"><i class="fa fa-link"></i> Buka Link</a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>

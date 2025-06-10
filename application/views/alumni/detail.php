@@ -16,22 +16,22 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
         <h3 class="mb-0">Data Alumni</h3>
       </div>
       <div class="card-body">
-        <p>Terima kasih <strong class="text-danger"><?php echo htmlspecialchars($alumni->nama_lengkap); ?> </strong> angkatan <strong class="text-danger"><?=$alumni->angkatan?> </strong> telah berpatisipasi di Pendataan&nbsp;Alumni&nbsp;SMAN&nbsp;1/277&nbsp;Sinjai.</p>
+        <p>Terima kasih <strong class="text-danger"><?php echo htmlspecialchars($alumni->nama_lengkap); ?> </strong> angkatan <strong class="text-danger"><?= $alumni->angkatan ?> </strong> telah berpartisipasi di Pendataan&nbsp;Alumni&nbsp;SMAN&nbsp;1/277&nbsp;Sinjai.</p>
         <p>Anda adalah Alumni ke <strong><?php echo $urutan_angkatan; ?></strong> dari angkatan <strong><?php echo $alumni->angkatan; ?></strong> yang telah melakukan pendataan.</p>
         <p>Anda adalah Alumni ke <strong><?php echo $urutan_alumni; ?></strong> dari total <strong><?php echo $total_alumni; ?></strong> yang telah melakukan pendataan.</p>
 
         <!-- Foto Profil Section -->
         <div class="text-center mb-4">
           <div class="profile-photo-container" style="width: 150px; height: 150px; margin: 0 auto; border-radius: 50%; overflow: hidden; border: 3px solid #f0f0f0;">
-            <?php if(!empty($alumni->foto_profil)): ?>
-              <img src="<?= base_url('uploads/foto_alumni/'.$alumni->foto_profil) ?>" alt="Foto Profil" style="width: 100%; height: 100%; object-fit: cover;">
+            <?php if (!empty($alumni->foto_profil)): ?>
+              <img src="<?= base_url('uploads/foto_alumni/' . $alumni->foto_profil) ?>" alt="Foto Profil" style="width: 100%; height: 100%; object-fit: cover;">
             <?php else: ?>
               <div style="width: 100%; height: 100%; background-color: #ddd; display: flex; align-items: center; justify-content: center;">
                 <i class="fas fa-user" style="font-size: 60px; color: #777;"></i>
               </div>
             <?php endif; ?>
           </div>
-          
+
           <?php if ($show_edit): ?>
             <div class="mt-3">
               <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#uploadPhotoModal">
@@ -40,12 +40,12 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
             </div>
           <?php endif; ?>
         </div>
-        
+
         <!-- Modal Upload Foto -->
         <div class="modal fade" id="uploadPhotoModal" tabindex="-1" aria-labelledby="uploadPhotoModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <form action="<?= site_url('alumni/upload_photo/'.$alumni->id_alumni) ?>" method="post" enctype="multipart/form-data">
+              <form action="<?= site_url('alumni/upload_photo/' . $alumni->id_alumni) ?>" method="post" enctype="multipart/form-data">
                 <div class="modal-header">
                   <h5 class="modal-title" id="uploadPhotoModalLabel">Unggah Foto Profil</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -174,14 +174,14 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
         </div>
 
         <!-- Jumlah referred by -->
-        <?php if (!empty($alumni->referred_by)):?> 
+        <?php if (!empty($alumni->referred_by)): ?>
           <div class="alert alert-info small" role="alert">
-            Referred by : 
-          <?php
-          $referral = $this->Alumni_model->get_alumni($alumni->referred_by); 
-          ?>
-              <a href="<?= base_url('alumni/detail/' . $referral->id_alumni) ?>">
-              <?=$referral->nama_lengkap . " (" . $referral->angkatan . ")";?>
+            Referred by :
+            <?php
+            $referral = $this->Alumni_model->get_alumni($alumni->referred_by);
+            ?>
+            <a href="<?= base_url('alumni/detail/' . $referral->id_alumni) ?>">
+              <?= $referral->nama_lengkap . " (" . $referral->angkatan . ")"; ?>
             </a>
           </div>
         <?php endif;  ?>
@@ -193,7 +193,9 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
             <?php
             $i = 1;
             foreach ($get_alumni_by_referred_by as $reffered) { ?>
-              <a href="<?= base_url('alumni/detail/' . $reffered->id_alumni) ?>"><?= $reffered->nama_lengkap . " (" . $reffered->angkatan . ")" ?><?php if ($i < count($get_alumni_by_referred_by)) {echo ",";} ?>
+              <a href="<?= base_url('alumni/detail/' . $reffered->id_alumni) ?>"><?= $reffered->nama_lengkap . " (" . $reffered->angkatan . ")" ?><?php if ($i < count($get_alumni_by_referred_by)) {
+                                                                                                                                                    echo ",";
+                                                                                                                                                  } ?>
               </a>
             <?php
               $i++;
@@ -203,10 +205,10 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
         <?php endif; ?>
 
         <div class="mb-3">
-            <div class="d-flex justify-content-end">
-              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#undangModal">
-                <i class="fa fa-link"></i> Undang Teman Alumni melalui akun ini
-              </button>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#referralModal">
+              <i class="fa fa-link"></i> Undang Teman Alumni melalui akun ini
+            </button>
           </div>
         </div>
 
@@ -276,9 +278,9 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
                       <label for="role" class="form-label">Role User</label>
                       <select class="form-select" id="role" name="role_id" required>
                         <option>-Pilih Role-</option>
-                        <?php if ($user_role == 'admin'): ?>                        
-                            <option value="1" <?php echo ($alumni->role_id == '1') ? 'selected' : ''; ?>>Admin</option>
-                        <option value="2" <?php echo ($alumni->role_id == '2') ? 'selected' : ''; ?>>Admin Angkatan</option>
+                        <?php if ($user_role == 'admin'): ?>
+                          <option value="1" <?php echo ($alumni->role_id == '1') ? 'selected' : ''; ?>>Admin</option>
+                          <option value="2" <?php echo ($alumni->role_id == '2') ? 'selected' : ''; ?>>Admin Angkatan</option>
                         <?php endif; ?>
                         <option value="5" <?php echo ($alumni->role_id == '5') ? 'selected' : ''; ?>>User Alumni</option>
                       </select>
@@ -301,11 +303,11 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
 </div>
 
 <script>
-function copyLink(link) {
-  navigator.clipboard.writeText(link).then(function() {
-    alert('Link berhasil disalin!');
-  }, function() {
-    alert('Gagal menyalin link');
-  });
-}
+  function copyLink(link) {
+    navigator.clipboard.writeText(link).then(function() {
+      alert('Link berhasil disalin!');
+    }, function() {
+      alert('Gagal menyalin link');
+    });
+  }
 </script>
