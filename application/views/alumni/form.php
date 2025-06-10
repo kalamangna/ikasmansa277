@@ -248,34 +248,76 @@
 </div>
 
 <script>
-  // Photo preview functionality
-document.getElementById('foto').addEventListener('change', function(e) {
+  // Fungsi untuk mengubah input menjadi huruf kapital
+  function convertToUpperCase(inputElement) {
+    inputElement.value = inputElement.value.toUpperCase();
+  }
+
+  // Daftar field yang ingin diubah menjadi huruf kapital
+  const uppercaseFields = [
+    'nama_lengkap',
+    'nama_panggilan',
+    'tempat_lahir',
+    'alamat_domisili',
+    'nama_perusahaan',
+    'jabatan',
+    'alamat_kantor'
+  ];
+
+  // Terapkan event listener untuk setiap field
+  document.addEventListener('DOMContentLoaded', function() {
+    uppercaseFields.forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      if (field) {
+        // Untuk perubahan langsung saat mengetik
+        field.addEventListener('input', function() {
+          convertToUpperCase(this);
+        });
+        
+        // Untuk perubahan saat paste
+        field.addEventListener('paste', function(e) {
+          setTimeout(() => {
+            convertToUpperCase(this);
+          }, 0);
+        });
+      }
+    });
+
+    // Tambahkan juga CSS untuk visual feedback
+    const style = document.createElement('style');
+    style.textContent = `
+      ${uppercaseFields.map(id => `#${id}`).join(', ')} {
+        text-transform: uppercase;
+      }
+    `;
+    document.head.appendChild(style);
+  });
+
+  // Tetap pertahankan script yang sudah ada untuk preview foto
+  document.getElementById('foto').addEventListener('change', function(e) {
     const file = e.target.files[0];
-    
-    // Daftar tipe file gambar yang diizinkan
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
     
     if (file) {
-        // Cek apakah tipe file termasuk gambar
-        if (!allowedTypes.includes(file.type)) {
-            alert('Silakan pilih file gambar (JPEG, PNG, GIF, WEBP, atau SVG)');
-            e.target.value = ''; // Reset input file
-            return;
-        }
-        
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const previewContainer = document.getElementById('preview-container');
-            const previewImage = document.getElementById('preview-image');
+      if (!allowedTypes.includes(file.type)) {
+        alert('Silakan pilih file gambar (JPEG, PNG, GIF, WEBP, atau SVG)');
+        e.target.value = '';
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
 
-            previewImage.src = event.target.result;
-            previewContainer.style.display = 'block';
-        }
-        reader.readAsDataURL(file);
+        previewImage.src = event.target.result;
+        previewContainer.style.display = 'block';
+      }
+      reader.readAsDataURL(file);
     }
-});
+  });
 
-  // File size validation (10MB)
+  // Validasi ukuran file
   document.querySelector('form').addEventListener('submit', function(e) {
     const fotoInput = document.getElementById('foto');
     if (fotoInput.files.length > 0) {

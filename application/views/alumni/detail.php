@@ -171,22 +171,26 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
               <div class="col-md-8"><?php echo htmlspecialchars($alumni->role); ?></div>
             </div>
           </div>
-        </div>
 
         <!-- Jumlah referred by -->
-        <?php if ($show_edit): ?>
-            <?php if (!empty($alumni->referred_by)): ?>
-              <div class="alert alert-info small" role="alert">
-                Referred by :
-                <?php
-                $referral = $this->Alumni_model->get_alumni($alumni->referred_by);
-                ?>
+        <?php
+        $referral = $this->Alumni_model->get_alumni($alumni->referred_by);
+        ?>
+        <?php if (!empty($alumni->referred_by)): ?>
+        <div class="alert alert-info small" role="alert">
+            Referred by :
+            <?php if (
+                  $user_role == 'admin' ||
+                  ($user_role == 'admin_angkatan' && $user_angkatan == $alumni_angkatan)
+                ): ?>
                 <a href="<?= base_url('alumni/detail/' . $referral->id_alumni) ?>">
                   <?= $referral->nama_lengkap . " (" . $referral->angkatan . ")"; ?>
                 </a>
-              </div>
+            <?php else: ?>
+                  <?= $referral->nama_lengkap . " (" . $referral->angkatan . ")"; ?>
             <?php endif;  ?>
-        <?php endif;  ?>
+          <?php endif;  ?>
+        </div>
 
         <!-- Jumlah referral -->
         <?php if (count($get_alumni_by_referred_by) > 0): ?>
@@ -195,10 +199,15 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
             <?php
             $i = 1;
             foreach ($get_alumni_by_referred_by as $reffered) { ?>
-              <a href="<?= base_url('alumni/detail/' . $reffered->id_alumni) ?>"><?= $reffered->nama_lengkap . " (" . $reffered->angkatan . ")" ?><?php if ($i < count($get_alumni_by_referred_by)) {
-                                                                                                                                                    echo ",";
-                                                                                                                                                  } ?>
-              </a>
+              <?php if (
+                    $user_role == 'admin' ||
+                    ($user_role == 'admin_angkatan' && $user_angkatan == $alumni_angkatan)
+                  ): ?>
+                  <a href="<?= base_url('alumni/detail/' . $reffered->id_alumni) ?>"><?= $reffered->nama_lengkap . " (" . $reffered->angkatan . ")" ?><?php if ($i < count($get_alumni_by_referred_by)) {echo ",";} ?>
+                  </a>
+              <?php else: ?>
+                  <?= $reffered->nama_lengkap . " (" . $reffered->angkatan . ")" ?>
+              <?php endif; ?>
             <?php
               $i++;
             }
@@ -214,6 +223,7 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
           </div>
         </div>
 
+        </div>
         <!-- Modal undang teman -->
         <div class="mb-3">
           <div class="modal fade" id="undangModal" tabindex="-1" aria-labelledby="referralModalLabel" aria-hidden="true">
