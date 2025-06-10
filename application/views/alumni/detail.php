@@ -174,16 +174,18 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
         </div>
 
         <!-- Jumlah referred by -->
-        <?php if (!empty($alumni->referred_by)): ?>
-          <div class="alert alert-info small" role="alert">
-            Referred by :
-            <?php
-            $referral = $this->Alumni_model->get_alumni($alumni->referred_by);
-            ?>
-            <a href="<?= base_url('alumni/detail/' . $referral->id_alumni) ?>">
-              <?= $referral->nama_lengkap . " (" . $referral->angkatan . ")"; ?>
-            </a>
-          </div>
+        <?php if ($show_edit): ?>
+            <?php if (!empty($alumni->referred_by)): ?>
+              <div class="alert alert-info small" role="alert">
+                Referred by :
+                <?php
+                $referral = $this->Alumni_model->get_alumni($alumni->referred_by);
+                ?>
+                <a href="<?= base_url('alumni/detail/' . $referral->id_alumni) ?>">
+                  <?= $referral->nama_lengkap . " (" . $referral->angkatan . ")"; ?>
+                </a>
+              </div>
+            <?php endif;  ?>
         <?php endif;  ?>
 
         <!-- Jumlah referral -->
