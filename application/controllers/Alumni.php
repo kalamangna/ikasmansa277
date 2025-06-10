@@ -250,7 +250,7 @@ public function save() {
     $alumni_ref = $this->Alumni_model->get_alumni($referral);
 
     // $message = 'Pendataan '. $post['nama_lengkap'] .' angkatan '.$post['angkatan'].' berhasil !!';
-    $message = '<b><u>#INPUT DATA ALUMNI</u></b>' . "\n" .
+    $message = '<b>#INPUT DATA ALUMNI</b> #id' .$alumni_id. "\n" .
                '🟢 <b>Status:</b> BERHASIL' . "\n" .
                '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($post['nama_lengkap']) . '</i>' . "\n" .
                '📌 <b>Angkatan:</b> <code>' . $post['angkatan'] . '</code>' . "\n" .
@@ -275,6 +275,7 @@ public function save() {
         }
         $data['urutan_alumni'] = $this->Alumni_model->get_urutan_alumni($id);
         $data['total_alumni'] = $this->Alumni_model->get_total_alumni();
+        $data['total_angkatan'] = $this->Alumni_model->total_angkatan($data['alumni']->angkatan);
         $data['urutan_angkatan'] = $this->Alumni_model->get_urutan_alumni_angkatan($data['alumni']->angkatan, $id);
         $data['urutan_alumni'] = $this->Alumni_model->get_urutan_alumni_all($data['alumni']->angkatan, $id);
         $data['get_alumni_by_referred_by'] = $this->Alumni_model->get_alumni_by_referred_by($id);
@@ -424,9 +425,9 @@ public function save() {
             $this->session->set_flashdata('success', 'Data alumni berhasil diperbarui.');
 
             $alumni = $this->Alumni_model->get_alumni($id_alumni);
-            $message = '<b><u>#UPDATEDATA ALUMNI</u></b>' . "\n" .
+            $message = '<b><u>#UPDATEDATA ALUMNI</u></b> #id' .$id. "\n" .
                        '🟢 <b>Status:</b> BERHASIL' . "\n" .
-                       '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($post['nama_lengkap']) . '</i>' . "\n" .
+                       '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($post['nama_lengkap']) . '</i>'. "\n" .
                        '📌 <b>Angkatan:</b> <code>' . $post['angkatan'] . '</code>' . "\n\n" .
                        '⭐ <b>Admin:</b> <code>' . $this->session->userdata('nama_lengkap') . '</code>' . "\n" .
                        '⏱ <i>Waktu: ' . date('d/m/Y H:i:s') . '</i>';
@@ -485,9 +486,9 @@ public function update_user($id_alumni) {
         $this->session->set_flashdata('success', $message);
 
         $alumni = $this->Alumni_model->get_alumni($id_alumni);
-        $message = '<b><u>#UPDATEUSER ALUMNI</u></b>' . "\n" .
+        $message = '<b><u>#UPDATEUSER ALUMNI</u></b> #id' . htmlspecialchars($alumni->nama_id) . "\n" .
                    '🟢 <b>Status:</b> BERHASIL' . "\n" .
-                   '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($alumni->nama_lengkap) . '</i>' . "\n" .
+                   '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($alumni->nama_lengkap) . '</i> '. "\n" .
                    '📌 <b>Angkatan:</b> <code>' . $alumni->angkatan . '</code>' . "\n\n" .
                    '⭐ <b>Admin:</b> <code>' . $this->session->userdata('nama_lengkap') . '</code>' . "\n" .
                    '⏱ <i>Waktu: ' . date('d/m/Y H:i:s') . '</i>';
@@ -635,9 +636,9 @@ public function update_user($id_alumni) {
         if ($result) {
             $this->session->set_flashdata('success', 'Data alumni '.$alumni->nama_lengkap.' dan semua data terkait berhasil dihapus.');
 
-            $message = '<b><u>#HAPUS ALUMNI</u></b>' . "\n" .
+            $message = '<b>#HAPUS ALUMNI</b>  #id' . $id. "\n" .
                        '🟢 <b>Status:</b> BERHASIL' . "\n" .
-                       '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($alumni->nama_lengkap) . '</i>' . "\n" .
+                       '👨‍🎓 <b>Nama:</b> <i>' . htmlspecialchars($alumni->nama_lengkap) . '</i>'."\n" .
                        '📌 <b>Angkatan:</b> <code>' . $alumni->angkatan . '</code>' . "\n\n" .
                        '⭐ <b>Admin:</b> <code>' . $this->session->userdata('nama_lengkap') . '</code>' . "\n" .
                        '⏱ <i>Waktu: ' . date('d/m/Y H:i:s') . '</i>';

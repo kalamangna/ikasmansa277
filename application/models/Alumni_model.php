@@ -196,6 +196,7 @@ public function insert_alumni($data) {
             'provinsi_id' => $data['provinsi_id'],
             'kabupaten_id' => $data['kabupaten_id'],
             'no_telepon' => $data['no_telepon'],
+            'updated_at' => date('Y-m-d H:i:s')
             // 'email' => $data['email'],
             // 'referred_by' => isset($data['referred_by']) ? $data['referred_by'] : null
 
@@ -272,6 +273,15 @@ public function insert_alumni($data) {
     // Total alumni yang sudah melakukan pendataan
     public function get_total_alumni() {
         return $this->db->count_all('alumni');
+    }
+
+    // Urutan alumni dari angkatan yang sama berdasarkan id_alumni
+    public function total_angkatan($angkatan) {
+        $this->db->select('COUNT(*) as jml');
+        $this->db->where('angkatan', $angkatan);
+        $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
+        $query = $this->db->get('alumni')->row();
+        return $query ? $query->jml : 0;
     }
 
     // Urutan alumni dari angkatan yang sama berdasarkan id_alumni
