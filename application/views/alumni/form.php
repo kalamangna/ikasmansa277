@@ -129,9 +129,9 @@
                   <?php
                   $tahun_mulai = 1966;
                   $tahun_sekarang = date('Y');
-                  for ($tahun = $tahun_mulai; $tahun <= $tahun_sekarang; $tahun++) {
-                    echo '<option value="' . $tahun . '">' . $tahun . '</option>';
-                  }
+                  for ($tahun = $tahun_mulai; $tahun <= $tahun_sekarang; $tahun++): ?>
+                    <option value="<?= $tahun ?>"><?= $tahun ?></option>
+                  <?php endfor;
                   ?>
                 </select>
                 <div class="invalid-feedback">*Silakan pilih angkatan.</div>
@@ -274,7 +274,7 @@
         field.addEventListener('input', function() {
           convertToUpperCase(this);
         });
-        
+
         // Untuk perubahan saat paste
         field.addEventListener('paste', function(e) {
           setTimeout(() => {
@@ -298,14 +298,14 @@
   document.getElementById('foto').addEventListener('change', function(e) {
     const file = e.target.files[0];
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
-    
+
     if (file) {
       if (!allowedTypes.includes(file.type)) {
         alert('Silakan pilih file gambar (JPEG, PNG, GIF, WEBP, atau SVG)');
         e.target.value = '';
         return;
       }
-      
+
       const reader = new FileReader();
       reader.onload = function(event) {
         const previewContainer = document.getElementById('preview-container');

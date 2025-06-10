@@ -1,6 +1,5 @@
 <div class="row justify-content-center">
   <div class="col-md-9 col-lg-7">
-
     <div class="card">
       <div class="card-header bg-success text-white">
         <h3 class="mb-0">Edit Data Alumni</h3>
@@ -101,15 +100,22 @@
             <div class="row g-3">
               <div class="col-md-6">
                 <label for="angkatan" class="form-label">Angkatan (Tahun Lulus)</label>
-                <input type="number" class="form-control" id="angkatan" name="angkatan" min="1900" max="2100" value="<?php echo $alumni->angkatan; ?>" required>
+                <select name="angkatan" id="angkatan" class="form-select" required>
+                  <option value="">-- Pilih Angkatan --</option>
+                  <?php
+                  $tahun_mulai = 1966;
+                  $tahun_sekarang = date('Y');
+                  for ($tahun = $tahun_mulai; $tahun <= $tahun_sekarang; $tahun++): ?>
+                    <option value="<?= $tahun ?>" <?= $tahun == $alumni->angkatan ? 'selected' : '' ?>><?= $tahun ?></option>
+                  <?php endfor;
+                  ?>
+                </select>
 
               </div>
               <div class="col-md-6">
                 <label for="jurusan" class="form-label">Jurusan (jika ada)</label>
-                <!-- <input type="text" class="form-control" id="jurusan" name="jurusan" value="<?php echo $alumni->jurusan; ?>"> -->
                 <select name="jurusan" id="jurusan" class="form-select" required>
                   <option value="">-- Pilih Jurusan --</option>
-                  <!-- Jurusan SMA -->
                   <option value="Fisika" <?php echo ("Fisika" == $alumni->jurusan) ? 'selected' : ''; ?>>Fisika (A1)</option>
                   <option value="Biologi" <?php echo ("Biologi" == $alumni->jurusan) ? 'selected' : ''; ?>>Biologi (A2)</option>
                   <option value="Ilmu Sosial" <?php echo ("Sosial" == $alumni->jurusan) ? 'selected' : ''; ?>>Ilmu Sosial (A3)</option>
@@ -127,7 +133,6 @@
 
           <hr>
 
-          <!-- Data Pekerjaan -->
           <h4>Data Pekerjaan</h4>
 
           <div class="mb-3">
@@ -194,87 +199,87 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-  // Fungsi untuk mengubah input menjadi huruf kapital
-  function convertToUpperCase(inputElement) {
-    inputElement.value = inputElement.value.toUpperCase();
-  }
+  <script>
+    // Fungsi untuk mengubah input menjadi huruf kapital
+    function convertToUpperCase(inputElement) {
+      inputElement.value = inputElement.value.toUpperCase();
+    }
 
-  // Daftar field yang ingin diubah menjadi huruf kapital
-  const uppercaseFields = [
-    'nama_lengkap',
-    'nama_panggilan',
-    'tempat_lahir',
-    'alamat_domisili',
-    'nama_perusahaan',
-    'jabatan',
-    'alamat_kantor'
-  ];
+    // Daftar field yang ingin diubah menjadi huruf kapital
+    const uppercaseFields = [
+      'nama_lengkap',
+      'nama_panggilan',
+      'tempat_lahir',
+      'alamat_domisili',
+      'nama_perusahaan',
+      'jabatan',
+      'alamat_kantor'
+    ];
 
-  // Terapkan event listener untuk setiap field
-  document.addEventListener('DOMContentLoaded', function() {
-    uppercaseFields.forEach(fieldId => {
-      const field = document.getElementById(fieldId);
-      if (field) {
-        // Untuk perubahan langsung saat mengetik
-        field.addEventListener('input', function() {
-          convertToUpperCase(this);
-        });
-        
-        // Untuk perubahan saat paste
-        field.addEventListener('paste', function(e) {
-          setTimeout(() => {
+    // Terapkan event listener untuk setiap field
+    document.addEventListener('DOMContentLoaded', function() {
+      uppercaseFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+          // Untuk perubahan langsung saat mengetik
+          field.addEventListener('input', function() {
             convertToUpperCase(this);
-          }, 0);
-        });
-      }
-    });
+          });
 
-    // Tambahkan juga CSS untuk visual feedback
-    const style = document.createElement('style');
-    style.textContent = `
+          // Untuk perubahan saat paste
+          field.addEventListener('paste', function(e) {
+            setTimeout(() => {
+              convertToUpperCase(this);
+            }, 0);
+          });
+        }
+      });
+
+      // Tambahkan juga CSS untuk visual feedback
+      const style = document.createElement('style');
+      style.textContent = `
       ${uppercaseFields.map(id => `#${id}`).join(', ')} {
         text-transform: uppercase;
       }
     `;
-    document.head.appendChild(style);
-  });
+      document.head.appendChild(style);
+    });
 
-  // Tetap pertahankan script yang sudah ada untuk preview foto
-  document.getElementById('foto').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
-    
-    if (file) {
-      if (!allowedTypes.includes(file.type)) {
-        alert('Silakan pilih file gambar (JPEG, PNG, GIF, WEBP, atau SVG)');
-        e.target.value = '';
-        return;
-      }
-      
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const previewContainer = document.getElementById('preview-container');
-        const previewImage = document.getElementById('preview-image');
+    // Tetap pertahankan script yang sudah ada untuk preview foto
+    document.getElementById('foto').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
 
-        previewImage.src = event.target.result;
-        previewContainer.style.display = 'block';
-      }
-      reader.readAsDataURL(file);
-    }
-  });
+      if (file) {
+        if (!allowedTypes.includes(file.type)) {
+          alert('Silakan pilih file gambar (JPEG, PNG, GIF, WEBP, atau SVG)');
+          e.target.value = '';
+          return;
+        }
 
-  // Validasi ukuran file
-  document.querySelector('form').addEventListener('submit', function(e) {
-    const fotoInput = document.getElementById('foto');
-    if (fotoInput.files.length > 0) {
-      const fileSize = fotoInput.files[0].size / 1024 / 1024; // in MB
-      if (fileSize > 10) {
-        e.preventDefault();
-        alert('Ukuran foto terlalu besar. Maksimal 10MB.');
-        return false;
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const previewContainer = document.getElementById('preview-container');
+          const previewImage = document.getElementById('preview-image');
+
+          previewImage.src = event.target.result;
+          previewContainer.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
       }
-    }
-    return true;
-  });
-</script>
+    });
+
+    // Validasi ukuran file
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const fotoInput = document.getElementById('foto');
+      if (fotoInput.files.length > 0) {
+        const fileSize = fotoInput.files[0].size / 1024 / 1024; // in MB
+        if (fileSize > 10) {
+          e.preventDefault();
+          alert('Ukuran foto terlalu besar. Maksimal 10MB.');
+          return false;
+        }
+      }
+      return true;
+    });
+  </script>

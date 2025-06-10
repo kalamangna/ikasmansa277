@@ -116,37 +116,7 @@
       </div>
     </div>
 
-    <div class="card shadow mb-4">
-      <div class="card-header">Jenis Kelamin Alumni</div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped text-nowrap align-middle">
-            <thead>
-              <tr>
-                <th class="text-center">No.</th>
-                <th class="text-center">Angkatan</th>
-                <th class="text-center">Laki-laki</th>
-                <th class="text-center">Perempuan</th>
-                <th class="text-center">Jumlah</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php $u1 = 1;
-              foreach ($gender_perangkatan as $row): ?>
-                <tr>
-                  <td class="text-center"><?php echo $u1++; ?></td>
-                  <td class="text-center"><?php echo htmlspecialchars($row->angkatan); ?></td>
-                  <td class="text-center"><?php echo htmlspecialchars($row->jumlah_laki_laki); ?></td>
-                  <td class="text-center"><?php echo htmlspecialchars($row->jumlah_perempuan); ?></td>
-                  <td class="text-center"><?php echo htmlspecialchars($row->total_semua); ?></td>
-                  <!-- <td class="text-center"><?php echo $row->jumlah_laki_laki + $row->jumlah_perempuan; ?></td> -->
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+
   </div>
 
   <div class="col-lg-6">
@@ -230,6 +200,37 @@
         </div>
       </div>
     </div>
+    <div class="card shadow mb-4">
+      <div class="card-header">Jenis Kelamin Alumni</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped text-nowrap align-middle">
+            <thead>
+              <tr>
+                <th class="text-center">No.</th>
+                <th class="text-center">Angkatan</th>
+                <th class="text-center">Laki-laki</th>
+                <th class="text-center">Perempuan</th>
+                <th class="text-center">Jumlah</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $u1 = 1;
+              foreach ($gender_perangkatan as $row): ?>
+                <tr>
+                  <td class="text-center"><?php echo $u1++; ?></td>
+                  <td class="text-center"><?php echo htmlspecialchars($row->angkatan); ?></td>
+                  <td class="text-center"><?php echo htmlspecialchars($row->jumlah_laki_laki); ?></td>
+                  <td class="text-center"><?php echo htmlspecialchars($row->jumlah_perempuan); ?></td>
+                  <td class="text-center"><?php echo htmlspecialchars($row->total_semua); ?></td>
+                  <!-- <td class="text-center"><?php echo $row->jumlah_laki_laki + $row->jumlah_perempuan; ?></td> -->
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>    
   </div>
 </div>
 
