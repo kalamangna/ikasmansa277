@@ -68,6 +68,13 @@
           </div>
 
           <div class="mb-3">
+            <label for="alamat_domisili" class="form-label">Alamat Domisili <small class="text-muted">(Wajib diisi)</small></label>
+            <textarea class="form-control" id="alamat_domisili" name="alamat_domisili" rows="2" required></textarea>
+            <small class="text-muted">Alamat tempat tinggal saat ini</small>
+            <div class="invalid-feedback">*Alamat domisili wajib diisi.</div>
+          </div>
+
+          <div class="mb-3">
             <label for="provinsi" class="form-label">Provinsi Domisili <small class="text-muted">(Wajib diisi)</small></label>
             <select class="form-select" id="provinsi" name="provinsi_id" required>
               <option value="">-- Pilih Provinsi --</option>
@@ -87,12 +94,6 @@
             <div class="invalid-feedback">*Silakan pilih kabupaten/kota.</div>
           </div>
 
-          <div class="mb-3">
-            <label for="alamat_domisili" class="form-label">Alamat Domisili <small class="text-muted">(Wajib diisi)</small></label>
-            <textarea class="form-control" id="alamat_domisili" name="alamat_domisili" rows="2" required></textarea>
-            <small class="text-muted">Alamat tempat tinggal saat ini</small>
-            <div class="invalid-feedback">*Alamat domisili wajib diisi.</div>
-          </div>
 
           <div class="mb-3">
             <label for="no_telepon" class="form-label">Nomor Telepon/WhatsApp <small class="text-muted">(Wajib diisi)</small></label>

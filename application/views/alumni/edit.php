@@ -59,6 +59,11 @@
           </div>
 
           <div class="mb-3">
+            <label for="alamat_domisili" class="form-label">Alamat Domisili</label>
+            <textarea class="form-control" id="alamat_domisili" name="alamat_domisili" rows="2" required><?php echo $alumni->alamat_domisili; ?></textarea>
+          </div>
+
+          <div class="mb-3">
             <label for="provinsi" class="form-label">Provinsi</label>
             <select class="form-select" id="provinsi" name="provinsi_id" required>
               <option value="">-- Pilih Provinsi --</option>
@@ -82,10 +87,6 @@
             </select>
           </div>
 
-          <div class="mb-3">
-            <label for="alamat_domisili" class="form-label">Alamat Domisili</label>
-            <textarea class="form-control" id="alamat_domisili" name="alamat_domisili" rows="2" required><?php echo $alumni->alamat_domisili; ?></textarea>
-          </div>
 
           <div class="mb-3">
             <label for="no_telepon" class="form-label">Nomor Telepon/WhatsApp</label>
@@ -192,54 +193,88 @@
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('#provinsi').change(function() {
-        var provinsi_id = $(this).val();
-        if (provinsi_id) {
-          $.ajax({
-            url: '<?php echo site_url('alumni/get_kabupaten_ajax'); ?>',
-            type: 'POST',
-            data: {
-              provinsi_id: provinsi_id
-            },
-            dataType: 'json',
-            success: function(data) {
-              $('#kabupaten').empty();
-              $('#kabupaten').append('<option value="">-- Pilih Kabupaten/Kota --</option>');
-              $.each(data, function(key, value) {
-                $('#kabupaten').append('<option value="' + value.id_kabupaten + '">' + value.nama_kabupaten + '</option>');
-              });
-            }
-          });
-        } else {
-          $('#kabupaten').empty();
-          $('#kabupaten').append('<option value="">-- Pilih Kabupaten/Kota --</option>');
-        }
-      });
 
-      // Jika di form edit, bisa set kabupaten yang sudah dipilih
-      <?php if (isset($alumni) && $alumni->kabupaten_id): ?>
-        var selectedKabupaten = '<?php echo $alumni->kabupaten_id; ?>';
-        var provinsi_id = $('#provinsi').val();
-        if (provinsi_id) {
-          $.ajax({
-            url: '<?php echo site_url('alumni/get_kabupaten_ajax'); ?>',
-            type: 'POST',
-            data: {
-              provinsi_id: provinsi_id
-            },
-            dataType: 'json',
-            success: function(data) {
-              $('#kabupaten').empty();
-              $('#kabupaten').append('<option value="">-- Pilih Kabupaten/Kota --</option>');
-              $.each(data, function(key, value) {
-                var selected = (value.id_kabupaten == selectedKabupaten) ? 'selected' : '';
-                $('#kabupaten').append('<option value="' + value.id_kabupaten + '" ' + selected + '>' + value.nama_kabupaten + '</option>');
-              });
-            }
-          });
-        }
-      <?php endif; ?>
+<script>
+  // Fungsi untuk mengubah input menjadi huruf kapital
+  function convertToUpperCase(inputElement) {
+    inputElement.value = inputElement.value.toUpperCase();
+  }
+
+  // Daftar field yang ingin diubah menjadi huruf kapital
+  const uppercaseFields = [
+    'nama_lengkap',
+    'nama_panggilan',
+    'tempat_lahir',
+    'alamat_domisili',
+    'nama_perusahaan',
+    'jabatan',
+    'alamat_kantor'
+  ];
+
+  // Terapkan event listener untuk setiap field
+  document.addEventListener('DOMContentLoaded', function() {
+    uppercaseFields.forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      if (field) {
+        // Untuk perubahan langsung saat mengetik
+        field.addEventListener('input', function() {
+          convertToUpperCase(this);
+        });
+        
+        // Untuk perubahan saat paste
+        field.addEventListener('paste', function(e) {
+          setTimeout(() => {
+            convertToUpperCase(this);
+          }, 0);
+        });
+      }
     });
-  </script>
+
+    // Tambahkan juga CSS untuk visual feedback
+    const style = document.createElement('style');
+    style.textContent = `
+      ${uppercaseFields.map(id => `#${id}`).join(', ')} {
+        text-transform: uppercase;
+      }
+    `;
+    document.head.appendChild(style);
+  });
+
+  // Tetap pertahankan script yang sudah ada untuk preview foto
+  document.getElementById('foto').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
+    
+    if (file) {
+      if (!allowedTypes.includes(file.type)) {
+        alert('Silakan pilih file gambar (JPEG, PNG, GIF, WEBP, atau SVG)');
+        e.target.value = '';
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
+
+        previewImage.src = event.target.result;
+        previewContainer.style.display = 'block';
+      }
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Validasi ukuran file
+  document.querySelector('form').addEventListener('submit', function(e) {
+    const fotoInput = document.getElementById('foto');
+    if (fotoInput.files.length > 0) {
+      const fileSize = fotoInput.files[0].size / 1024 / 1024; // in MB
+      if (fileSize > 10) {
+        e.preventDefault();
+        alert('Ukuran foto terlalu besar. Maksimal 10MB.');
+        return false;
+      }
+    }
+    return true;
+  });
+</script>
