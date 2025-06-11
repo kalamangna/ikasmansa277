@@ -163,8 +163,29 @@ class Dashboard_model extends CI_Model {
         return $query->result();
     }
 
+    // Mendapatkan jumlah alumni dikelompokkan berdasarkan role
+    public function get_alumni_count_by_role() {
+        $this->db->select('r.nama_role, COUNT(u.id_alumni) as jumlah_alumni');
+        $this->db->from('alumni a');
+        $this->db->join('users u', 'a.id_alumni = u.alumni_id');
+        $this->db->join('roles r', 'u.role_id = r.id_role');
+        $this->db->group_by('r.nama_role');
+        $this->db->order_by('r.id_role');
+        return $this->db->get()->result_array();
+    }
 
-
+    // Mendapatkan alumni yang memiliki role 1-4 (admin)
+    public function get_admin_alumni() {
+        $this->db->select('a.*, r.nama_role, p.angkatan');
+        $this->db->from('alumni a');
+        $this->db->join('users u', 'a.id_alumni = u.alumni_id');
+        $this->db->join('roles r', 'u.role_id = r.id_role');
+        $this->db->join('pendidikan p', 'a.id_alumni = p.alumni_id');
+        $this->db->where('u.role_id >=', 1);
+        $this->db->where('u.role_id <=', 4);
+        $this->db->order_by('u.role_id, a.nama_lengkap');
+        return $this->db->get()->result_array();
+    }
 
 
 

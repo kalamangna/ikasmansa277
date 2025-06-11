@@ -44,6 +44,14 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
   <link rel="stylesheet" href="<?= base_url('assets/css/sb-admin-2.min.css') ?>">
 
 
+    <!-- dataTables -->
+    <link rel="stylesheet" href="<?= base_url('assets/datatables/jquery.dataTables.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/datatables/dataTables.bootstrap5.min.css') ?>">
+
+
+
+
+
   <script>
     function copyLink(link) {
       navigator.clipboard.writeText(link).catch(err => console.error("Gagal menyalin:", err));

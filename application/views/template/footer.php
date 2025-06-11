@@ -13,6 +13,25 @@
 <script src="<?php echo base_url('assets/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jquery-3.7.1.min.js'); ?>"></script>
 
+<!-- dataTables -->
+<script src="<?= base_url('assets/datatables/jquery.dataTables.min.js') ?>"></script>
+<script src="<?= base_url('assets/datatables/dataTables.bootstrap5.min.js') ?>"></script>
+<script>
+    $(document).ready(function() {
+        $('#alumniTable').DataTable();
+    });
+
+    $(document).ready(function() {
+        $('#dashboardTable').DataTable({
+            "paging": false,       // Nonaktifkan pagination
+            "searching": false,    // Nonaktifkan search
+            "info": false,         // Nonaktifkan info "Showing X of Y entries"
+            "ordering": true,      // Biarkan sorting aktif (opsional)
+            "dom": 't'            // Hanya tampilkan tabel saja (tanpa kontrol lainnya)
+        });
+});
+</script>
+
 <!-- manampikan script untuk menampilkan kabupaten setelah memilih provinsi -->
 <?php if (isset($ajax_kabupaten)): ?>
   <script>

@@ -305,20 +305,24 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
       <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
-            <form method="post" action="<?php echo site_url('alumni/update_user/' . $alumni->id_alumni); ?>">
+            <form method="post" action="<?php echo site_url('alumni/update_user/' . $alumni->id_alumni); ?>" class="needs-validation" novalidate>
               <div class="modal-header">
                 <h5 class="modal-title" id="editUserModalLabel">Edit Data User</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
               </div>
+
               <div class="modal-body">
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
                   <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($alumni->email); ?>" required>
+                  <div class="invalid-feedback">*Silakan masukkan email yang valid.</div>
                 </div>
+
                 <div class="mb-3">
                   <label for="password" class="form-label">Password Baru (kosongkan jika tidak ingin ganti)</label>
                   <input type="password" class="form-control" id="password" name="password" autocomplete="new-password">
                 </div>
+
                 <?php if ($this->session->userdata('role') == 'admin'): ?>
                   <div class="mb-3">
                     <label for="role" class="form-label">Role User</label>
@@ -333,6 +337,7 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
                   </div>
                 <?php endif; ?>
               </div>
+
               <div class="modal-footer">
                 <input type="hidden" name="email_current" value="<?= $alumni->email ?>">
                 <input type="hidden" name="alumni_id" value="<?= $alumni->id_alumni ?>">
@@ -351,20 +356,23 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
 
 <!-- Modal Upload Foto -->
 <div class="modal fade" id="uploadPhotoModal" tabindex="-1" aria-labelledby="uploadPhotoModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <form action="<?= site_url('alumni/upload_photo/' . $alumni->id_alumni) ?>" method="post" enctype="multipart/form-data">
+      <form action="<?= site_url('alumni/upload_photo/' . $alumni->id_alumni) ?>" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
         <div class="modal-header">
           <h5 class="modal-title" id="uploadPhotoModalLabel">Unggah Foto Profil</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+
         <div class="modal-body">
           <div class="mb-3">
             <label for="foto_profil" class="form-label">Pilih Foto</label>
             <input class="form-control" type="file" id="foto_profil" name="foto_profil" accept="image/*" required>
-            <small class="text-muted">Format: JPG/PNG, Maksimal 2MB</small>
+            <small class="text-muted">Maksimal 10MB (akan otomatis diperkecil oleh sistem, disarankan foto portrait)</small>
+            <div class="invalid-feedback">*Silakan upload foto profil.</div>
           </div>
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
           <button type="submit" class="btn btn-primary">Unggah</button>

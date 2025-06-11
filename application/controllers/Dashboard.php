@@ -18,6 +18,8 @@ class Dashboard extends CI_Controller {
         $data['alumni_per_pekerjaan'] = $this->Dashboard_model->get_total_alumni_per_pekerjaan();
         $data['alumni_tercepat'] = $this->Dashboard_model->get_alumni_faster();
         $data['alumni_terbaru'] = $this->Dashboard_model->get_alumni_recent();
+        $data['get_admin_alumni'] = $this->Dashboard_model->get_admin_alumni();
+
         $data['get_referred_rank'] = $this->Dashboard_model->get_referred_rank();
 
 

@@ -1,3 +1,7 @@
+<?php
+$is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
+?>
+
 <h2 class="mb-4"><?php echo $title; ?></h2>
 
 <div class="row g-4 mb-4">
@@ -95,14 +99,14 @@
       <div class="card-header">Rekap per Angkatan</div>
       <div class="card-body overflow-auto" style="height: 500px;">
         <div class="table-responsive">
-          <table class="table table-bordered table-striped text-nowrap align-middle">
+          <table class="table table-bordered table-striped text-nowrap align-middle" id="dashboardTable">
             <thead>
               <tr>
                 <th class="text-center">No.</th>
                 <th class="text-center">Angkatan</th>
-                <th class="text-center">Laki-laki</th>
-                <th class="text-center">Perempuan</th>
-                <th class="text-center">Jumlah</th>
+                <th class="text-center"><i class="fas fa-male " data-bs-toggle="tooltip" title="Laki-laki"></i></th>
+                <th class="text-center"><i class="fas fa-female " data-bs-toggle="tooltip" title="Perempuan"></i></th>
+                <th class="text-center"><i class="fas fa-users " data-bs-toggle="tooltip" title="Jumlah"></i></th>
               </tr>
             </thead>
             <tbody>
@@ -145,7 +149,34 @@
         </div>
       </div>
     </div>
-
+    <?php if ($is_admin): ?>
+        <div class="card shadow mb-4">
+          <div class="card-header">Data Admin</div>
+          <div class="card-body overflow-auto" style="height: 500px;">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped text-nowrap align-middle">
+                <thead>
+                  <tr>
+                    <th class="text-center">No.</th>
+                    <th class="text-center">Nama / Angkatan</th>
+                    <th class="text-center">Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $urut = 1;
+                  foreach ($get_admin_alumni as $row): ?>
+                    <tr>
+                      <td class="text-center"><?= $urut++ ?></td>
+                      <td class="text-left"><?php echo htmlspecialchars($row['nama_lengkap']); ?> / <?php echo htmlspecialchars($row['angkatan']); ?></td>
+                      <td class="text-center"><?php echo htmlspecialchars($row['nama_role']); ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    <?php endif; ?>
 
   </div>
 
