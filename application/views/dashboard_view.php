@@ -70,7 +70,7 @@
   <div class="col-lg-6">
     <div class="card shadow mb-4">
       <div class="card-header">Domisili Alumni</div>
-      <div class="card-body">
+      <div class="card-body overflow-auto" style="height: 500px;">
         <div class="table-responsive">
           <table class="table table-bordered table-striped align-middle">
             <thead>
@@ -91,118 +91,9 @@
         </div>
       </div>
     </div>
-
     <div class="card shadow mb-4">
-      <div class="card-header">Pekerjaan Alumni</div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped align-middle">
-            <thead>
-              <tr>
-                <th class="text-center">Pekerjaan</th>
-                <th class="text-center">Jumlah</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($alumni_per_pekerjaan as $row): ?>
-                <tr>
-                  <td><?php echo htmlspecialchars($row->nama_pekerjaan); ?></td>
-                  <td class="text-center"><?php echo htmlspecialchars($row->total_alumni); ?></td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
-
-  <div class="col-lg-6">
-    <div class="card shadow mb-4">
-      <div class="card-header">Data Terbaru</div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped text-nowrap align-middle">
-            <thead>
-              <tr>
-                <th class="text-center">No.</th>
-                <th class="text-center">Nama / Angkatan</th>
-                <th class="text-center">Waktu</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php $urut = 1;
-              foreach ($alumni_terbaru as $row): ?>
-                <tr>
-                  <td class="text-center"><?= $urut++ ?></td>
-                  <td class="text-left"><?php echo htmlspecialchars($row->nama_lengkap); ?> / <?php echo htmlspecialchars($row->angkatan); ?></td>
-                  <td class="text-center"><?php echo htmlspecialchars($row->created_at); ?></td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="card shadow mb-4">
-      <div class="card-header">Data Tercepat</div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped text-nowrap align-middle">
-            <thead>
-              <tr>
-                <th class="text-center">No.</th>
-                <th class="text-center">Nama / Angkatan</th>
-                <th class="text-center">Waktu</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php $urut = 1;
-              foreach ($alumni_tercepat as $row): ?>
-                <tr>
-                  <td class="text-center"><?= $urut++ ?></td>
-                  <td class="text-left"><?php echo htmlspecialchars($row->nama_lengkap); ?> / <?php echo htmlspecialchars($row->angkatan); ?></td>
-                  <td class="text-center"><?php echo htmlspecialchars($row->created_at); ?></td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="card shadow mb-4">
-      <div class="card-header">Referral Terbanyak</div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped align-middle">
-            <thead>
-              <tr>
-                <th class="text-center align-middle">No.</th>
-                <th class="text-center align-middle">Nama / Angkatan</th>
-                <th class="text-center align-middle">Jumlah Ref</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php $urut = 1;
-              foreach ($get_referred_rank as $row): ?>
-                <tr>
-                  <td class="text-center align-middle"><?= $urut++ ?></td>
-                  <td class="text-left align-middle"><?php echo htmlspecialchars($row->nama_lengkap); ?> / <?php echo htmlspecialchars($row->angkatan); ?></td>
-                  <td class="text-center align-middle"><?php echo htmlspecialchars($row->ref_jumlah); ?></td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="card shadow mb-4">
-      <div class="card-header">Jenis Kelamin Alumni</div>
-      <div class="card-body">
+      <div class="card-header">Rekap per Angkatan</div>
+      <div class="card-body overflow-auto" style="height: 500px;">
         <div class="table-responsive">
           <table class="table table-bordered table-striped text-nowrap align-middle">
             <thead>
@@ -230,7 +121,116 @@
           </table>
         </div>
       </div>
-    </div>    
+    </div>
+    <div class="card shadow mb-4">
+      <div class="card-header">Pekerjaan Alumni</div>
+      <div class="card-body overflow-auto" style="height: 500px;">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped align-middle">
+            <thead>
+              <tr>
+                <th class="text-center">Pekerjaan</th>
+                <th class="text-center">Jumlah</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($alumni_per_pekerjaan as $row): ?>
+                <tr>
+                  <td><?php echo htmlspecialchars($row->nama_pekerjaan); ?></td>
+                  <td class="text-center"><?php echo htmlspecialchars($row->total_alumni); ?></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card shadow mb-4">
+      <div class="card-header">Data Terbaru</div>
+      <div class="card-body overflow-auto" style="height: 500px;">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped text-nowrap align-middle">
+            <thead>
+              <tr>
+                <th class="text-center">No.</th>
+                <th class="text-center">Nama / Angkatan</th>
+                <th class="text-center">Waktu</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $urut = 1;
+              foreach ($alumni_terbaru as $row): ?>
+                <tr>
+                  <td class="text-center"><?= $urut++ ?></td>
+                  <td class="text-left"><?php echo htmlspecialchars($row->nama_lengkap); ?> / <?php echo htmlspecialchars($row->angkatan); ?></td>
+                  <td class="text-center"><?php echo htmlspecialchars($row->created_at); ?></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow mb-4">
+      <div class="card-header">Data Tercepat</div>
+      <div class="card-body overflow-auto" style="height: 500px;">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped text-nowrap align-middle">
+            <thead>
+              <tr>
+                <th class="text-center">No.</th>
+                <th class="text-center">Nama / Angkatan</th>
+                <th class="text-center">Waktu</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $urut = 1;
+              foreach ($alumni_tercepat as $row): ?>
+                <tr>
+                  <td class="text-center"><?= $urut++ ?></td>
+                  <td class="text-left"><?php echo htmlspecialchars($row->nama_lengkap); ?> / <?php echo htmlspecialchars($row->angkatan); ?></td>
+                  <td class="text-center"><?php echo htmlspecialchars($row->created_at); ?></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow mb-4">
+      <div class="card-header">Referral Terbanyak</div>
+      <div class="card-body overflow-auto" style="height: 500px;">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped align-middle">
+            <thead>
+              <tr>
+                <th class="text-center align-middle">No.</th>
+                <th class="text-center align-middle">Nama / Angkatan</th>
+                <th class="text-center align-middle">Jumlah Ref</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $urut = 1;
+              foreach ($get_referred_rank as $row): ?>
+                <tr>
+                  <td class="text-center align-middle"><?= $urut++ ?></td>
+                  <td class="text-left align-middle"><?php echo htmlspecialchars($row->nama_lengkap); ?> / <?php echo htmlspecialchars($row->angkatan); ?></td>
+                  <td class="text-center align-middle"><?php echo htmlspecialchars($row->ref_jumlah); ?></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
   </div>
 </div>
 

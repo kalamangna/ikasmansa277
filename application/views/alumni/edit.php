@@ -5,31 +5,30 @@
         <h3 class="mb-0">Edit Data Alumni</h3>
       </div>
       <div class="card-body">
-        <?php
-        // print_r($pekerjaan_list); die();
-        // print_r($alumni); die();
-        ?>
         <?php if ($this->session->flashdata('success')): ?>
           <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
         <?php endif; ?>
 
-        <form method="post" action="<?php echo site_url('alumni/update/' . $alumni->id_alumni); ?>">
+        <form method="post" action="<?php echo site_url('alumni/update/' . $alumni->id_alumni); ?>" class="needs-validation" novalidate enctype="multipart/form-data">
           <h4>Data Pribadi</h4>
 
           <div class="mb-3">
-            <label for="nama_lengkap" class="form-label">Nama Lengkap (sertakan gelar akademik jika ada)</label>
+            <label for="nama_lengkap" class="form-label">Nama Lengkap <small class="text-muted">(Wajib diisi)</small></label>
             <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" value="<?php echo $alumni->nama_lengkap; ?>" required>
+            <small class="text-muted">Isikan nama lengkap sesuai ijazah</small>
+            <div class="invalid-feedback">*Nama lengkap wajib diisi.</div>
           </div>
 
           <div class="mb-3">
             <div class="row g-3">
               <div class="col-md-6">
-                <label for="nama_panggilan" class="form-label">Nama Panggilan</label>
+                <label for="nama_panggilan" class="form-label">Nama Panggilan <small class="text-muted">(Opsional)</small></label>
                 <input type="text" class="form-control" id="nama_panggilan" name="nama_panggilan" value="<?php echo set_value('nama_panggilan', $alumni->nama_panggilan ?? ''); ?>">
+                <small class="text-muted">Nama yang biasa dipanggil sehari-hari</small>
               </div>
 
               <div class="col-md-6">
-                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                <label for="jenis_kelamin" class="form-label">Jenis Kelamin <small class="text-muted">(Wajib diisi)</small></label>
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="jenis_kelamin" id="laki" value="Laki-laki"
                     <?php echo set_value('jenis_kelamin', $alumni->jenis_kelamin) == 'Laki-laki' ? 'checked' : ''; ?>>
@@ -39,6 +38,9 @@
                   <input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan" value="Perempuan"
                     <?php echo set_value('jenis_kelamin', $alumni->jenis_kelamin) == 'Perempuan' ? 'checked' : ''; ?>>
                   <label class="form-check-label" for="perempuan">Perempuan</label>
+                  <div class="invalid-feedback">
+                    *Silakan pilih jenis kelamin.
+                  </div>
                 </div>
               </div>
             </div>
@@ -47,23 +49,28 @@
           <div class="mb-3">
             <div class="row g-3">
               <div class="col-md-6">
-                <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                <label for="tempat_lahir" class="form-label">Tempat Lahir <small class="text-muted">(Wajib diisi)</small></label>
                 <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="<?php echo $alumni->tempat_lahir; ?>" required>
+                <small class="text-muted">Kota/kabupaten tempat lahir</small>
+                <div class="invalid-feedback">*Tempat lahir wajib diisi.</div>
               </div>
               <div class="col-md-6">
-                <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                <label for="tanggal_lahir" class="form-label">Tanggal Lahir <small class="text-muted">(Wajib diisi)</small></label>
                 <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="<?php echo $alumni->tanggal_lahir; ?>" required>
+                <div class="invalid-feedback">*Silakan pilih tanggal lahir.</div>
               </div>
             </div>
           </div>
 
           <div class="mb-3">
-            <label for="alamat_domisili" class="form-label">Alamat Domisili</label>
+            <label for="alamat_domisili" class="form-label">Alamat Domisili <small class="text-muted">(Wajib diisi)</small></label>
             <textarea class="form-control" id="alamat_domisili" name="alamat_domisili" rows="2" required><?php echo $alumni->alamat_domisili; ?></textarea>
+            <small class="text-muted">Alamat tempat tinggal saat ini</small>
+            <div class="invalid-feedback">*Alamat domisili wajib diisi.</div>
           </div>
 
           <div class="mb-3">
-            <label for="provinsi" class="form-label">Provinsi</label>
+            <label for="provinsi" class="form-label">Provinsi Domisili <small class="text-muted">(Wajib diisi)</small></label>
             <select class="form-select" id="provinsi" name="provinsi_id" required>
               <option value="">-- Pilih Provinsi --</option>
               <?php foreach ($provinsi as $prov): ?>
@@ -72,10 +79,11 @@
                 </option>
               <?php endforeach; ?>
             </select>
+            <div class="invalid-feedback">*Silakan pilih provinsi.</div>
           </div>
 
           <div class="mb-3">
-            <label for="kabupaten" class="form-label">Kabupaten/Kota</label>
+            <label for="kabupaten" class="form-label">Kabupaten/Kota Domisili <small class="text-muted">(Wajib diisi)</small></label>
             <select class="form-select" id="kabupaten" name="kabupaten_id" required>
               <option value="">-- Pilih Kabupaten/Kota --</option>
               <?php foreach ($kabupaten as $kab): ?>
@@ -84,12 +92,15 @@
                 </option>
               <?php endforeach; ?>
             </select>
+            <div class="invalid-feedback">*Silakan pilih kabupaten/kota.</div>
           </div>
 
 
           <div class="mb-3">
-            <label for="no_telepon" class="form-label">Nomor Telepon/WhatsApp</label>
+            <label for="no_telepon" class="form-label">Nomor Telepon/WhatsApp <small class="text-muted">(Wajib diisi)</small></label>
             <input type="text" class="form-control" id="no_telepon" name="no_telepon" value="<?php echo $alumni->no_telepon; ?>" required>
+            <small class="text-muted">Nomor aktif yang bisa dihubungi</small>
+            <div class="invalid-feedback">*Nomor telepon/WhatsApp wajib diisi.</div>
           </div>
 
           <hr>
@@ -99,7 +110,7 @@
           <div class="mb-3">
             <div class="row g-3">
               <div class="col-md-6">
-                <label for="angkatan" class="form-label">Angkatan (Tahun Lulus)</label>
+                <label for="angkatan" class="form-label">Angkatan (Tahun Lulus) <small class="text-muted">(Wajib diisi)</small></label>
                 <select name="angkatan" id="angkatan" class="form-select" required>
                   <option value="">-- Pilih Angkatan --</option>
                   <?php
@@ -110,8 +121,9 @@
                   <?php endfor;
                   ?>
                 </select>
-
+                <div class="invalid-feedback">*Silakan pilih angkatan.</div>
               </div>
+
               <div class="col-md-6">
                 <label for="jurusan" class="form-label">Jurusan (jika ada)</label>
                 <select name="jurusan" id="jurusan" class="form-select" required>
@@ -127,6 +139,7 @@
                   <option disabled>──────────</option>
                   <option value="Umum" <?php echo ("Umum" == $alumni->jurusan) ? 'selected' : ''; ?>>Umum / Tidak ada jurusan</option>
                 </select>
+                <div class="invalid-feedback">*Silakan pilih jurusan.</div>
               </div>
             </div>
           </div>
@@ -145,16 +158,19 @@
                 </option>
               <?php endforeach; ?>
             </select>
+            <small class="text-muted">Pekerjaan saat ini (jika ada)</small>
           </div>
 
           <div class="mb-3">
             <label for="nama_perusahaan" class="form-label">Nama Perusahaan/Instansi</label>
             <input type="text" class="form-control" id="nama_perusahaan" name="nama_perusahaan" value="<?php echo $alumni->nama_perusahaan; ?>">
+            <small class="text-muted">Nama tempat bekerja saat ini</small>
           </div>
 
           <div class="mb-3">
             <label for="jabatan" class="form-label">Jabatan</label>
             <input type="text" class="form-control" id="jabatan" name="jabatan" value="<?php echo $alumni->jabatan; ?>">
+            <small class="text-muted">Posisi/jabatan pekerjaan saat ini</small>
           </div>
 
           <div class="mb-3">
@@ -164,7 +180,6 @@
 
           <hr>
 
-          <!-- Keterangan Tambahan -->
           <h4>Keterangan Tambahan</h4>
 
           <div class="mb-3">
@@ -189,7 +204,9 @@
             <label for="saran_masukan" class="form-label">Saran dan Masukan untuk SMA 1/277 Kabupaten Sinjai</label>
             <textarea class="form-control" id="saran_masukan" name="saran_masukan" rows="3"><?php echo $alumni->saran_masukan; ?></textarea>
           </div>
+
           <input type="hidden" name="id_pekerjaan" value="<?= $alumni->nama_perusahaan ?>">
+
           <button type="submit" class="btn btn-primary">Update Data</button>
         </form>
 
