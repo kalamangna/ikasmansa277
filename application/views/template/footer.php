@@ -18,9 +18,20 @@
 <script src="<?= base_url('assets/datatables/dataTables.bootstrap5.min.js') ?>"></script>
 <script>
     $(document).ready(function() {
-        $('#alumniTable').DataTable();
+        $('#alumniTable').DataTable({
+            "pageLength": 50,
+            "lengthMenu": [[50, 100, 200, -1], [50, 100, 200, "All"]], // Opsi tambahan
+            "paging": true,
+            "searching": true,
+            "language": {
+                "search": "Cari:",          // Custom teks search
+                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                "infoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+                "lengthMenu": "Tampilkan _MENU_ data per halaman",
+                "zeroRecords": "Data tidak ditemukan"
+            }
+        });
     });
-
     $(document).ready(function() {
         $('#dashboardTable').DataTable({
             "paging": false,       // Nonaktifkan pagination

@@ -149,34 +149,7 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
         </div>
       </div>
     </div>
-    <?php if ($is_admin): ?>
-        <div class="card shadow mb-4">
-          <div class="card-header">Data Admin</div>
-          <div class="card-body overflow-auto" style="height: 500px;">
-            <div class="table-responsive">
-              <table class="table table-bordered table-striped text-nowrap align-middle">
-                <thead>
-                  <tr>
-                    <th class="text-center">No.</th>
-                    <th class="text-center">Nama / Angkatan</th>
-                    <th class="text-center">Role</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $urut = 1;
-                  foreach ($get_admin_alumni as $row): ?>
-                    <tr>
-                      <td class="text-center"><?= $urut++ ?></td>
-                      <td class="text-left"><?php echo htmlspecialchars($row['nama_lengkap']); ?> / <?php echo htmlspecialchars($row['angkatan']); ?></td>
-                      <td class="text-center"><?php echo htmlspecialchars($row['nama_role']); ?></td>
-                    </tr>
-                  <?php endforeach; ?>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-    <?php endif; ?>
+
 
   </div>
 
@@ -261,9 +234,83 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
         </div>
       </div>
     </div>
-    
+
+    <?php if ($is_admin): ?>
+      <div class="card shadow mb-4">
+        <div class="card-header">Data Admin</div>
+        <div class="card-body overflow-auto" style="height: 500px;">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped text-nowrap align-middle">
+              <thead>
+                <tr>
+                  <th class="text-center">No.</th>
+                  <th class="text-center">Nama / Angkatan</th>
+                  <th class="text-center">Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php $urut = 1;
+                foreach ($get_admin_alumni as $row): ?>
+                  <tr>
+                    <td class="text-center"><?= $urut++ ?></td>
+                    <td class="text-left"><?php echo htmlspecialchars($row['nama_lengkap']); ?> / <?php echo htmlspecialchars($row['angkatan']); ?></td>
+                    <td class="text-center">
+                      <?php if ($row['nama_role'] == 'admin'): ?>
+                        <i class="fas fa-user-shield text-primary"></i>
+                      <?php elseif ($row['nama_role'] == 'admin_angkatan'): ?>
+                        <i class="fas fa-users text-success"></i>
+                      <?php elseif ($row['nama_role'] == 'admin_provinsi'): ?>
+                        <i class="fas fa-map-marked-alt text-info"></i>
+                      <?php elseif ($row['nama_role'] == 'admin_kabupaten'): ?>
+                        <i class="fas fa-map-marker-alt text-warning"></i>
+                      <?php endif; ?>
+                      <!-- <?php echo htmlspecialchars($row['nama_role']); ?> -->
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Keterangan Ikon -->
+          <div class="alert alert-info mt-3">
+            <h6 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Keterangan Ikon Role:</h6>
+            <ul class="mb-0">
+              <li><i class="fas fa-user-shield text-primary me-1"></i> <strong>Admin</strong>: Hak akses penuh sistem</li>
+              <li><i class="fas fa-users text-success me-1"></i> <strong>Admin Angkatan</strong>: Mengelola data per angkatan</li>
+              <li><i class="fas fa-map-marked-alt text-info me-1"></i> <strong>Admin Provinsi</strong>: Mengelola data per provinsi</li>
+              <li><i class="fas fa-map-marker-alt text-warning me-1"></i> <strong>Admin Kabupaten</strong>: Mengelola data per kabupaten</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    <?php endif; ?>
+
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <style>
   /* CSS untuk chart selalu sama tinggi */

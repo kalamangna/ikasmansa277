@@ -184,6 +184,7 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
           <div class="card-body">
             <div class="d-flex justify-content-end">
               <?php if (
+                
                 $user_role == 'admin' ||
                 ($user_role == 'admin_angkatan' && $user_angkatan == $alumni_angkatan)
               ): ?>
@@ -328,8 +329,10 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
                     <label for="role" class="form-label">Role User</label>
                     <select class="form-select" id="role" name="role_id" required>
                       <option>-Pilih Role-</option>
-                      <?php if ($user_role == 'admin'): ?>
+                      <?php if ($this->session->userdata('id_alumni') == '92'): ?>
                         <option value="1" <?php echo ($alumni->role_id == '1') ? 'selected' : ''; ?>>Admin</option>
+                      <?php endif; ?>
+                      <?php if ($user_role == 'admin'): ?>
                         <option value="2" <?php echo ($alumni->role_id == '2') ? 'selected' : ''; ?>>Admin Angkatan</option>
                       <?php endif; ?>
                       <option value="5" <?php echo ($alumni->role_id == '5') ? 'selected' : ''; ?>>User Alumni</option>

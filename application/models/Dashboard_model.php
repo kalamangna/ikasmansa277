@@ -183,7 +183,7 @@ class Dashboard_model extends CI_Model {
         $this->db->join('pendidikan p', 'a.id_alumni = p.alumni_id');
         $this->db->where('u.role_id >=', 1);
         $this->db->where('u.role_id <=', 4);
-        $this->db->order_by('u.role_id, a.nama_lengkap');
+        $this->db->order_by('u.role_id, p.angkatan, a.nama_lengkap');
         return $this->db->get()->result_array();
     }
 

@@ -20,7 +20,7 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table table-bordered table-striped text-nowrap align-middle">
+      <table class="table table-bordered table-striped text-nowrap align-middle"  id="alumniTable">
         <thead>
           <tr class="text-center">
             <th>No.</th>
