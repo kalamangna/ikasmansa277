@@ -41,12 +41,21 @@ public function update_alumni($id_alumni, $data) {
 
 public function insert_alumni($data) {
     $this->db->trans_start();
+    
+    // $tanggal_input = $data['tanggal_lahir'];
+    // $tanggal_mysql = date('Y-m-d', strtotime(str_replace('-', '/', $tanggal_input)));
+    
+
+    $tanggal_input = $data['tanggal_lahir'];
+    list($day, $month, $year) = explode('-', $tanggal_input);
+    $tanggal_mysql = "$year-$month-$day";
+
 
     // Simpan data alumni - ADD foto_path HERE
     $alumni_data = [
         'nama_lengkap' => $data['nama_lengkap'],
         'tempat_lahir' => $data['tempat_lahir'],
-        'tanggal_lahir' => $data['tanggal_lahir'],
+        'tanggal_lahir' => $tanggal_mysql,
         'jenis_kelamin' => $data['jenis_kelamin'],
         'nama_panggilan' => $data['nama_panggilan'],            
         'alamat_domisili' => $data['alamat_domisili'],
@@ -56,6 +65,8 @@ public function insert_alumni($data) {
         'foto_profil' => isset($data['foto_profil']) ? $data['foto_profil'] : null, // Add this line
         'referred_by' => isset($data['referred_by']) ? $data['referred_by'] : null
     ];
+
+    // print_r($alumni_data);die();
     $this->db->insert('alumni', $alumni_data);
     $alumni_id = $this->db->insert_id();
 

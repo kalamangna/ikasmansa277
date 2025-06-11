@@ -18,19 +18,20 @@
       <p class="mb-0"><strong>Angkatan Anda:</strong> <?php echo htmlspecialchars($selected_angkatan); ?></p>
     <?php endif; ?>
   </div>
+
   <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped text-nowrap align-middle"  id="alumniTable">
+    <div class="table-responsive py-2">
+      <table class="table table-bordered table-striped text-nowrap align-middle" id="alumniTable">
         <thead>
-          <tr class="text-center">
+          <tr>
             <th>No.</th>
-            <th>Nama Lengkap</th>
-            <th>Nama Panggilan</th>
-            <th>Jurusan</th>
-            <th>Domisili Sekarang</th>
-            <th>Ref</th>
+            <th class="text-center">Nama Lengkap</th>
+            <th class="text-center">Nama Panggilan</th>
+            <th class="text-center">Jurusan</th>
+            <th class="text-center">Domisili Sekarang</th>
+            <th class="text-center">Ref</th>
             <?php if ($is_admin) { ?>
-              <th>Proses</th>
+              <th class="text-center">Proses</th>
             <?php } ?>
 
             <!-- Tambahkan kolom lain sesuai kebutuhan -->

@@ -17,31 +17,52 @@
 <script src="<?= base_url('assets/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= base_url('assets/datatables/dataTables.bootstrap5.min.js') ?>"></script>
 <script>
-    $(document).ready(function() {
-        $('#alumniTable').DataTable({
-            "pageLength": 50,
-            "lengthMenu": [[50, 100, 200, -1], [50, 100, 200, "All"]], // Opsi tambahan
-            "paging": true,
-            "searching": true,
-            "language": {
-                "search": "Cari:",          // Custom teks search
-                "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                "infoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
-                "lengthMenu": "Tampilkan _MENU_ data per halaman",
-                "zeroRecords": "Data tidak ditemukan"
-            }
-        });
+  $(document).ready(function() {
+    $('#alumniTable').DataTable({
+      "pageLength": 50,
+      "lengthMenu": [
+        [50, 100, 200, -1],
+        [50, 100, 200, "All"]
+      ], // Opsi tambahan
+      "paging": true,
+      "searching": true,
+      "language": {
+        "search": "Cari:", // Custom teks search
+        "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+        "infoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
+        "lengthMenu": "Tampilkan _MENU_ data per halaman",
+        "zeroRecords": "Data tidak ditemukan"
+      }
     });
-    $(document).ready(function() {
-        $('#dashboardTable').DataTable({
-            "paging": false,       // Nonaktifkan pagination
-            "searching": false,    // Nonaktifkan search
-            "info": false,         // Nonaktifkan info "Showing X of Y entries"
-            "ordering": true,      // Biarkan sorting aktif (opsional)
-            "dom": 't'            // Hanya tampilkan tabel saja (tanpa kontrol lainnya)
-        });
-});
+  });
+
+  $(document).ready(function() {
+    $('#dashboardTable').DataTable({
+      "paging": false, // Nonaktifkan pagination
+      "searching": false, // Nonaktifkan search
+      "info": false, // Nonaktifkan info "Showing X of Y entries"
+      "ordering": true, // Biarkan sorting aktif (opsional)
+      "dom": 't' // Hanya tampilkan tabel saja (tanpa kontrol lainnya)
+    });
+  });
 </script>
+
+<!-- override css bootstrap -->
+<style>
+  div.dataTables_wrapper div.dataTables_length select {
+    color: #000;
+    background-color: #fff;
+    -webkit-appearance: auto;
+    appearance: auto;
+    background-image: none;
+  }
+
+  .dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0;
+    margin: 0 0.1rem;
+  }
+</style>
+
 
 <!-- manampikan script untuk menampilkan kabupaten setelah memilih provinsi -->
 <?php if (isset($ajax_kabupaten)): ?>

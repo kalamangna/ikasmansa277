@@ -108,6 +108,8 @@ class Alumni extends CI_Controller
     {
         $post = $this->input->post();
 
+        // print_r($post);die();
+
         $last_input = $this->session->userdata('last_alumni_input');
         if (
             $last_input &&
@@ -118,6 +120,8 @@ class Alumni extends CI_Controller
             redirect('alumni/create');
             return;
         }
+
+
 
 
         // Handle photo upload

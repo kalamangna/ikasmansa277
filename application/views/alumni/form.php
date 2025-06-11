@@ -59,11 +59,54 @@
                 <small class="text-muted">Kota/kabupaten tempat lahir</small>
                 <div class="invalid-feedback">*Tempat lahir wajib diisi.</div>
               </div>
+<!--                 <div class="col-md-6">
+                  <label for="tanggal_lahir" class="form-label">Tanggal Lahir <small class="text-muted">(Wajib diisi)</small></label>
+                  <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" required>
+                  <div class="invalid-feedback">*Silakan pilih tanggal lahir.</div>
+                </div> -->
               <div class="col-md-6">
                 <label for="tanggal_lahir" class="form-label">Tanggal Lahir <small class="text-muted">(Wajib diisi)</small></label>
-                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" required>
-                <div class="invalid-feedback">*Silakan pilih tanggal lahir.</div>
+                <input type="text" class="form-control" id="tanggal_lahir" name="tanggal_lahir" 
+                       placeholder="dd-mm-yyyy" required>
+                <div class="invalid-feedback" id="tanggal-error">*Format tanggal harus dd-mm-yyyy (contoh: 31-12-2000)</div>
               </div>
+
+              <script>
+              document.getElementById('tanggal_lahir').addEventListener('input', function(e) {
+                let input = e.target.value.replace(/\D/g, '').substring(0, 8);
+                
+                // Format otomatis: dd-mm-yyyy
+                if (input.length > 4) {
+                  input = input.substring(0, 2) + '-' + input.substring(2, 4) + '-' + input.substring(4);
+                } else if (input.length > 2) {
+                  input = input.substring(0, 2) + '-' + input.substring(2);
+                }
+                e.target.value = input;
+              });
+
+              // Validasi saat form disubmit
+              document.querySelector('form').addEventListener('submit', function(e) {
+                const tanggalInput = document.getElementById('tanggal_lahir');
+                const regex = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-(19|20)\d\d$/;
+                
+                if (!regex.test(tanggalInput.value)) {
+                  e.preventDefault();
+                  document.getElementById('tanggal-error').textContent = "*Format tanggal tidak valid (contoh: 31-12-2000)";
+                  tanggalInput.classList.add('is-invalid');
+                } else {
+                  // Cek apakah tanggal valid (misal: 31-02-2023 tidak valid)
+                  const [day, month, year] = tanggalInput.value.split('-');
+                  const date = new Date(`${year}-${month}-${day}`);
+                  
+                  if (isNaN(date.getTime())) {
+                    e.preventDefault();
+                    document.getElementById('tanggal-error').textContent = "*Tanggal tidak valid (contoh: 31-02-2023 tidak ada)";
+                    tanggalInput.classList.add('is-invalid');
+                  }
+                }
+              });
+              </script>                  <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
+
             </div>
           </div>
 
