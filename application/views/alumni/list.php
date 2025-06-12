@@ -5,11 +5,11 @@
   <div class="card-header">
     <?php if ($user_role == 'admin'): ?>
       <form method="get" class="mb-3">
-        <label for="angkatan" class="form-label">Pilih Angkatan:</label>
-        <select name="angkatan" id="angkatan" class="form-select" onchange="this.form.submit()">
+        <label for="angkatan" class="form-label" >Pilih Angkatan:</label>
+        <select name="angkatan" id="angkatan" class="form-select col-md-2 col-sm-6" onchange="this.form.submit()" >
           <?php foreach ($angkatan_list as $angk): ?>
             <option value="<?php echo $angk['angkatan']; ?>" <?php echo ($selected_angkatan == $angk['angkatan']) ? 'selected' : ''; ?>>
-              <?php echo $angk['angkatan']; ?>
+              <?php echo $angk['angkatan']; ?> <?php echo " <small>(".$angk['total_semua']." orang)</small>"; ?>
             </option>
           <?php endforeach; ?>
         </select>

@@ -33,11 +33,6 @@ $url_pendataan = site_url('alumni/create?ut=' . $this->session->userdata('referr
 
         <div class="card mb-3">
           <div class="card-body">
-
-            <!-- <p>Terima kasih <strong class="text-bold"><?php echo htmlspecialchars($alumni->nama_lengkap); ?> </strong> angkatan <strong class="text-bold"><?= $alumni->angkatan ?> </strong> telah berpartisipasi di Pendataan&nbsp;Alumni&nbsp;SMAN&nbsp;1/277&nbsp;Sinjai.</p>
-            <p>Anda adalah Alumni ke <strong><?php echo $urutan_angkatan; ?></strong> dari <strong><?php echo $total_angkatan; ?></strong> alumni angkatan <strong><?php echo $alumni->angkatan; ?></strong> yang telah melakukan pendataan.</p>
-            <p>Anda adalah Alumni ke <strong><?php echo $urutan_alumni; ?></strong> dari total <strong><?php echo $total_alumni; ?></strong> yang telah melakukan pendataan.</p> -->
-
             <p>
               Terima kasih
               <strong class="fw-bold text-primary">

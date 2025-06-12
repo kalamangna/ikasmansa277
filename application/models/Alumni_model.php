@@ -155,9 +155,22 @@ public function insert_alumni($data) {
     }
     public function get_all_angkatan()
     {
-        $this->db->distinct();
-        $this->db->select('pendidikan.angkatan');
-        $this->db->from('pendidikan');
+        // $this->db->distinct();
+        // $this->db->select('pendidikan.angkatan');
+        // $this->db->from('pendidikan');
+        // $this->db->order_by('pendidikan.angkatan', 'ASC');
+        // $query = $this->db->get();
+        // return $query->result_array();
+
+        $this->db->select('
+            pendidikan.angkatan,
+            SUM(CASE WHEN alumni.jenis_kelamin = "Laki-laki" THEN 1 ELSE 0 END) AS jumlah_laki_laki,
+            SUM(CASE WHEN alumni.jenis_kelamin = "Perempuan" THEN 1 ELSE 0 END) AS jumlah_perempuan,
+            COUNT(*) AS total_semua
+        ');
+        $this->db->from('alumni');
+        $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
+        $this->db->group_by('pendidikan.angkatan');
         $this->db->order_by('pendidikan.angkatan', 'ASC');
         $query = $this->db->get();
         return $query->result_array();

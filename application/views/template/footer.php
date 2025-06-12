@@ -18,7 +18,10 @@
 <script src="<?= base_url('assets/datatables/dataTables.bootstrap5.min.js') ?>"></script>
 <script>
   $(document).ready(function() {
-    $('#alumniTable').DataTable({
+    const alumniTable = $('#alumniTable').DataTable({
+      "scrollX": true, // Aktifkan scroll horizontal
+      "responsive": true,
+      "autoWidth": false,
       "pageLength": 50,
       "lengthMenu": [
         [50, 100, 200, -1],
@@ -32,29 +35,61 @@
         "infoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
         "lengthMenu": "Tampilkan _MENU_ data per halaman",
         "zeroRecords": "Data tidak ditemukan"
-      }
-    });
-  });
+      },
+      "columnDefs": [{
+          orderable: false,
+          targets: 0
+        } // kolom pertama
+      ]
+    })
 
-  $(document).ready(function() {
-    $('#dashboardTable').DataTable({
+    const dashboardTable = $('#dashboardTable').DataTable({
+      "responsive": true,
+      "autoWidth": false,
       "paging": false, // Nonaktifkan pagination
       "searching": false, // Nonaktifkan search
       "info": false, // Nonaktifkan info "Showing X of Y entries"
       "ordering": true, // Biarkan sorting aktif (opsional)
-      "dom": 't' // Hanya tampilkan tabel saja (tanpa kontrol lainnya)
-    });
+      "dom": 't', // Hanya tampilkan tabel saja (tanpa kontrol lainnya)
+      "columnDefs": [{
+          orderable: false,
+          targets: 0
+        } // kolom pertama
+      ]
+    })
+
+    // Event update nomor urut otomatis
+    function updateRowNumbering(table) {
+      table.on('order.dt search.dt', function() {
+        table.column(0, {
+            search: 'applied',
+            order: 'applied'
+          }).nodes()
+          .each(function(cell, i) {
+            cell.innerHTML = i + 1;
+          });
+      }).draw();
+    }
+
+    // Aktifkan pada kedua tabel
+    updateRowNumbering(alumniTable);
+    updateRowNumbering(dashboardTable);
   });
 </script>
 
 <!-- override css bootstrap -->
 <style>
   div.dataTables_wrapper div.dataTables_length select {
-    color: #000;
-    background-color: #fff;
     -webkit-appearance: auto;
     appearance: auto;
     background-image: none;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ced4da;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
   }
 
   .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -126,7 +161,6 @@ if ($hidden_counter == false) {
 }
 
 ?>
-
 
 <!-- Validasi form dengan Bootstrap -->
 <script>

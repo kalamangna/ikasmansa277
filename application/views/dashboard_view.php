@@ -74,8 +74,8 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
   <div class="col-lg-6">
     <div class="card shadow mb-4">
       <div class="card-header">Domisili Alumni</div>
-      <div class="card-body overflow-auto" style="height: 500px;">
-        <div class="table-responsive">
+      <div class="card-body">
+        <div class="table-responsive overflow-auto" style="max-height: 560px;">
           <table class="table table-bordered table-striped align-middle">
             <thead>
               <tr>
@@ -95,10 +95,11 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
         </div>
       </div>
     </div>
+
     <div class="card shadow mb-4">
       <div class="card-header">Rekap per Angkatan</div>
-      <div class="card-body overflow-auto" style="height: 500px;">
-        <div class="table-responsive">
+      <div class="card-body">
+        <div class="table-responsive overflow-auto" style="max-height: 560px;">
           <table class="table table-bordered table-striped text-nowrap align-middle" id="dashboardTable">
             <thead>
               <tr>
@@ -126,10 +127,11 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
         </div>
       </div>
     </div>
+
     <div class="card shadow mb-4">
       <div class="card-header">Pekerjaan Alumni</div>
-      <div class="card-body overflow-auto" style="height: 500px;">
-        <div class="table-responsive">
+      <div class="card-body">
+        <div class="table-responsive overflow-auto" style="max-height: 560px;">
           <table class="table table-bordered table-striped align-middle">
             <thead>
               <tr>
@@ -156,8 +158,8 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
   <div class="col-lg-6">
     <div class="card shadow mb-4">
       <div class="card-header">Data Terbaru</div>
-      <div class="card-body overflow-auto" style="height: 500px;">
-        <div class="table-responsive">
+      <div class="card-body">
+        <div class="table-responsive overflow-auto" style="max-height: 560px;">
           <table class="table table-bordered table-striped text-nowrap align-middle">
             <thead>
               <tr>
@@ -183,8 +185,8 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
 
     <div class="card shadow mb-4">
       <div class="card-header">Data Tercepat</div>
-      <div class="card-body overflow-auto" style="height: 500px;">
-        <div class="table-responsive">
+      <div class="card-body">
+        <div class="table-responsive overflow-auto" style="max-height: 560px;">
           <table class="table table-bordered table-striped text-nowrap align-middle">
             <thead>
               <tr>
@@ -210,8 +212,8 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
 
     <div class="card shadow mb-4">
       <div class="card-header">Referral Terbanyak</div>
-      <div class="card-body overflow-auto" style="height: 500px;">
-        <div class="table-responsive">
+      <div class="card-body">
+        <div class="table-responsive overflow-auto" style="max-height: 560px;">
           <table class="table table-bordered table-striped align-middle">
             <thead>
               <tr>
@@ -238,9 +240,9 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
     <?php if ($is_admin): ?>
       <div class="card shadow mb-4">
         <div class="card-header">Data Admin</div>
-        <div class="card-body overflow-auto" style="height: 500px;">
+        <div class="card-body overflow-auto" style="max-height: 560px;">
           <div class="table-responsive">
-            <table class="table table-bordered table-striped text-nowrap align-middle">
+            <table class="table table-bordered table-striped align-middle">
               <thead>
                 <tr>
                   <th class="text-center">No.</th>
@@ -252,9 +254,9 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
                 <?php $urut = 1;
                 foreach ($get_admin_alumni as $row): ?>
                   <tr>
-                    <td class="text-center"><?= $urut++ ?></td>
-                    <td class="text-left"><?php echo htmlspecialchars($row['nama_lengkap']); ?> / <?php echo htmlspecialchars($row['angkatan']); ?></td>
-                    <td class="text-center">
+                    <td class="text-center align-middle"><?= $urut++ ?></td>
+                    <td class="text-left align-middle"><?php echo htmlspecialchars($row['nama_lengkap']); ?> / <?php echo htmlspecialchars($row['angkatan']); ?></td>
+                    <td class="text-center align-middle">
                       <?php if ($row['nama_role'] == 'admin'): ?>
                         <i class="fas fa-user-shield text-primary"></i>
                       <?php elseif ($row['nama_role'] == 'admin_angkatan'): ?>
