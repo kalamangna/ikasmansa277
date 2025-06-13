@@ -67,6 +67,41 @@ class Alumni extends CI_Controller
         $this->load->view('template/footer');
     }
 
+
+    public function search()
+    {
+        // Cek hak akses admin
+        $user_role = $this->session->userdata('role');
+        if ($user_role != 'admin') {
+            show_error('Anda tidak memiliki hak akses untuk fitur ini', 403, 'Akses Ditolak');
+        }
+
+        $keyword = $this->input->get('q'); // Ambil keyword dari parameter GET
+
+        // Validasi keyword tidak kosong
+        if (empty($keyword)) {
+            $this->session->set_flashdata('error', 'Masukkan kata kunci pencarian');
+            redirect('alumni');
+        }
+
+        // Panggil model untuk pencarian
+        $results = $this->Alumni_model->search_alumni_by_name($keyword);
+
+        // Siapkan data untuk view
+        $data = [
+            'results' => $results,
+            'keyword' => $keyword,
+            'is_admin' => true, // Karena hanya admin yang bisa akses
+            'user_role' => $user_role
+        ];
+
+        // Load view
+        $this->load->view('template/header');
+        $this->load->view('alumni/search_results', $data);
+        $this->load->view('template/footer');
+    }
+
+
     public function get_kabupaten_ajax()
     {
         $provinsi_id = $this->input->post('provinsi_id');

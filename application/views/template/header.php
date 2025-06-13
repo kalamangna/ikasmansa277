@@ -63,66 +63,76 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-      <a class="navbar-brand" href="<?php echo base_url(); ?>">
-        <img src="<?php echo base_url("images/logo_ika1.png") ?>" alt="Logo IKA" width="30" height="30" class="d-inline-block align-text-top">
-        <span class="ms-1">IKA SMANSA / 277 Sinjai</span>
-      </a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="<?php echo base_url(); ?>">
+      <img src="<?php echo base_url("images/logo_ika1.png") ?>" alt="Logo IKA" width="30" height="30" class="d-inline-block align-text-top">
+      <span class="ms-1">IKA SMANSA / 277 Sinjai</span>
+    </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+<!--         <li class="nav-item">
+          <a class="nav-link" href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
+        </li>
+ -->
+        <?php if ($is_logged_in and !empty($this->session->userdata('referral'))): ?>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
+            <a class="nav-link" href="<?php echo site_url('alumni'); ?>">Data Alumni</a>
           </li>
+        <?php endif; ?>
+      </ul>
 
-          <?php if ($is_logged_in and !empty($this->session->userdata('referral'))): ?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo site_url('alumni'); ?>">Data Alumni</a>
-            </li>
+
+      <!-- Menu login/logout di sebelah kanan -->
+      <ul class="navbar-nav ml-auto">
+          <!-- Search Button and Form -->
+        <?php if ($is_admin): ?>
+          <li class="d-flex me-2">
+            <button class="btn btn-outline-light" type="button" data-bs-toggle="collapse" data-bs-target="#searchForm" aria-expanded="false" aria-controls="searchForm">
+              <i class="fa fa-search"></i>
+            </button>
+          </li>
+          
+          <div class="collapse" id="searchForm">
+            <form class="d-flex" action="<?php echo site_url('alumni/search'); ?>" method="get">
+              <input class="form-control me-2" type="search" placeholder="Cari alumni..." aria-label="Search" name="q" value='<?=$keyword = $this->input->get('q')?$keyword = $this->input->get('q'):""?>'>
+              <button class="btn btn-outline-light" type="submit">Cari</button>
+          </div>
           <?php endif; ?>
-        </ul>
-
-        <!-- Menu login/logout di sebelah kanan -->
-        <ul class="navbar-nav ml-auto">
-          <?php if ($is_logged_in): ?>
-            <?php if (!empty($this->session->userdata('referral'))): ?>
-              <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#referralModal">
-                  <i class="fa fa-link"></i> Undang Teman Alumni
-                </button>
-              </div>
-            <?php endif; ?>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Halo, <?php echo $this->session->userdata('nama_lengkap'); ?>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="<?php echo site_url('alumni/detail/' . $this->session->userdata('id_alumni')); ?>"><i class="fa fa-link"></i> Profil User</a>
-                <a class="dropdown-item" href="<?php echo site_url('auth/logout'); ?>">Logout</a>
-                <!-- <a class="dropdown-item" href="<?php echo site_url('auth/logout'); ?>">Logout</a> -->
-              </div>
-            </li>
-          <?php else: ?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo site_url('auth/login'); ?>">Login</a>
-            </li>
+        <?php if ($is_logged_in): ?>
+          <?php if (!empty($this->session->userdata('referral'))): ?>
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#referralModal">
+                <i class="fa fa-link"></i> Undang Teman Alumni
+              </button>
+            </div>
           <?php endif; ?>
-        </ul>
-
-      </div>
+            </form>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Halo, <?php echo $this->session->userdata('nama_lengkap'); ?>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+              <a class="dropdown-item" href="<?php echo site_url('alumni/detail/' . $this->session->userdata('id_alumni')); ?>"><i class="fa fa-link"></i> Profil User</a>
+              <a class="dropdown-item" href="<?php echo site_url('auth/logout'); ?>">Logout</a>
+            </div>
+          </li>
+        <?php else: ?>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo site_url('auth/login'); ?>">Login</a>
+          </li>
+        <?php endif; ?>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
   <!-- Info Hari, Tanggal, dan Waktu (PHP) -->
   <!-- <div class="bg-light border-bottom"> -->
   <div class="container mt-4">

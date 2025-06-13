@@ -192,6 +192,23 @@ public function insert_alumni($data) {
         return $query->result();
     }        
 
+    public function search_alumni_by_name($keyword) 
+    {
+        $this->db->select('alumni.*, pendidikan.angkatan, pendidikan.jurusan, provinsi.nama_provinsi as provinsi, kabupaten.nama_kabupaten as kabupaten,
+            (SELECT COUNT(A2.id_alumni) FROM alumni A2 WHERE A2.referred_by = alumni.id_alumni) AS ref_jumlah');
+        $this->db->from('alumni');
+        $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
+        $this->db->join('provinsi', 'alumni.provinsi_id = provinsi.id_provinsi');
+        $this->db->join('kabupaten', 'alumni.kabupaten_id = kabupaten.id_kabupaten');
+        
+        // Pencarian dengan LIKE untuk partial matching
+        $this->db->like('alumni.nama_lengkap', $keyword);
+        
+        $this->db->order_by('alumni.nama_lengkap', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     // Ambil alumni berdasarkan referral
     public function get_alumni_by_referred_by($id_alumni)
     {
