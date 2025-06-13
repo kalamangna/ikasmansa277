@@ -64,7 +64,7 @@ class Dashboard_model extends CI_Model {
             LEFT JOIN `pendidikan` ON `pendidikan`.`alumni_id` = `alumni`.`id_alumni` 
             HAVING `ref_jumlah` > 0
             ORDER BY `ref_jumlah` DESC 
-            LIMIT 10;
+            LIMIT 20;
                 ");
         return $query -> result();
     }        
