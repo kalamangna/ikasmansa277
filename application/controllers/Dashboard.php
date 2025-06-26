@@ -8,7 +8,7 @@ class Dashboard extends CI_Controller {
 
     public function index($menit_reload = null) {
         $data['title'] = 'Dashboard Data Alumni';
-        $data['total_alumni'] = $this->Dashboard_model->getTotalAlumni();
+        // $data['total_alumni'] = $this->Dashboard_model->getTotalAlumni();
         $data['total_angkatan'] = $this->Dashboard_model->get_total_angkatan();
         $data['alumni_per_angkatan'] = $this->Dashboard_model->getAlumniCountByAngkatan();
         $data['alumni_per_jurusan'] = $this->Dashboard_model->getAlumniCountByJurusan();

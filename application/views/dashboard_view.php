@@ -10,7 +10,8 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
       <div class="card-header"><i class="fas fa-users text-success me-2 "></i> Jumlah Alumni</div>
       <div class="card-body">
         <p class="d-flex display-6 fw-bold justify-content-end">
-          <?php echo $total_alumni; ?>
+          <?php echo $gender_total->total_laki_laki+$gender_total->total_perempuan; ?>
+          <?php //echo $total_alumni; ?>
         </p>
       </div>
     </div>
@@ -101,13 +102,13 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
       <div class="card-body">
         <div class="table-responsive overflow-auto" style="height: 560px;">
           <table class="table table-bordered table-striped text-nowrap align-middle" id="dashboardTable">
-            <thead>
-              <tr>
-                <th class="text-center">No.</th>
-                <th class="text-center">Angkatan</th>
-                <th class="text-center"><i class="fas fa-male " data-bs-toggle="tooltip" title="Laki-laki"></i></th>
-                <th class="text-center"><i class="fas fa-female " data-bs-toggle="tooltip" title="Perempuan"></i></th>
-                <th class="text-center"><i class="fas fa-users " data-bs-toggle="tooltip" title="Jumlah"></i></th>
+            <thead >
+              <tr >
+                <th style="position: sticky;" class="text-center">No.</th>
+                <th style="position: sticky;" class="text-center">Angkatan</th>
+                <th style="position: sticky;" class="text-center"><i class="fas fa-male " data-bs-toggle="tooltip" title="Laki-laki"></i></th>
+                <th style="position: sticky;" class="text-center"><i class="fas fa-female " data-bs-toggle="tooltip" title="Perempuan"></i></th>
+                <th style="position: sticky;" class="text-center"><i class="fas fa-users " data-bs-toggle="tooltip" title="Jumlah"></i></th>
               </tr>
             </thead>
             <tbody>
@@ -118,7 +119,8 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
                   <td class="text-center"><?php echo htmlspecialchars($row->angkatan); ?></td>
                   <td class="text-center"><?php echo htmlspecialchars($row->jumlah_laki_laki); ?></td>
                   <td class="text-center"><?php echo htmlspecialchars($row->jumlah_perempuan); ?></td>
-                  <td class="text-center"><?php echo htmlspecialchars($row->total_semua); ?></td>
+                  <td class="text-center"><?php echo htmlspecialchars($row->jumlah_laki_laki+$row->jumlah_perempuan); ?></td>
+                  <!-- <td class="text-center"><?php echo htmlspecialchars($row->total_semua); ?></td> -->
                   <!-- <td class="text-center"><?php echo $row->jumlah_laki_laki + $row->jumlah_perempuan; ?></td> -->
                 </tr>
               <?php endforeach; ?>

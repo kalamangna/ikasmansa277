@@ -1,17 +1,19 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard_model extends CI_Model {
-    public function __construct() {
+class Dashboard_model extends CI_Model
+{
+    public function __construct()
+    {
         parent::__construct();
-        $this -> load -> database();        
+        $this->load->database();
         $this->load->library('session');
         $this->load->helper(array('form', 'url'));
-
     }
 
     // Menghitung total alumni
-    public function getTotalAlumni() {
+    public function getTotalAlumni()
+    {
         return $this->db->count_all('alumni');
     }
 
@@ -22,42 +24,42 @@ class Dashboard_model extends CI_Model {
         return $query->row()->total_angkatan;
     }
 
-        // Ambil alumni tercepat
+    // Ambil alumni tercepat
     public function get_alumni_faster()
     {
         $this->db->select('alumni.*, pendidikan.angkatan, pendidikan.jurusan, provinsi.nama_provinsi as provinsi, kabupaten.nama_kabupaten as kabupaten');
         $this->db->from('alumni');
         $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
         $this->db->join('provinsi', 'alumni.provinsi_id = provinsi.id_provinsi');
-        $this->db->join('kabupaten', 'alumni.kabupaten_id = kabupaten.id_kabupaten');        
+        $this->db->join('kabupaten', 'alumni.kabupaten_id = kabupaten.id_kabupaten');
         // $this->db->where('pendidikan.angkatan', $angkatan);
         $this->db->limit(10);
         $this->db->order_by('alumni.created_at', 'ASC');
         $this->db->order_by('alumni.id_alumni', 'ASC');
         $query = $this->db->get();
         return $query->result();
-    }        
+    }
 
-        // Ambil alumni terbaru
+    // Ambil alumni terbaru
     public function get_alumni_recent()
     {
         $this->db->select('alumni.*, pendidikan.angkatan, pendidikan.jurusan, provinsi.nama_provinsi as provinsi, kabupaten.nama_kabupaten as kabupaten');
         $this->db->from('alumni');
         $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
         $this->db->join('provinsi', 'alumni.provinsi_id = provinsi.id_provinsi');
-        $this->db->join('kabupaten', 'alumni.kabupaten_id = kabupaten.id_kabupaten');        
+        $this->db->join('kabupaten', 'alumni.kabupaten_id = kabupaten.id_kabupaten');
         // $this->db->where('pendidikan.angkatan', $angkatan);
         $this->db->limit(10);
         $this->db->order_by('alumni.created_at', 'DESC');
         $query = $this->db->get();
         return $query->result();
-    }        
+    }
 
-        // Ambil referral terbanyak
+    // Ambil referral terbanyak
     public function get_referred_rank()
     {
 
-        $query = $this -> db -> query("
+        $query = $this->db->query("
             SELECT `alumni`.*, `pendidikan`.`angkatan`, 
                 (SELECT COUNT(A2.id_alumni) FROM alumni A2 WHERE A2.referred_by = alumni.id_alumni) AS ref_jumlah 
             FROM `alumni` 
@@ -66,11 +68,12 @@ class Dashboard_model extends CI_Model {
             ORDER BY `ref_jumlah` DESC 
             LIMIT 20;
                 ");
-        return $query -> result();
-    }        
+        return $query->result();
+    }
 
     // Menghitung jumlah alumni per angkatan
-    public function getAlumniCountByAngkatan() {
+    public function getAlumniCountByAngkatan()
+    {
         $this->db->select('angkatan as angkatan, COUNT(*) as jumlah_alumni');
         $this->db->group_by('angkatan');
         $this->db->order_by('angkatan', 'ASC');
@@ -79,7 +82,8 @@ class Dashboard_model extends CI_Model {
     }
 
     // Menghitung jumlah alumni per jurusan
-    public function getAlumniCountByJurusan() {
+    public function getAlumniCountByJurusan()
+    {
         $this->db->select('jurusan, COUNT(*) as jumlah_alumni');
         $this->db->group_by('jurusan');
         $this->db->order_by('jumlah_alumni', 'DESC');
@@ -88,7 +92,8 @@ class Dashboard_model extends CI_Model {
     }
 
     // Menghitung jumlah alumni berdasarkan status pekerjaan (misal: bekerja, wirausaha, belum bekerja)
-    public function getAlumniCountByStatusPekerjaan() {
+    public function getAlumniCountByStatusPekerjaan()
+    {
         $this->db->select('pekerjaan, COUNT(*) as jumlah_alumni');
         $this->db->group_by('pekerjaan');
         $query = $this->db->get('alumni');
@@ -112,25 +117,26 @@ class Dashboard_model extends CI_Model {
         $this->db->select('
             pendidikan.angkatan,
             SUM(CASE WHEN alumni.jenis_kelamin = "Laki-laki" THEN 1 ELSE 0 END) AS jumlah_laki_laki,
-            SUM(CASE WHEN alumni.jenis_kelamin = "Perempuan" THEN 1 ELSE 0 END) AS jumlah_perempuan,
-            COUNT(*) AS total_semua
+            SUM(CASE WHEN alumni.jenis_kelamin = "Perempuan" THEN 1 ELSE 0 END) AS jumlah_perempuan
 
         ');
+            // ,
+            // jumlah_laki_laki+jumlah_perempuan AS total_semua
         $this->db->from('alumni');
         $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
         $this->db->group_by('pendidikan.angkatan');
-        $this->db->order_by('total_semua', 'DESC');
+        $this->db->order_by('pendidikan.angkatan', 'ASC');
         $query = $this->db->get();
         return $query->result();
     }
     public function get_gender_count_total()
     {
-    $this->db->select('
+        $this->db->select('
         SUM(CASE WHEN jenis_kelamin = "Laki-laki" THEN 1 ELSE 0 END) AS total_laki_laki,
         SUM(CASE WHEN jenis_kelamin = "Perempuan" THEN 1 ELSE 0 END) AS total_perempuan
     ');
-    $query = $this->db->get('alumni');
-    return $query->row();
+        $query = $this->db->get('alumni');
+        return $query->row();
     }
 
     public function get_alumni_per_kabupaten()
@@ -164,7 +170,8 @@ class Dashboard_model extends CI_Model {
     }
 
     // Mendapatkan jumlah alumni dikelompokkan berdasarkan role
-    public function get_alumni_count_by_role() {
+    public function get_alumni_count_by_role()
+    {
         $this->db->select('r.nama_role, COUNT(u.id_alumni) as jumlah_alumni');
         $this->db->from('alumni a');
         $this->db->join('users u', 'a.id_alumni = u.alumni_id');
@@ -175,7 +182,8 @@ class Dashboard_model extends CI_Model {
     }
 
     // Mendapatkan alumni yang memiliki role 1-4 (admin)
-    public function get_admin_alumni() {
+    public function get_admin_alumni()
+    {
         $this->db->select('a.*, r.nama_role, p.angkatan');
         $this->db->from('alumni a');
         $this->db->join('users u', 'a.id_alumni = u.alumni_id');
@@ -186,8 +194,4 @@ class Dashboard_model extends CI_Model {
         $this->db->order_by('u.role_id, p.angkatan, a.nama_lengkap');
         return $this->db->get()->result_array();
     }
-
-
-
-
 }

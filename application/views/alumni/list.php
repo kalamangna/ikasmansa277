@@ -1,6 +1,6 @@
 <!-- <img src="<?= site_url('qrcode_test/generate/' . urlencode($url)) ?>" alt="QR Code"> -->
 <h2 class="mb-4">Daftar Alumni Pendataan</h2>
-
+<?php echo count($alumni_list); ?>
 <div class="card shadow">
   <div class="card-header">
     <?php if ($user_role == 'admin'): ?>

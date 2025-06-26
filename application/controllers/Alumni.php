@@ -62,6 +62,8 @@ class Alumni extends CI_Controller
         $data['angkatan_list'] = $angkatan_list;
         $data['user_role'] = $user_role;
 
+        
+
         $this->load->view('template/header');
         $this->load->view('alumni/list', $data);
         $this->load->view('template/footer');

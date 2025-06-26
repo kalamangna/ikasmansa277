@@ -169,7 +169,7 @@ public function insert_alumni($data) {
             COUNT(*) AS total_semua
         ');
         $this->db->from('alumni');
-        $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
+        $this->db->join('pendidikan', 'pendidikan.alumni_id like alumni.id_alumni');
         $this->db->group_by('pendidikan.angkatan');
         $this->db->order_by('pendidikan.angkatan', 'ASC');
         $query = $this->db->get();
@@ -183,7 +183,7 @@ public function insert_alumni($data) {
             (SELECT COUNT(A2.id_alumni) FROM alumni A2 WHERE A2.referred_by = alumni.id_alumni) AS ref_jumlah 
             ');
         $this->db->from('alumni');
-        $this->db->join('pendidikan', 'pendidikan.alumni_id = alumni.id_alumni');
+        $this->db->join('pendidikan', 'pendidikan.alumni_id like alumni.id_alumni');
         $this->db->join('provinsi', 'alumni.provinsi_id = provinsi.id_provinsi');
         $this->db->join('kabupaten', 'alumni.kabupaten_id = kabupaten.id_kabupaten');        
         $this->db->where('pendidikan.angkatan', $angkatan);
