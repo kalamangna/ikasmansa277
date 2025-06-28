@@ -9,7 +9,7 @@
         <select name="angkatan" id="angkatan" class="form-select col-md-2 col-sm-6" onchange="this.form.submit()" >
           <?php foreach ($angkatan_list as $angk): ?>
             <option value="<?php echo $angk['angkatan']; ?>" <?php echo ($selected_angkatan == $angk['angkatan']) ? 'selected' : ''; ?>>
-              <?php echo $angk['angkatan']; ?> <?php echo " <small>(".$angk['total_semua']." orang)</small>"; ?>
+              <?php echo $angk['angkatan']; ?> <?php echo " <small>(".$angk['jumlah_laki_laki']+$angk['jumlah_perempuan']." orang)</small>"; ?>
             </option>
           <?php endforeach; ?>
         </select>
