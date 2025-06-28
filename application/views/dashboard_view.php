@@ -338,14 +338,25 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
         label: 'Jumlah Alumni',
         data: dataAngkatan,
         backgroundColor: [
-          '#0d6efd',
-          '#dc3545',
-          '#198754',
-          '#fd7e14',
-          '#6f42c1',
-          '#20c997',
-          '#ffc107',
-          '#6610f2'
+          '#0d6efd', // biru
+          '#dc3545', // merah
+          '#198754', // hijau
+          '#fd7e14', // oranye
+          '#6f42c1', // ungu
+          '#20c997', // toska
+          '#ffc107', // kuning
+          '#6610f2', // indigo
+
+          // tambahan warna
+          '#343a40', // abu gelap
+          '#e83e8c', // pink terang
+          '#8ac926', // hijau lime
+          '#adb5bd', // abu-abu
+          '#d63384', // pink gelap
+          '#ff595e', // merah muda oranye
+          '#1982c4', // biru cerah
+          '#0dcaf0', // biru muda (cyan)
+          '#6a4c93'  // ungu gelap
         ],
       }]
     },
@@ -382,15 +393,27 @@ $is_admin = $this->session->userdata('role') == 'admin' ? 1 : null;
         label: 'Jumlah Alumni',
         data: dataJurusan,
         backgroundColor: [
-          '#0d6efd',
-          '#dc3545',
-          '#198754',
-          '#fd7e14',
-          '#6f42c1',
-          '#20c997',
-          '#ffc107',
-          '#6610f2'
+          '#0d6efd', // biru
+          '#dc3545', // merah
+          '#198754', // hijau
+          '#fd7e14', // oranye
+          '#6f42c1', // ungu
+          '#20c997', // toska
+          '#ffc107', // kuning
+          '#6610f2', // indigo
+
+          // tambahan warna
+          '#0dcaf0', // biru muda (cyan)
+          '#adb5bd', // abu-abu
+          '#343a40', // abu gelap
+          '#e83e8c', // pink terang
+          '#d63384', // pink gelap
+          '#1982c4', // biru cerah
+          '#8ac926', // hijau lime
+          '#ff595e', // merah muda oranye
+          '#6a4c93'  // ungu gelap
         ],
+
       }]
     },
     options: {
