@@ -41,7 +41,7 @@ $is_admin = $session->get('role') == 'admin' ? 1 : null;
     </div>
     <div class="mt-auto relative z-10">
       <p class="text-5xl font-black text-blue-900 tracking-tighter tabular-nums leading-none"><?= $total_angkatan ?? 0; ?></p>
-      <p class="text-[10px] font-black text-blue-300 uppercase tracking-[0.3em] mt-3 flex items-center gap-2"><span class="h-1 w-4 bg-blue-900/20 rounded-full"></span> Total Angkatan</p>
+      <p class="text-[10px] font-black text-blue-900 uppercase tracking-[0.3em] mt-3 flex items-center gap-2"><span class="h-1 w-4 bg-blue-900/20 rounded-full"></span> Total Angkatan</p>
     </div>
   </div>
 

@@ -297,16 +297,16 @@ function is_active_menu_ci4($path)
           <!-- Referral Modal -->
           <?php if ($is_logged_in): ?>
             <div id="referralModal" class="modal fixed inset-0 z-[60] hidden overflow-y-auto" role="dialog" aria-modal="true">
-              <div class="flex min-h-full items-center justify-center p-4 text-center">
+              <div class="flex min-h-full items-center justify-center p-4">
                 <div class="fixed inset-0 bg-blue-900/80 backdrop-blur-sm transition-opacity" data-close-modal></div>
-                <div class="relative transform overflow-hidden rounded-[2.5rem] bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-slate-100">
-                  <div class="p-10">
-                    <div class="text-center mb-10">
-                      <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-400 text-blue-900 shadow-xl shadow-yellow-400/20 mb-6 italic font-black text-2xl">
+                <div class="relative transform overflow-hidden rounded-[2rem] bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-xs border border-slate-100">
+                  <div class="p-8">
+                    <div class="text-center mb-6">
+                      <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-yellow-400 text-blue-900 shadow-xl shadow-yellow-400/20 mb-4 italic font-black text-xl">
                         <i class="fab fa-whatsapp"></i>
                       </div>
-                      <h3 class="text-2xl font-black text-slate-900 uppercase italic leading-none">Undang</h3>
-                      <p class="text-[10px] text-slate-400 font-bold mt-3 tracking-[0.2em] uppercase text-center">Perluas Jaringan Alumni</p>
+                      <h3 class="text-xl font-black text-slate-900 uppercase italic leading-none">Undang Alumni</h3>
+                      <p class="text-[9px] text-slate-400 font-bold mt-2 tracking-[0.2em] uppercase text-center">Bagikan link referral Anda</p>
                     </div>
 
                     <?php
@@ -314,30 +314,31 @@ function is_active_menu_ci4($path)
                     $whatsappLink = "https://wa.me/?text=" . urlencode("Halo Alumni SMAN 1/277 Sinjai! Silakan daftar melalui link ini: " . $referralLink);
                     ?>
 
-
-                    <div class="space-y-8">
-                      <div class="space-y-3">
-                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Link Daftar</label>
-                        <div class="flex gap-2 p-1 bg-slate-50 rounded-2xl ring-1 ring-slate-200">
-                          <input type="text" readonly value="<?= esc($referralLink) ?>" class="block w-full border-0 bg-transparent py-2.5 px-4 text-slate-900 text-[10px] font-black font-mono focus:ring-0">
-                          <button onclick="copyLink('<?= esc($referralLink) ?>')" class="rounded-xl bg-blue-900 px-4 py-2 text-white shadow-lg hover:bg-blue-800 active:scale-95 transition-all">
+                    <div class="space-y-6">
+                      <div class="space-y-2">
+                        <label class="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Link Referral</label>
+                        <div class="flex gap-2 p-1 bg-slate-50 rounded-xl ring-1 ring-slate-200">
+                          <input type="text" readonly value="<?= esc($referralLink) ?>" class="block w-full border-0 bg-transparent py-2 px-3 text-slate-900 text-[9px] font-black font-mono focus:ring-0">
+                          <button onclick="copyLink('<?= esc($referralLink) ?>')" class="rounded-lg bg-blue-900 px-3 py-1.5 text-white shadow-lg hover:bg-blue-800 active:scale-95 transition-all text-xs">
                             <i class="fa fa-copy"></i>
                           </button>
                         </div>
                       </div>
 
-                      <a href="<?= esc($whatsappLink) ?>" target="_blank" class="flex w-full items-center justify-center gap-x-3 rounded-[1.5rem] bg-emerald-600 px-4 py-5 text-[10px] font-black text-white shadow-2xl shadow-emerald-600/20 hover:bg-emerald-500 transition-all uppercase tracking-[0.2em] border-b-4 border-emerald-800 active:border-b-0 active:translate-y-1">
-                        <i class="fab fa-whatsapp text-xl"></i> WhatsApp
+                      <a href="<?= esc($whatsappLink) ?>" target="_blank" rel="noopener noreferrer" class="flex w-full items-center justify-center gap-x-3 rounded-xl bg-emerald-600 px-4 py-3 text-[9px] font-black text-white shadow-xl shadow-emerald-600/20 hover:bg-emerald-500 transition-all uppercase tracking-[0.2em] border-b-4 border-emerald-800 active:border-b-0 active:translate-y-1">
+                        <i class="fab fa-whatsapp text-lg"></i> Undang via WhatsApp
                       </a>
 
-                      <div class="pt-10 border-t border-slate-100 flex flex-col items-center">
-                        <span class="mb-6 text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Atau Pindai Kode QR</span>
-                        <img src="<?= base_url('qr_code?url=' . urlencode($referralLink)) ?>" class="h-48 w-48 rounded-3xl border-4 border-slate-50 p-3 shadow-inner bg-white" alt="QR">
+                      <div class="pt-6 border-t border-slate-100 flex flex-col items-center">
+                        <span class="mb-4 text-[8px] font-black text-slate-400 uppercase tracking-[0.3em]">Atau Pindai QR</span>
+                        <a href="<?= esc($referralLink) ?>" target="_blank" rel="noopener noreferrer">
+                          <img src="<?= base_url('qr_code?url=' . urlencode($referralLink)) ?>" class="h-32 w-32 rounded-2xl border-2 border-slate-50 p-2 shadow-inner bg-white" alt="QR">
+                        </a>
                       </div>
                     </div>
                   </div>
-                  <div class="bg-slate-50 px-10 py-6 border-t border-slate-100 flex justify-center">
-                    <button type="button" data-close-modal class="text-[9px] font-black text-slate-400 hover:text-red-600 transition-colors uppercase tracking-[0.4em]">Tutup</button>
+                  <div class="bg-slate-50 px-8 py-5 border-t border-slate-100 flex justify-center">
+                    <button type="button" data-close-modal class="text-[8px] font-black text-slate-400 hover:text-red-600 transition-colors uppercase tracking-[0.4em]">Tutup</button>
                   </div>
                 </div>
               </div>

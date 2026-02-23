@@ -214,8 +214,9 @@ $session = session();
 
             <div class="space-y-4">
               <label class="text-[9px] font-black text-slate-400 tracking-widest ml-4 italic">Foto</label>
+              <div id="foto-error-message" class="mb-2 text-red-500 text-xs text-center font-bold"></div>
               <div class="group relative flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 px-6 py-12 hover:border-blue-800 hover:bg-slate-50/50 transition-all cursor-pointer overflow-hidden">
-                <input id="foto" name="foto" type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*">
+                <input id="foto" name="foto" type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/png, image/jpg, image/jpeg">
                 <div class="text-center">
                   <?php if (!empty($alumni->foto_profil)): ?>
                     <img id="preview-image-existing" src="<?= base_url('uploads/foto_alumni/' . $alumni->foto_profil); ?>" class="h-24 w-24 object-cover rounded-2xl mx-auto mb-4" alt="Existing Profile Photo">
@@ -227,7 +228,7 @@ $session = session();
                       Pilih File Baru
                     </span>
                   </div>
-                  <p class="text-[9px] font-bold text-slate-300 tracking-widest mt-2 italic">JPG / PNG • MAX 10MB</p>
+                  <p class="text-[9px] font-bold text-slate-300 tracking-widest mt-2 italic">PNG, JPG, JPEG • MAX 10MB</p>
                 </div>
                 <div id="preview-container" class="absolute inset-0 hidden bg-white rounded-3xl overflow-hidden p-2 z-20">
                   <img id="preview-image" src="#" class="h-full w-full object-contain rounded-2xl" alt="Preview">
@@ -262,24 +263,70 @@ $session = session();
     }
 
     const fotoInput = document.getElementById('foto');
+    const fotoErrorMessage = document.getElementById('foto-error-message');
+    const editForm = document.getElementById('editForm');
+
+    const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10MB
+    const ALLOWED_MIME_TYPES = ['image/png', 'image/jpeg', 'image/jpg'];
+
+    function validateFotoFile(file) {
+      if (!file) {
+        return null; // File input is optional, no error if empty
+      }
+
+      if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+        return "Format file tidak didukung. Hanya PNG, JPG, JPEG yang diizinkan.";
+      }
+
+      if (file.size > MAX_FILE_SIZE_BYTES) {
+        return "Ukuran file terlalu besar. Maksimum 10MB.";
+      }
+
+      return null;
+    }
+
     if (fotoInput) {
       fotoInput.addEventListener('change', function(e) {
         const [file] = e.target.files;
         const previewContainer = document.getElementById('preview-container');
         const previewImage = document.getElementById('preview-image');
         const previewImageExisting = document.getElementById('preview-image-existing');
+        
+        const validationError = validateFotoFile(file);
+
+        if (validationError) {
+          fotoErrorMessage.textContent = validationError;
+          previewContainer.classList.add('hidden');
+          if (previewImageExisting) previewImageExisting.classList.remove('hidden');
+          fotoInput.value = ''; // Clear selected file
+          return;
+        } else {
+          fotoErrorMessage.textContent = ''; // Clear any previous error
+        }
 
         if (file) {
           const reader = new FileReader();
           reader.onload = e => {
             previewImage.src = e.target.result;
             previewContainer.classList.remove('hidden');
-            if (previewImageExisting && !previewImageExisting.classList.contains('hidden')) previewImageExisting.classList.add('hidden');
+            if (previewImageExisting) previewImageExisting.classList.add('hidden');
           }
           reader.readAsDataURL(file);
         } else {
           previewContainer.classList.add('hidden');
           if (previewImageExisting) previewImageExisting.classList.remove('hidden');
+        }
+      });
+    }
+
+    if (editForm) {
+      editForm.addEventListener('submit', function(e) {
+        const file = fotoInput.files[0];
+        const validationError = validateFotoFile(file);
+
+        if (validationError) {
+          e.preventDefault(); // Prevent form submission
+          fotoErrorMessage.textContent = validationError;
         }
       });
     }

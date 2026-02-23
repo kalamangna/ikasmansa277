@@ -24,6 +24,7 @@ $routes->group('alumni', function($routes) {
     $routes->get('detail/(:num)', 'Alumni::detail/$1');
     $routes->get('edit/(:num)', 'Alumni::edit/$1');
     $routes->post('update/(:num)', 'Alumni::update/$1');
+    $routes->post('upload_photo/(:num)', 'Alumni::uploadPhoto/$1'); // New route for photo upload
     $routes->post('get_kabupaten_ajax', 'Alumni::get_kabupaten_ajax');
     $routes->get('search', 'Alumni::search');
 });

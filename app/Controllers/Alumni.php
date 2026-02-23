@@ -172,6 +172,11 @@ class Alumni extends BaseController
             }
             $fileName = $img->getRandomName();
             $img->move(FCPATH . 'uploads/foto_alumni', $fileName);
+
+            // Update session foto_profil if the current user is being updated
+            if (session()->get('id_alumni') == $id) {
+                session()->set('foto_profil', $fileName);
+            }
         }
         $postData['foto_profil'] = $fileName;
 
@@ -240,6 +245,59 @@ class Alumni extends BaseController
         }
 
         return redirect()->to('alumni/detail/' . $id)->with('success', 'Data alumni berhasil diperbarui.');
+    }
+
+    /**
+     * Upload photo for alumni
+     */
+    public function uploadPhoto(?int $id = null): ResponseInterface
+    {
+        // Check if an ID is provided
+        if ($id === null) {
+            return $this->response->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST)
+                                  ->setJSON(['status' => 'error', 'message' => 'ID Alumni tidak ditemukan.']);
+        }
+
+        $alumni = $this->alumniModel->getAlumni($id);
+
+        // Check if alumni exists
+        if (!$alumni) {
+            return $this->response->setStatusCode(ResponseInterface::HTTP_NOT_FOUND)
+                                  ->setJSON(['status' => 'error', 'message' => 'Alumni tidak ditemukan.']);
+        }
+
+        // Access Control
+        if (!$this->canEdit($id, $alumni->angkatan)) {
+            return $this->response->setStatusCode(ResponseInterface::HTTP_FORBIDDEN)
+                                  ->setJSON(['status' => 'error', 'message' => 'Anda tidak memiliki izin untuk mengedit alumni ini.']);
+        }
+
+        // Validate input
+        if (!$this->validate([
+            'foto_profil' => 'uploaded[foto_profil]|max_size[foto_profil,10240]|mime_in[foto_profil,image/png,image/jpg,image/jpeg]', // 10MB max, png/jpg
+        ])) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors())->with('openModal', 'uploadPhotoModal');
+        }
+
+        $img = $this->request->getFile('foto_profil');
+        $fileName = $alumni->foto_profil; // Keep existing file if not new one
+
+        if ($img && $img->isValid() && !$img->hasMoved()) {
+            // Delete old photo if exists
+            if (!empty($fileName) && file_exists(FCPATH . 'uploads/foto_alumni/' . $fileName)) {
+                unlink(FCPATH . 'uploads/foto_alumni/' . $fileName);
+            }
+            $fileName = $img->getRandomName();
+            $img->move(FCPATH . 'uploads/foto_alumni', $fileName);
+        }
+
+        // Update alumni data with new photo file name
+        $this->alumniModel->update($id, ['foto_profil' => $fileName]);
+
+        // Update session foto_profil
+        session()->set('foto_profil', $fileName);
+
+        return redirect()->to('alumni/detail/' . $id)->with('success', 'Foto profil berhasil diunggah.');
     }
 
     /**

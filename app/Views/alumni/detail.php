@@ -215,15 +215,15 @@ $urlPendataan = site_url('alumni/create?ut=' . $session->get('referral'));
 <!-- Modal: Undang -->
 <div id="undangModal" class="modal fixed inset-0 z-50 hidden overflow-y-auto" role="dialog">
   <div class="flex min-h-full items-center justify-center p-4">
-    <div class="fixed inset-0 bg-blue-900/80 backdrop-blur-md transition-opacity" data-close-modal></div>
-    <div class="relative transform overflow-hidden rounded-[2.5rem] bg-white shadow-2xl transition-all sm:w-full sm:max-w-md border border-slate-100">
-      <div class="p-10">
-        <div class="text-center mb-10">
-          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-400 text-blue-900 shadow-xl shadow-yellow-400/20 mb-6 italic font-black text-2xl">
+    <div class="fixed inset-0 bg-blue-900/80 backdrop-blur-sm transition-opacity" data-close-modal></div>
+    <div class="relative transform overflow-hidden rounded-[2rem] bg-white shadow-2xl transition-all sm:w-full sm:max-w-xs border border-slate-100">
+      <div class="p-8">
+        <div class="text-center mb-6">
+          <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-yellow-400 text-blue-900 shadow-xl shadow-yellow-400/20 mb-4 italic font-black text-xl">
             <i class="fab fa-whatsapp"></i>
           </div>
-          <h3 class="text-2xl font-black text-slate-900 uppercase italic leading-none">Undang</h3>
-          <p class="text-[10px] text-slate-400 font-bold mt-3 tracking-[0.2em] uppercase text-center">Undang teman alumni</p>
+          <h3 class="text-xl font-black text-slate-900 uppercase italic leading-none">Undang Alumni</h3>
+          <p class="text-[9px] text-slate-400 font-bold mt-2 tracking-[0.2em] uppercase text-center">Bagikan link referral Anda</p>
         </div>
         
         <?php
@@ -231,29 +231,31 @@ $urlPendataan = site_url('alumni/create?ut=' . $session->get('referral'));
           $whatsappLink = "https://wa.me/?text=" . urlencode("Halo Alumni SMAN 1/277 Sinjai! Silakan daftar melalui link ini: " . $referralLink);
         ?>
 
-        <div class="space-y-8">
-          <div class="space-y-3">
-            <label class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Link Daftar</label>
-            <div class="flex gap-2 p-1 bg-slate-50 rounded-2xl ring-1 ring-slate-200">
-              <input type="text" readonly value="<?= esc($referralLink) ?>" class="block w-full border-0 bg-transparent py-2.5 px-4 text-slate-900 text-[10px] font-black font-mono focus:ring-0">
-              <button onclick="copyLink('<?= esc($referralLink) ?>')" class="rounded-xl bg-blue-900 px-4 py-2 text-white shadow-lg hover:bg-blue-800 active:scale-95 transition-all">
+        <div class="space-y-6">
+          <div class="space-y-2">
+            <label class="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Link Referral</label>
+            <div class="flex gap-2 p-1 bg-slate-50 rounded-xl ring-1 ring-slate-200">
+              <input type="text" readonly value="<?= esc($referralLink) ?>" class="block w-full border-0 bg-transparent py-2 px-3 text-slate-900 text-[9px] font-black font-mono focus:ring-0">
+              <button onclick="copyLink('<?= esc($referralLink) ?>')" class="rounded-lg bg-blue-900 px-3 py-1.5 text-white shadow-lg hover:bg-blue-800 active:scale-95 transition-all text-xs">
                 <i class="fa fa-copy"></i>
               </button>
             </div>
           </div>
 
-          <a href="<?= esc($whatsappLink) ?>" target="_blank" class="flex w-full items-center justify-center gap-x-3 rounded-[1.5rem] bg-emerald-600 px-4 py-5 text-[10px] font-black text-white shadow-2xl shadow-emerald-600/20 hover:bg-emerald-500 transition-all uppercase tracking-[0.2em] border-b-4 border-emerald-800 active:border-b-0 active:translate-y-1">
-            <i class="fab fa-whatsapp text-xl"></i> WhatsApp
+          <a href="<?= esc($whatsappLink) ?>" target="_blank" rel="noopener noreferrer" class="flex w-full items-center justify-center gap-x-3 rounded-xl bg-emerald-600 px-4 py-3 text-[9px] font-black text-white shadow-xl shadow-emerald-600/20 hover:bg-emerald-500 transition-all uppercase tracking-[0.2em] border-b-4 border-emerald-800 active:border-b-0 active:translate-y-1">
+            <i class="fab fa-whatsapp text-lg"></i> Undang via WhatsApp
           </a>
 
-          <div class="pt-10 border-t border-slate-100 flex flex-col items-center">
-            <span class="mb-6 text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Scan QR</span>
-            <img src="<?= base_url('qr_code?url=' . urlencode($referralLink)) ?>" class="h-48 w-48 rounded-3xl border-4 border-slate-50 p-3 shadow-inner bg-white" alt="QR">
+          <div class="pt-6 border-t border-slate-100 flex flex-col items-center">
+            <span class="mb-4 text-[8px] font-black text-slate-400 uppercase tracking-[0.3em]">Atau Pindai QR</span>
+            <a href="<?= esc($referralLink) ?>" target="_blank" rel="noopener noreferrer">
+              <img src="<?= base_url('qr_code?url=' . urlencode($referralLink)) ?>" class="h-32 w-32 rounded-2xl border-2 border-slate-50 p-2 shadow-inner bg-white" alt="QR">
+            </a>
           </div>
         </div>
       </div>
-      <div class="bg-slate-50 px-10 py-6 border-t border-slate-100 flex justify-center">
-        <button type="button" data-close-modal class="text-[9px] font-black text-slate-400 hover:text-red-600 transition-colors uppercase tracking-[0.4em]">Tutup</button>
+      <div class="bg-slate-50 px-8 py-5 border-t border-slate-100 flex justify-center">
+        <button type="button" data-close-modal class="text-[8px] font-black text-slate-400 hover:text-red-600 transition-colors uppercase tracking-[0.4em]">Tutup</button>
       </div>
     </div>
   </div>
@@ -315,33 +317,47 @@ $urlPendataan = site_url('alumni/create?ut=' . $session->get('referral'));
 <div id="uploadPhotoModal" class="modal fixed inset-0 z-50 hidden overflow-y-auto" role="dialog">
   <div class="flex min-h-full items-center justify-center p-4">
     <div class="fixed inset-0 bg-blue-900/90 backdrop-blur-sm transition-opacity" data-close-modal></div>
-    <div class="relative transform overflow-hidden rounded-[2.5rem] bg-white shadow-2xl transition-all sm:w-full sm:max-w-md border border-slate-100">
+    <div class="relative transform overflow-hidden rounded-[2rem] bg-white shadow-2xl transition-all sm:w-full sm:max-w-xs border border-slate-100">
       <form action="<?= site_url('alumni/upload_photo/' . $alumni->id_alumni) ?>" method="post" enctype="multipart/form-data">
-        <div class="p-12">
-          <div class="text-center mb-10">
-            <div class="mx-auto h-16 w-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-900 mb-6 shadow-inner ring-1 ring-blue-100">
-              <i class="fa fa-camera-retro text-2xl"></i>
+        <div class="p-8">
+          <div class="text-center mb-6">
+            <div class="mx-auto h-14 w-14 bg-blue-50 rounded-xl flex items-center justify-center text-blue-900 mb-4 shadow-inner ring-1 ring-blue-100">
+              <i class="fa fa-camera-retro text-xl"></i>
             </div>
-            <h3 class="text-2xl font-black text-slate-900 uppercase italic leading-none">Foto</h3>
-            <p class="text-[10px] text-slate-400 font-bold mt-3 tracking-widest leading-relaxed">Edit foto profil</p>
+            <h3 class="text-xl font-black text-slate-900 uppercase italic leading-none">Edit Foto</h3>
+            <p class="text-[9px] text-slate-400 font-bold mt-2 tracking-widest leading-relaxed">Perbarui foto profil Anda</p>
           </div>
           
-          <div class="group relative flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 px-6 py-14 hover:border-blue-900 hover:bg-slate-50/50 transition-all cursor-pointer overflow-hidden">
-            <input id="foto_profil" name="foto_profil" type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" required>
-            <div class="text-center">
-              <i class="fas fa-cloud-upload-alt text-5xl text-slate-200 mb-6 group-hover:text-blue-900 transition-all transform group-hover:-translate-y-2"></i>
+          <div id="upload-error-message" class="mb-3 text-red-500 text-xs text-center font-bold">
+            <?php if (session()->getFlashdata('errors')): ?>
+              <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                <p><?= esc($error) ?></p>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </div>
+
+          <div id="photo-upload-area" class="group relative flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 px-6 py-10 hover:border-blue-900 hover:bg-slate-50/50 transition-all cursor-pointer overflow-hidden">
+            <input id="foto_profil" name="foto_profil" type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/png, image/jpg, image/jpeg" required>
+            <div id="current-image-icon" class="text-center">
+              <i class="fas fa-cloud-upload-alt text-4xl text-slate-200 mb-4 group-hover:text-blue-900 transition-all transform group-hover:-translate-y-2"></i>
               <div class="flex text-sm leading-6 text-slate-600 justify-center">
                 <span class="relative font-black text-blue-900 group-hover:text-blue-800 tracking-widest text-[10px] uppercase">
                   Pilih File
                 </span>
               </div>
-              <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em] mt-3 italic">JPG / PNG • MAX 10MB</p>
+              <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em] mt-2 italic">PNG, JPG, JPEG • MAX 10MB</p>
+            </div>
+            <div id="preview-container-modal" class="absolute inset-0 hidden bg-white rounded-3xl overflow-hidden p-2 z-20">
+              <img id="preview-image-modal" src="#" class="h-full w-full object-contain rounded-2xl" alt="Preview">
+              <button type="button" onclick="clearPhotoSelection()" class="absolute top-3 right-3 h-8 w-8 bg-slate-900/50 text-white rounded-full flex items-center justify-center hover:bg-slate-900 backdrop-blur-sm transition-all z-30 text-sm">
+                <i class="fa fa-times"></i>
+              </button>
             </div>
           </div>
         </div>
-        <div class="bg-slate-50 px-12 py-8 flex flex-col sm:flex-row-reverse gap-4 border-t border-slate-100">
-          <button type="submit" class="inline-flex justify-center rounded-2xl bg-blue-900 px-10 py-4 text-[10px] font-black text-white shadow-xl shadow-blue-900/20 hover:bg-blue-800 transition-all uppercase tracking-[0.2em] border-b-4 border-blue-950">Simpan</button>
-          <button type="button" data-close-modal class="inline-flex justify-center rounded-2xl bg-white px-10 py-4 text-[10px] font-black text-slate-500 ring-1 ring-inset ring-slate-200 hover:bg-slate-100 transition-all uppercase tracking-[0.2em]">Batal</button>
+        <div class="bg-slate-50 px-8 py-5 flex flex-col sm:flex-row-reverse gap-3 border-t border-slate-100">
+          <button type="submit" class="inline-flex justify-center rounded-xl bg-blue-900 px-8 py-3 text-[9px] font-black text-white shadow-xl shadow-blue-900/20 hover:bg-blue-800 transition-all uppercase tracking-[0.2em] border-b-4 border-blue-950">Simpan</button>
+          <button type="button" data-close-modal class="inline-flex justify-center rounded-xl bg-white px-8 py-3 text-[9px] font-black text-slate-500 ring-1 ring-inset ring-slate-200 hover:bg-slate-100 transition-all uppercase tracking-[0.2em]">Batal</button>
         </div>
       </form>
     </div>
@@ -356,4 +372,93 @@ $urlPendataan = site_url('alumni/create?ut=' . $session->get('referral'));
       alert('Gagal menyalin link.');
     });
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const fotoProfilInput = document.getElementById('foto_profil');
+    const previewContainerModal = document.getElementById('preview-container-modal');
+    const previewImageModal = document.getElementById('preview-image-modal');
+    const currentImageIcon = document.getElementById('current-image-icon');
+    const uploadErrorMessage = document.getElementById('upload-error-message');
+    const uploadPhotoForm = document.querySelector('#uploadPhotoModal form');
+
+    const MAX_FILE_SIZE_MB = 10; // MB
+    const ALLOWED_MIME_TYPES = ['image/png', 'image/jpeg', 'image/jpg'];
+
+    function validateFile(file) {
+      if (!file) {
+        return "Pilih file untuk diunggah.";
+      }
+
+      // Validate file type
+      if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+        return "Format file tidak didukung. Hanya PNG, JPG, JPEG yang diizinkan.";
+      }
+
+      // Validate file size
+      if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+        return "Ukuran file terlalu besar. Maksimum " + MAX_FILE_SIZE_MB + "MB.";
+      }
+
+      return null; // No error
+    }
+
+    if (fotoProfilInput) {
+      fotoProfilInput.addEventListener('change', function(e) {
+        const [file] = e.target.files;
+        const validationError = validateFile(file);
+
+        if (validationError) {
+          uploadErrorMessage.textContent = validationError;
+          previewContainerModal.classList.add('hidden');
+          if (currentImageIcon) currentImageIcon.classList.remove('hidden');
+          fotoProfilInput.value = ''; // Clear selected file
+          return;
+        } else {
+          uploadErrorMessage.textContent = ''; // Clear any previous error
+        }
+
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = e => {
+            previewImageModal.src = e.target.result;
+            previewContainerModal.classList.remove('hidden');
+            if (currentImageIcon) currentImageIcon.classList.add('hidden');
+          }
+          reader.readAsDataURL(file);
+        } else {
+          previewContainerModal.classList.add('hidden');
+          if (currentImageIcon) currentImageIcon.classList.remove('hidden');
+        }
+      });
+    }
+
+    if (uploadPhotoForm) {
+      uploadPhotoForm.addEventListener('submit', function(e) {
+        const file = fotoProfilInput.files[0];
+        const validationError = validateFile(file);
+
+        if (validationError) {
+          e.preventDefault(); // Prevent form submission
+          uploadErrorMessage.textContent = validationError;
+        }
+      });
+    }
+
+    // Function to clear photo selection and hide preview
+    window.clearPhotoSelection = function() {
+      if (fotoProfilInput) fotoProfilInput.value = '';
+      if (previewContainerModal) previewContainerModal.classList.add('hidden');
+      if (currentImageIcon) currentImageIcon.classList.remove('hidden');
+      if (uploadErrorMessage) uploadErrorMessage.textContent = ''; // Clear error on clear
+    }
+
+    // Auto-open modal if requested via flashdata
+    <?php if (session()->getFlashdata('openModal')): ?>
+      const modalId = '<?= session()->getFlashdata('openModal') ?>';
+      const modalToOpen = document.getElementById(modalId);
+      if (modalToOpen) {
+        modalToOpen.classList.remove('hidden');
+      }
+    <?php endif; ?>
+  });
 </script>
