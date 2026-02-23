@@ -7,8 +7,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>IKA SMANSA / 277 Sinjai</title>
-	<link rel="shortcut icon" href="<?php echo base_url("images/logo_ika.ico"); ?>" type="image/x-icon">
-	<link rel="stylesheet" href="<?php echo base_url('assets/fontawesome-free/css/all.min.css') ?>">
+	<link rel="shortcut icon" href="<?php echo base_url("images/ika.png"); ?>" type="image/png">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 	<link rel="stylesheet" href="<?= base_url('assets/css/output.css') ?>">
 </head>
 
@@ -21,7 +21,7 @@
 
 	<div class="max-w-4xl w-full text-center relative z-10">
 		<div class="inline-flex items-center justify-center p-6 bg-white rounded-[3rem] shadow-2xl border border-slate-100 mb-12 transform hover:scale-105 transition-transform duration-500">
-			<img class="h-32 w-auto drop-shadow-2xl" src="<?php echo base_url("images/logo_ika1.png") ?>" alt="Logo">
+			<img class="h-32 w-auto drop-shadow-2xl" src="<?php echo base_url("images/ika.png") ?>" alt="Logo">
 		</div>
 
 		<h1 class="text-5xl md:text-7xl font-black text-blue-900 tracking-[ -0.05em] uppercase italic leading-[0.9]">

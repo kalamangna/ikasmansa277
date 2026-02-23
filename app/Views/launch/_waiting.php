@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Menunggu</title>
-    <link rel="shortcut icon" href="<?php echo base_url("images/logo_ika.ico"); ?>" type="image/x-icon">
-    <link rel="stylesheet" href="<?php echo base_url('assets/fontawesome-free/css/all.min.css') ?>">
+    <link rel="shortcut icon" href="<?php echo base_url("images/ika.png"); ?>" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css') ?>">
     <script src="<?php echo base_url('assets/js/jquery-3.7.1.min.js') ?>"></script>
 </head>
@@ -16,7 +16,7 @@
     <div class="absolute -top-24 -right-24 w-96 h-96 bg-blue-900/5 rounded-full blur-[100px]"></div>
 
     <div class="mb-12 inline-flex items-center justify-center p-6 bg-white rounded-[3rem] shadow-2xl border border-slate-100 transform hover:rotate-3 transition-transform">
-        <img class="h-24 w-auto" src="<?php echo base_url("images/logo_ika1.png") ?>" alt="Logo">
+        <img class="h-24 w-auto" src="<?php echo base_url("images/ika.png") ?>" alt="Logo">
     </div>
 
     <div class="bg-white rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] border border-slate-200 p-12 max-w-lg w-full relative overflow-hidden">

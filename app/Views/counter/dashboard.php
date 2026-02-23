@@ -28,7 +28,7 @@
       <span class="text-[9px] font-black text-blue-100 uppercase tracking-widest">Traffic</span>
     </div>
     <div class="mt-auto relative z-10">
-      <p class="text-4xl font-black text-white tabular-nums tracking-tighter italic leading-none"><?php echo number_format($total_visits, 0, ',', '.'); ?></p>
+      <p class="text-4xl font-black text-white tabular-nums tracking-tighter italic leading-none"><?php echo $total_visits; ?></p>
       <p class="text-[9px] font-bold text-blue-300 uppercase tracking-[0.3em] mt-3">Total Kunjungan</p>
     </div>
   </div>
@@ -39,7 +39,7 @@
       <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Unique</span>
     </div>
     <div class="mt-auto">
-      <p class="text-4xl font-black text-slate-800 tabular-nums tracking-tighter group-hover:text-blue-900 transition-colors leading-none"><?php echo number_format($unique_visits, 0, ',', '.'); ?></p>
+      <p class="text-4xl font-black text-slate-800 tabular-nums tracking-tighter group-hover:text-blue-900 transition-colors leading-none"><?php echo $unique_visits; ?></p>
       <p class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em] mt-3 italic">User Unik</p>
     </div>
   </div>
@@ -122,7 +122,7 @@
                   <p class="text-xs font-black text-slate-700 tracking-tight truncate max-w-[300px]"><?= $page->page_visited ?></p>
                 </td>
                 <td class="px-10 py-5 text-center">
-                  <span class="bg-blue-50 text-blue-900 text-[10px] font-black px-2.5 py-1 rounded-lg border border-blue-100 shadow-sm"><?= number_format($page->visit_count, 0, ',', '.') ?></span>
+                  <span class="bg-blue-50 text-blue-900 text-[10px] font-black px-2.5 py-1 rounded-lg border border-blue-100 shadow-sm"><?= $page->visit_count ?></span>
                 </td>
                 <td class="px-10 py-5 text-right">
                   <div class="flex items-center justify-end gap-3">
@@ -232,7 +232,7 @@
           fontSize: '10px'
         },
         formatter: function(val) {
-          return val.toLocaleString('id-ID');
+          return val;
         }
       }
     },
@@ -243,7 +243,7 @@
       theme: 'dark',
       y: {
         formatter: function(val) {
-          return val.toLocaleString('id-ID');
+          return val;
         }
       }
     },
@@ -289,14 +289,32 @@
             },
             value: {
               fontWeight: 900,
-              color: brandBlue
+              color: brandBlue,
+              formatter: function(val) {
+                return val;
+              }
             },
             total: {
               show: true,
               fontWeight: 900,
-              label: 'OS'
+              label: 'OS',
+              formatter: function(w) {
+                return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+              }
             }
           }
+        }
+      }
+    },
+    dataLabels: {
+      formatter: function (val, opts) {
+        return opts.w.globals.series[opts.seriesIndex];
+      }
+    },
+    tooltip: {
+      y: {
+        formatter: function(val) {
+          return val;
         }
       }
     }
@@ -334,14 +352,32 @@
             },
             value: {
               fontWeight: 900,
-              color: brandBlue
+              color: brandBlue,
+              formatter: function(val) {
+                return val;
+              }
             },
             total: {
               show: true,
               fontWeight: 900,
-              label: 'BROWSER'
+              label: 'BROWSER',
+              formatter: function(w) {
+                return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+              }
             }
           }
+        }
+      }
+    },
+    dataLabels: {
+      formatter: function (val, opts) {
+        return opts.w.globals.series[opts.seriesIndex];
+      }
+    },
+    tooltip: {
+      y: {
+        formatter: function(val) {
+          return val;
         }
       }
     }
@@ -416,7 +452,7 @@
           fontSize: '9px'
         },
         formatter: function(val) {
-          return val.toLocaleString('id-ID');
+          return val;
         }
       }
     },
@@ -428,7 +464,7 @@
       theme: 'dark',
       y: {
         formatter: function(val) {
-          return val.toLocaleString('id-ID');
+          return val;
         }
       }
     }

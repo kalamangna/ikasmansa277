@@ -19,11 +19,30 @@ function is_active_menu_ci4($path)
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?= esc($title ?? 'Portal Alumni') ?> - IKA SMANSA / 277 Sinjai</title>
-  <link rel="shortcut icon" href="<?= base_url("images/logo_ika.ico"); ?>" type="image/x-icon">
+  
+  <!-- SEO & Meta Tags -->
+  <meta name="description" content="Portal Resmi Ikatan Alumni SMA Negeri 1 Sinjai (IKA SMANSA / 277). Wadah silaturahmi, informasi, dan kolaborasi seluruh alumni lintas angkatan.">
+  <meta name="keywords" content="IKA SMANSA, 277 Sinjai, Alumni SMAN 1 Sinjai, Portal Alumni, Sinjai, Ikatan Alumni">
+  <meta name="author" content="IKA SMANSA / 277 Sinjai">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<?= current_url() ?>">
+  <meta property="og:title" content="<?= esc($title ?? 'Portal Alumni') ?> - IKA SMANSA / 277 Sinjai">
+  <meta property="og:description" content="Portal Resmi Ikatan Alumni SMA Negeri 1 Sinjai (IKA SMANSA / 277). Wadah silaturahmi, informasi, dan kolaborasi seluruh alumni lintas angkatan.">
+  <meta property="og:image" content="<?= base_url('images/meta.png') ?>">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="<?= current_url() ?>">
+  <meta property="twitter:title" content="<?= esc($title ?? 'Portal Alumni') ?> - IKA SMANSA / 277 Sinjai">
+  <meta property="twitter:description" content="Portal Resmi Ikatan Alumni SMA Negeri 1 Sinjai (IKA SMANSA / 277). Wadah silaturahmi, informasi, dan kolaborasi seluruh alumni lintas angkatan.">
+  <meta property="twitter:image" content="<?= base_url('images/meta.png') ?>">
+
+  <link rel="shortcut icon" href="<?= base_url("images/ika.png"); ?>" type="image/png">
 
   <!-- Fonts & Icons -->
-  <link rel="stylesheet" href="<?= base_url('assets/fontawesome-free/css/all.min.css') ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/datatables/jquery.dataTables.min.css') ?>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link rel="stylesheet" href="<?= base_url('assets/css/output.css') ?>">
 
   <!-- Core Scripts -->
@@ -111,7 +130,7 @@ function is_active_menu_ci4($path)
             <!-- Sidebar content -->
             <div class="flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-4 ring-1 ring-white/10">
               <a href="<?= base_url(); ?>" class="flex h-16 shrink-0 items-center gap-x-3 mt-4">
-                <img src="<?= base_url("images/logo_ika1.png") ?>" class="h-8 w-auto" alt="Logo">
+                <img src="<?= base_url("images/ika.png") ?>" class="h-8 w-auto" alt="Logo">
                 <span class="text-white font-black tracking-tight text-lg uppercase italic">IKA SMANSA / 277 Sinjai</span>
               </a>
               <nav class="flex flex-1 flex-col mt-4">
@@ -147,7 +166,7 @@ function is_active_menu_ci4($path)
       <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col">
         <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-900 px-6 pb-4 shadow-2xl">
           <a href="<?= base_url(); ?>" class="flex h-16 shrink-0 items-center gap-x-3 mt-8 border-b border-white/5 pb-8">
-            <img src="<?= base_url("images/logo_ika1.png") ?>" class="h-14 w-auto drop-shadow-xl" alt="Logo">
+            <img src="<?= base_url("images/ika.png") ?>" class="h-14 w-auto drop-shadow-xl" alt="Logo">
             <span class="text-white text-xl font-black tracking-tighter uppercase italic leading-none">Portal<br><span class="text-yellow-400">Alumni</span></span>
           </a>
           <nav class="flex flex-1 flex-col mt-10">
@@ -333,7 +352,7 @@ function is_active_menu_ci4($path)
         <footer class="border-t border-slate-200 bg-white py-8 mt-auto">
           <div class="px-4 sm:px-6 lg:px-8 max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="flex items-center gap-x-4 text-blue-900">
-              <img src="<?= base_url("images/logo_ika1.png") ?>" class="h-8 w-auto grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer" alt="Logo">
+              <img src="<?= base_url("images/ika.png") ?>" class="h-8 w-auto grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer" alt="Logo">
               <p class="text-sm font-bold text-slate-400 tracking-tight leading-none">&copy; 2025 IKA SMANSA / 277 Sinjai. <span class="hidden sm:inline">All rights reserved.</span></p>
             </div>
             <div class="flex gap-x-8">

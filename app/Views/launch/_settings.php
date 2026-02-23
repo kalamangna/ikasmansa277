@@ -7,7 +7,7 @@ $session = session();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Set Sesi</title>
-    <link rel="stylesheet" href="<?= base_url('assets/fontawesome-free/css/all.min.css') ?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css') ?>">
 </head>
 <body class="h-full flex items-center justify-center p-6">

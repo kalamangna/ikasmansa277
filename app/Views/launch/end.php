@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
     <div class="mb-12 inline-flex items-center justify-center p-6 bg-white rounded-[3rem] shadow-2xl border border-slate-100">
-        <img class="h-24 w-auto grayscale opacity-20" src="<?php echo base_url("images/logo_ika1.png") ?>" alt="Logo">
+        <img class="h-24 w-auto grayscale opacity-20" src="<?php echo base_url("images/ika.png") ?>" alt="Logo">
     </div>
 
     <div class="h-24 w-24 rounded-[2rem] bg-red-50 flex items-center justify-center text-red-600 shadow-xl shadow-red-100 mb-10 border-2 border-red-100 ring-8 ring-red-50/50">

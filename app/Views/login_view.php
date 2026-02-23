@@ -7,7 +7,7 @@
   <div class="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
     <div class="flex justify-center">
       <div class="h-20 w-20 bg-white rounded-[2rem] shadow-xl border border-slate-100 flex items-center justify-center p-4">
-        <img class="h-full w-auto drop-shadow-sm" src="<?= base_url("images/logo_ika1.png") ?>" alt="Logo">
+        <img class="h-full w-auto drop-shadow-sm" src="<?= base_url("images/ika.png") ?>" alt="Logo">
       </div>
     </div>
     <h2 class="mt-8 text-center text-3xl font-black tracking-tighter text-blue-900 uppercase italic">Masuk</h2>

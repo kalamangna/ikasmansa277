@@ -16,7 +16,7 @@ $session = session();
 <div class="max-w-4xl mx-auto mb-20">
   <div class="mb-10 text-center">
     <div class="inline-flex items-center justify-center p-4 bg-white rounded-3xl shadow-xl mb-8 border border-slate-100">
-      <img src="<?= base_url("images/logo_ika1.png") ?>" class="h-16 w-auto" alt="Logo">
+      <img src="<?= base_url("images/ika.png") ?>" class="h-16 w-auto" alt="Logo">
     </div>
     <h1 class="text-4xl font-black text-blue-900 tracking-tighter uppercase italic leading-none">Registrasi</h1>
     <p class="text-sm text-slate-400 font-bold mt-4 uppercase tracking-[0.3em]">Pendataan Online</p>

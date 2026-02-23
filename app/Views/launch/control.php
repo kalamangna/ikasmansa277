@@ -7,8 +7,8 @@ $session = session();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>IKA SMANSA / 277 Sinjai | Kontrol</title>
-    <link rel="shortcut icon" href="<?= base_url("images/logo_ika.ico"); ?>" type="image/x-icon">
-    <link rel="stylesheet" href="<?= base_url('assets/fontawesome-free/css/all.min.css') ?>">
+    <link rel="shortcut icon" href="<?= base_url("images/ika.png"); ?>" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css') ?>">
 </head>
 <body class="h-full flex items-center justify-center p-6 relative overflow-hidden font-sans">
@@ -22,7 +22,7 @@ $session = session();
     <div class="max-w-4xl w-full relative z-10">
         <div class="text-center mb-12">
             <div class="inline-flex items-center justify-center p-4 bg-white rounded-3xl shadow-2xl mb-8 ring-8 ring-white/10">
-                <img src="<?= base_url("images/logo_ika1.png") ?>" class="h-16 w-auto" alt="Logo">
+                <img src="<?= base_url("images/ika.png") ?>" class="h-16 w-auto" alt="Logo">
             </div>
             <h1 class="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase italic leading-none">Kontrol Sesi</h1>
             <p class="text-[10px] text-blue-300 font-bold mt-4 uppercase tracking-[0.4em] italic">Manajemen Pendaftaran</p>

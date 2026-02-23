@@ -16,7 +16,7 @@
         <div class="p-12">
             <div class="text-center mb-12">
                 <div class="inline-flex items-center justify-center p-4 bg-slate-50 rounded-2xl mb-8 shadow-inner border border-slate-100">
-                    <img src="<?php echo base_url("images/logo_ika1.png") ?>" class="h-12 w-auto" alt="Logo">
+                    <img src="<?php echo base_url("images/ika.png") ?>" class="h-12 w-auto" alt="Logo">
                 </div>
                 <h2 class="text-3xl font-black text-blue-900 uppercase italic tracking-tighter leading-none">Link Daftar</h2>
                 <p class="text-[10px] text-slate-400 font-bold mt-4 uppercase tracking-[0.3em]">Pendaftaran Online</p>

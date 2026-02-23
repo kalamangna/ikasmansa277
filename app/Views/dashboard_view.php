@@ -28,7 +28,7 @@ $is_admin = $session->get('role') == 'admin' ? 1 : null;
       <span class="text-[10px] font-black text-blue-100 uppercase tracking-[0.2em]">Alumni</span>
     </div>
     <div class="mt-auto relative z-10">
-      <p class="text-5xl font-black text-white tracking-tighter tabular-nums leading-none"><?= number_format(($gender_total->total_laki_laki ?? 0) + ($gender_total->total_perempuan ?? 0), 0, ',', '.'); ?></p>
+      <p class="text-5xl font-black text-white tracking-tighter tabular-nums leading-none"><?= ($gender_total->total_laki_laki ?? 0) + ($gender_total->total_perempuan ?? 0); ?></p>
       <p class="text-[10px] font-black text-blue-300 uppercase tracking-[0.3em] mt-3 flex items-center gap-2"><span class="h-1 w-4 bg-yellow-400 rounded-full"></span> Total Terdata</p>
     </div>
   </div>
@@ -40,7 +40,7 @@ $is_admin = $session->get('role') == 'admin' ? 1 : null;
       <span class="text-[10px] font-black text-blue-900/60 uppercase tracking-[0.2em]">Angkatan</span>
     </div>
     <div class="mt-auto relative z-10">
-      <p class="text-5xl font-black text-blue-900 tracking-tighter tabular-nums leading-none"><?= number_format($total_angkatan ?? 0, 0, ',', '.'); ?></p>
+      <p class="text-5xl font-black text-blue-900 tracking-tighter tabular-nums leading-none"><?= $total_angkatan ?? 0; ?></p>
       <p class="text-[10px] font-black text-blue-300 uppercase tracking-[0.3em] mt-3 flex items-center gap-2"><span class="h-1 w-4 bg-blue-900/20 rounded-full"></span> Total Angkatan</p>
     </div>
   </div>
@@ -51,7 +51,7 @@ $is_admin = $session->get('role') == 'admin' ? 1 : null;
       <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Laki-laki</span>
     </div>
     <div class="mt-auto">
-      <p class="text-5xl font-black text-slate-800 tracking-tighter tabular-nums group-hover:text-blue-900 transition-colors leading-none"><?= number_format($gender_total->total_laki_laki ?? 0, 0, ',', '.'); ?></p>
+      <p class="text-5xl font-black text-slate-800 tracking-tighter tabular-nums group-hover:text-blue-900 transition-colors leading-none"><?= $gender_total->total_laki_laki ?? 0; ?></p>
       <div class="flex items-center gap-x-3 mt-4">
         <?php 
           $total = ($gender_total->total_laki_laki ?? 0) + ($gender_total->total_perempuan ?? 0);
@@ -68,7 +68,7 @@ $is_admin = $session->get('role') == 'admin' ? 1 : null;
       <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Perempuan</span>
     </div>
     <div class="mt-auto">
-      <p class="text-5xl font-black text-slate-800 tracking-tighter tabular-nums group-hover:text-red-600 transition-colors leading-none"><?= number_format($gender_total->total_perempuan ?? 0, 0, ',', '.'); ?></p>
+      <p class="text-5xl font-black text-slate-800 tracking-tighter tabular-nums group-hover:text-red-600 transition-colors leading-none"><?= $gender_total->total_perempuan ?? 0; ?></p>
       <div class="flex items-center gap-x-3 mt-4">
         <?php 
           $pct_p = ($total > 0) ? round(($gender_total->total_perempuan / $total) * 100) : 0;
@@ -147,7 +147,7 @@ $is_admin = $session->get('role') == 'admin' ? 1 : null;
                   </div>
                 </td>
                 <td class="px-10 py-5 text-center">
-                  <span class="bg-blue-900 text-yellow-400 text-[10px] font-black px-3 py-1.5 rounded-xl shadow-lg"><?= number_format($row->total_alumni, 0, ',', '.') ?></span>
+                  <span class="bg-blue-900 text-yellow-400 text-[10px] font-black px-3 py-1.5 rounded-xl shadow-lg"><?= $row->total_alumni ?></span>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -170,7 +170,7 @@ $is_admin = $session->get('role') == 'admin' ? 1 : null;
                 <div class="h-10 w-10 rounded-xl bg-white flex items-center justify-center text-slate-400 group-hover:text-blue-900 shadow-sm italic font-black text-xs"><?= esc(substr($row->nama_pekerjaan, 0, 1)) ?></div>
                 <p class="text-xs font-black text-slate-700 uppercase tracking-tight"><?= esc($row->nama_pekerjaan) ?></p>
               </div>
-              <p class="text-sm font-black text-blue-900 tabular-nums"><?= number_format($row->total_alumni, 0, ',', '.') ?></p>
+              <p class="text-sm font-black text-blue-900 tabular-nums"><?= $row->total_alumni ?></p>
             </div>
           <?php endforeach; ?>
         </div>
@@ -199,9 +199,9 @@ $is_admin = $session->get('role') == 'admin' ? 1 : null;
             <?php foreach ($gender_perangkatan as $row): ?>
               <tr class="hover:bg-blue-50/30 transition-colors">
                 <td class="px-10 py-5 text-sm font-black text-slate-700 tabular-nums uppercase">Angkatan <?= esc($row->angkatan) ?></td>
-                <td class="px-10 py-5 text-xs font-bold text-slate-500 text-center"><?= number_format($row->jumlah_laki_laki, 0, ',', '.') ?></td>
-                <td class="px-10 py-5 text-xs font-bold text-slate-500 text-center"><?= number_format($row->jumlah_perempuan, 0, ',', '.') ?></td>
-                <td class="px-10 py-5 text-sm font-black text-blue-900 text-center italic"><?= number_format($row->jumlah_laki_laki + $row->jumlah_perempuan, 0, ',', '.') ?></td>
+                <td class="px-10 py-5 text-xs font-bold text-slate-500 text-center"><?= $row->jumlah_laki_laki ?></td>
+                <td class="px-10 py-5 text-xs font-bold text-slate-500 text-center"><?= $row->jumlah_perempuan ?></td>
+                <td class="px-10 py-5 text-sm font-black text-blue-900 text-center italic"><?= $row->jumlah_laki_laki + $row->jumlah_perempuan ?></td>
               </tr>
             <?php endforeach; ?>
           </tbody>
@@ -249,7 +249,7 @@ $is_admin = $session->get('role') == 'admin' ? 1 : null;
                 <p class="text-[9px] font-bold text-blue-300 uppercase tracking-widest italic">Angkatan <?= esc($row->angkatan) ?></p>
               </div>
               <div class="bg-yellow-400 text-blue-900 px-4 py-2 rounded-2xl text-xs font-black ring-8 ring-blue-900 shadow-xl">
-                <?= number_format($row->ref_jumlah, 0, ',', '.') ?> <span class="text-[8px] opacity-60">REF</span>
+                <?= $row->ref_jumlah ?> <span class="text-[8px] opacity-60">REF</span>
               </div>
             </div>
           <?php endforeach; ?>
@@ -492,7 +492,7 @@ $is_admin = $session->get('role') == 'admin' ? 1 : null;
       theme: 'dark',
       y: {
         formatter: function(val) {
-          return val.toLocaleString('id-ID') + " Alumni";
+          return val + " Alumni";
         }
       }
     },
