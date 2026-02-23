@@ -104,7 +104,7 @@
 
     <div class="mt-10 text-center">
       <a href="<?= base_url(); ?>" class="inline-flex items-center gap-2 text-[10px] font-black text-slate-400 hover:text-blue-900 transition-all uppercase tracking-[0.3em] group">
-        <i class="fa fa-arrow-left group-hover:-translate-x-1 transition-transform"></i> Beranda
+        <i class="fa fa-arrow-left group-hover:-translate-x-1 transition-transform"></i> Dashboard
       </a>
     </div>
   </div>
