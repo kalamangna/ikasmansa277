@@ -1,37 +1,37 @@
-# IKA SMANSA 277 Sinjai Portal
+# Portal IKA SMANSA 277 Sinjai
 
-Portal Alumni IKA SMANSA / 277 Sinjai migrated to CodeIgniter 4.
+Portal resmi untuk pendataan dan informasi alumni IKA SMANSA / 277 Sinjai.
 
-## Features
-- **Alumni Directory:** Registration and management of alumni profiles.
-- **QR Code System:** Dynamic QR generation for alumni referrals and profile links.
-- **Dashboard:** Analytics and metrics visualization using ApexCharts.
-- **News Management:** Admin panel for publishing community updates.
+## Fitur Utama
+- **Pendataan Alumni:** Pendaftaran dan pengelolaan profil alumni secara mandiri.
+- **Sistem QR Code:** Pembuatan QR Code otomatis untuk rujukan dan verifikasi profil.
+- **Dashboard Statistik:** Visualisasi data alumni yang interaktif.
+- **Manajemen Berita:** Pengelolaan berita dan informasi terbaru untuk komunitas.
 
-## Requirements
-- PHP 8.2+
-- MySQL/MariaDB
-- Node.js & NPM (for Tailwind CSS)
+## Persyaratan Sistem
+- PHP 8.2 ke atas
+- MySQL atau MariaDB
+- Node.js & NPM (untuk Tailwind CSS)
 
-## Installation
-1. **PHP Dependencies:**
+## Cara Instalasi
+1. **Instal dependensi PHP:**
    ```bash
    composer install
    ```
-2. **JS Dependencies:**
+2. **Instal dependensi JS:**
    ```bash
    npm install
    ```
-3. **Environment Setup:**
-   Copy `env` to `.env` and configure your `app.baseURL` and database credentials.
-4. **Build Assets:**
+3. **Konfigurasi Lingkungan:**
+   Salin file `env` menjadi `.env` lalu sesuaikan `app.baseURL` dan konfigurasi database.
+4. **Build Aset:**
    ```bash
    npm run build
    ```
 
-## Development
-- **Tailwind Watcher:** `npm run dev`
-- **Local Server:** `php spark serve`
+## Pengembangan
+- **Menjalankan Tailwind (Watch):** `npm run dev`
+- **Menjalankan Server Lokal:** `php spark serve`
 
-## License
+## Lisensi
 [MIT](LICENSE)
