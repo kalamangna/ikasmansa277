@@ -127,3 +127,9 @@ _modules/*
 
 # node_modules
 node_modules/
+
+# upload directories
+public/uploads/
+
+# backups
+backups/
