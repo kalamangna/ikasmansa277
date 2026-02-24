@@ -260,5 +260,93 @@ $session = session();
         }
       });
     }
+
+    // Dynamic Kabupaten loading
+    const provinsiSelect = document.getElementById('provinsi');
+    const kabupatenSelect = document.getElementById('kabupaten');
+
+    if (provinsiSelect && kabupatenSelect) {
+      provinsiSelect.addEventListener('change', function() {
+        const provinsiId = this.value;
+        if (provinsiId) {
+          fetch(`<?= site_url('api/kabupaten/'); ?>${provinsiId}`)
+            .then(response => response.json())
+            .then(data => {
+              kabupatenSelect.innerHTML = '<option value="" class="text-slate-400">Pilih Kota</option>';
+              data.forEach(kab => {
+                const option = document.createElement('option');
+                option.value = kab.id_kabupaten;
+                option.textContent = kab.nama_kabupaten;
+                kabupatenSelect.appendChild(option);
+              });
+            })
+            .catch(error => console.error('Error fetching kabupaten:', error));
+        } else {
+          kabupatenSelect.innerHTML = '<option value="" class="text-slate-400">Pilih Kota</option>';
+        }
+      });
+    }
+
+    // Custom form validation for required fields
+    const registForm = document.getElementById('registForm');
+    if (registForm) {
+      registForm.addEventListener('submit', function(event) {
+        let firstInvalidField = null;
+        const requiredFields = registForm.querySelectorAll('[required]');
+
+        requiredFields.forEach(field => {
+          // Reset previous error states
+          field.classList.remove('border-red-500');
+          field.classList.remove('text-red-500'); // Assuming labels might also be affected
+
+          // For radio buttons (gender), check if any are checked
+          if (field.type === 'radio') {
+            const radioGroup = registForm.querySelectorAll(`input[name="${field.name}"]`);
+            const isChecked = Array.from(radioGroup).some(radio => radio.checked);
+            if (!isChecked) {
+              // Highlight the group or first radio button
+              radioGroup[0].classList.add('border-red-500');
+              if (!firstInvalidField) firstInvalidField = radioGroup[0];
+            }
+          } else if (!field.value.trim()) { // Check for empty value for other field types
+            field.classList.add('border-red-500');
+            if (!firstInvalidField) firstInvalidField = field;
+          }
+        });
+
+        // For file input 'foto', check if a file is selected
+        const fotoInput = document.getElementById('foto');
+        if (fotoInput && fotoInput.hasAttribute('required') && !fotoInput.files.length) {
+          // Assuming there's a visual container for the file input like a div with class 'group'
+          const fotoContainer = fotoInput.closest('.group'); // Find the parent .group element
+          if (fotoContainer) {
+            fotoContainer.classList.add('border-red-500');
+            // Or add a specific error message below the input
+          }
+          if (!firstInvalidField) firstInvalidField = fotoInput;
+        }
+
+        if (firstInvalidField) {
+          event.preventDefault(); // Prevent form submission
+          event.stopPropagation();
+          firstInvalidField.focus(); // Autofocus on the first invalid field
+          firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' }); // Scroll to it
+        }
+        registForm.classList.add('was-validated'); // Add a class to indicate validation occurred
+      });
+
+      // Clear validation styles on input change
+      registForm.addEventListener('input', function(event) {
+        const field = event.target;
+        if (field.hasAttribute('required')) {
+          field.classList.remove('border-red-500');
+          field.classList.remove('text-red-500');
+          const fotoContainer = field.closest('.group');
+          if (fotoContainer) {
+            fotoContainer.classList.remove('border-red-500');
+          }
+        }
+      });
+    }
   });
 </script>
